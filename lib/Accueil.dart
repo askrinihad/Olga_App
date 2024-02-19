@@ -9,9 +9,14 @@ class AccueilPage extends StatefulWidget {
 
 class _AccueilPageState extends State<AccueilPage> {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text("BioDivObserver")),
+  Widget build(BuildContext context) { 
+    return 
+    Container(
+      child: Center(child:  Text("BioDivObserver", style: TextStyle(color: Color.fromARGB(255, 17, 31, 157), 
+      fontSize:30, 
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Hind Siliguri'),),
+      ),
     );
   }
 }

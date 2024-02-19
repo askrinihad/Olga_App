@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/Accueil.dart';
 import 'package:test_app/Bibliotheque.dart';
+import 'package:test_app/ChoixPhoto.dart';
 import 'package:test_app/Historique.dart';
+import 'package:test_app/choixEspece.dart';
 import 'package:test_app/main.dart';
 import 'package:test_app/mydrawer_header.dart';
 import 'package:test_app/NouvelleObservation.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class Photo extends StatefulWidget {
+  const Photo({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<Photo> createState() => _PhotoState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  var currentPage  = DrawerSections.Accueil;
+class _PhotoState extends State<Photo> {
+  var currentPage  = DrawerSections.Photo;
   @override
   Widget build(BuildContext context) {
     var container;
@@ -27,13 +29,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }else if (currentPage==DrawerSections.Accueil){
       container=AccueilPage();
     }else if (currentPage==DrawerSections.Deconnexion){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> HomePage() ));
+      container= LoginScreen();
     }
+    else if (currentPage==DrawerSections.Photo){
+      container= ChoixPhoto();
+    }
+    
     
     return Scaffold(
       appBar: AppBar(
-    
-        backgroundColor: const Color.fromARGB(255, 17, 31, 157),
+        backgroundColor: Color.fromARGB(255, 17, 31, 157),
       ),
       body: container,
       drawer: Drawer(
@@ -80,7 +85,7 @@ Widget menuItem(int id, String title, IconData icon, bool selected){
         }
       });
       },
-      child: Padding(padding: EdgeInsets.all(5.0),
+       child: Padding(padding: EdgeInsets.all(5.0),
       child: Row(
         
         children: [
@@ -105,4 +110,5 @@ enum DrawerSections{
   Historique ,
   Bibliotheque,
   Deconnexion,
+  Photo,
 }

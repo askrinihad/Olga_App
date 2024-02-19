@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/Espece.dart';
-import 'package:test_app/choixEspece.dart';
+import 'package:test_app/NouvelleObservation.dart';
+import 'package:test_app/ObsType.dart';
+import 'package:test_app/Photo.dart';
 import 'package:test_app/profile_screen.dart';
 
-class NouvelleObservation extends StatefulWidget {
-  const NouvelleObservation({super.key});
+class ChoixEspece extends StatefulWidget {
+  const ChoixEspece({super.key});
 
   @override
-  State<NouvelleObservation> createState() => _NouvelleObservationState();
+  State<ChoixEspece> createState() => _ChoixEspeceState();
 }
 
-class _NouvelleObservationState extends State<NouvelleObservation> {
+class _ChoixEspeceState extends State<ChoixEspece> {
   @override
   Widget build(BuildContext context) {
-    return 
-    //Container(child: Center(child: Text("Nouvelle observation")),)
-Padding(
+    return Padding(
   padding: EdgeInsets.only(top: 200.0), // Adjust top padding as needed
   child: Column(
     children: [
@@ -32,9 +31,9 @@ Padding(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
+               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo()));
             },
-            child: const Text("Faune", style: TextStyle(
+            child: const Text("Espèce protègé", style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),
@@ -55,9 +54,9 @@ Padding(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo()));
             },
-            child: const Text("Flore", style: TextStyle(
+            child: const Text("Espèce indésirable", style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),
@@ -78,9 +77,9 @@ Padding(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo()));
             },
-            child: const Text("Insectes", style: TextStyle(
+            child: const Text("Espèce courante", style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),
@@ -101,7 +100,8 @@ Padding(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen()));
+             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ObsType() ));
+             
             },
             child: const Text("Retour", style: TextStyle(
               color: Colors.white,
@@ -114,13 +114,12 @@ Padding(
     ],
   ),
 );
-
-
-
-
-
-
-
-
   }
 }
+
+
+
+
+
+
+

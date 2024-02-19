@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
-      //home: ProfileScreen(),
+      //home: HomePage(),
+      home: ProfileScreen(),
        
     );
   }
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
             print('in on press');
             User? user = await loginUsingEmailPassword(email: _emailController.text, password: _passwordController.text, context: context);
             print(user);
-            print('User is not null');
+            
             if(user != null)
             { 
               print('Navigating to AccueilPage');

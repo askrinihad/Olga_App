@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:test_app/Accueil.dart';
 import 'package:test_app/Bibliotheque.dart';
 import 'package:test_app/Historique.dart';
+import 'package:test_app/choixEspece.dart';
 import 'package:test_app/main.dart';
 import 'package:test_app/mydrawer_header.dart';
 import 'package:test_app/NouvelleObservation.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ObsType extends StatefulWidget {
+  const ObsType({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ObsType> createState() => _ObsTypeState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  var currentPage  = DrawerSections.Accueil;
+class _ObsTypeState extends State<ObsType> {
+  var currentPage  = DrawerSections.NouvelleObservation;
   @override
   Widget build(BuildContext context) {
     var container;
@@ -27,13 +28,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }else if (currentPage==DrawerSections.Accueil){
       container=AccueilPage();
     }else if (currentPage==DrawerSections.Deconnexion){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> HomePage() ));
+      container= LoginScreen();
     }
+    else if (currentPage==DrawerSections.Espece){
+      container= ChoixEspece();
+    }
+    
     
     return Scaffold(
       appBar: AppBar(
-    
-        backgroundColor: const Color.fromARGB(255, 17, 31, 157),
+        backgroundColor: Color.fromARGB(255, 17, 31, 157),
       ),
       body: container,
       drawer: Drawer(
@@ -105,4 +109,5 @@ enum DrawerSections{
   Historique ,
   Bibliotheque,
   Deconnexion,
+  Espece,
 }
