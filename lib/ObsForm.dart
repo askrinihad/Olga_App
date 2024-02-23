@@ -10,6 +10,11 @@ class ObsForm extends StatefulWidget {
 class _ObsFormState extends State<ObsForm> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  Container(
+      child: Center(child:  Text("L'observation est enregistrée", style: TextStyle(
+      fontSize:24, 
+      fontFamily: 'Hind Siliguri'),),
+      ),
+    );
   }
 }

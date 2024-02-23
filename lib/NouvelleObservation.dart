@@ -11,6 +11,9 @@ class NouvelleObservation extends StatefulWidget {
 }
 
 class _NouvelleObservationState extends State<NouvelleObservation> {
+  final floreController=TextEditingController();
+  final fauneController=TextEditingController();
+  final insecteController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return 
@@ -32,7 +35,12 @@ Padding(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
+               //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
+               Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => Espece(argumentReceived: "faune"),
+                      ),
+                    );
             },
             child: const Text("Faune", style: TextStyle(
               color: Colors.white,
@@ -55,12 +63,19 @@ Padding(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
+               Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => Espece(argumentReceived: "flore"),
+                      ),
+                    );
             },
-            child: const Text("Flore", style: TextStyle(
+            child:  Text(
+              "Flore", 
+              style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
-            )),
+            ),
+            ),
           ),
         ),
       ),
@@ -78,7 +93,11 @@ Padding(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
+               Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => Espece(argumentReceived: "insectes"),
+                      ),
+                    );
             },
             child: const Text("Insectes", style: TextStyle(
               color: Colors.white,

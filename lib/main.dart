@@ -5,6 +5,7 @@ import 'package:test_app/Accueil.dart';
 import 'package:test_app/Bibliotheque.dart';
 import 'package:test_app/Historique.dart';
 import 'package:test_app/profile_screen.dart';
+import 'package:test_app/mymap_page.dart';
 
 
 void main() {
@@ -18,8 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //home: HomePage(),
-      home: ProfileScreen(),
+      home: HomePage(),
+      //home: ProfileScreen(),
+      //home: MapApp(),
+    
        
     );
   }

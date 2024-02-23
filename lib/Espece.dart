@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:test_app/Accueil.dart';
 import 'package:test_app/Bibliotheque.dart';
 import 'package:test_app/Historique.dart';
+import 'package:test_app/ajouterEspece.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/main.dart';
 import 'package:test_app/mydrawer_header.dart';
 import 'package:test_app/NouvelleObservation.dart';
 
 class Espece extends StatefulWidget {
-  const Espece({super.key});
+  final String argumentReceived;
+
+  const Espece({required this.argumentReceived, super.key});
+  //const Espece({super.key});
 
   @override
   State<Espece> createState() => _EspeceState();
@@ -18,21 +22,10 @@ class _EspeceState extends State<Espece> {
   var currentPage  = DrawerSections.Espece;
   @override
   Widget build(BuildContext context) {
-    var container;
-    if(currentPage==DrawerSections.NouvelleObservation){
-      container=NouvelleObservation();
-    } else if (currentPage==DrawerSections.Bibliotheque){
-      container=Bibliotheque();
-    }else if (currentPage==DrawerSections.Historique){
-      container=Historique();
-    }else if (currentPage==DrawerSections.Accueil){
-      container=AccueilPage();
-    }else if (currentPage==DrawerSections.Deconnexion){
-      container= LoginScreen();
-    }
-    else if (currentPage==DrawerSections.Espece){
-      container= ChoixEspece();
-    }
+     var container;
+    //print("Received Argument: ${widget.argumentReceived}");
+    container = ChoixEspece(argumentReceived: widget.argumentReceived);
+    
     
     
     return Scaffold(
@@ -57,10 +50,12 @@ Widget MyDrawerList(){
       children: [
         menuItem(1, "Accueil", Icons.home, currentPage == DrawerSections.Accueil ? true: false),
         menuItem(2, "Nouvelle observation", Icons.add_box_rounded, currentPage == DrawerSections.NouvelleObservation ? true: false),
-        menuItem(3, "Historique des observations", Icons.history, currentPage == DrawerSections.Historique ? true: false),
-        menuItem(4, "Bibliothèque", Icons.list, currentPage == DrawerSections.Bibliotheque ? true: false),
-        menuItem(5, "Déconnexion", Icons.logout, currentPage == DrawerSections.Deconnexion ? true: false),
-      ],
+        menuItem(3, "Nouvelle espèce", Icons.add_box_rounded, currentPage == DrawerSections.NouvelleEspece ? true: false),
+        menuItem(4, "Historique des observations", Icons.history, currentPage == DrawerSections.Historique ? true: false),
+        menuItem(5, "Bibliothèque", Icons.list, currentPage == DrawerSections.Bibliotheque ? true: false),
+        menuItem(6, "Déconnexion", Icons.logout, currentPage == DrawerSections.Deconnexion ? true: false),
+      
+       ],
     ),
   );
 }
@@ -71,15 +66,18 @@ Widget menuItem(int id, String title, IconData icon, bool selected){
       onTap: (){
       Navigator.pop(context);
       setState(() {
-        if(id==1){
+         if(id==1){
           currentPage=DrawerSections.Accueil;
         } else if(id==2){
           currentPage=DrawerSections.NouvelleObservation;
         }else if(id==3){
+          currentPage=DrawerSections.NouvelleEspece;
+        }
+        else if(id==4){
           currentPage=DrawerSections.Historique;
-        }else if(id==4){
-          currentPage=DrawerSections.Bibliotheque;
         }else if(id==5){
+          currentPage=DrawerSections.Bibliotheque;
+        }else if(id==6){
           currentPage=DrawerSections.Deconnexion;
         }
       });
@@ -106,6 +104,7 @@ Widget menuItem(int id, String title, IconData icon, bool selected){
 enum DrawerSections{
   Accueil,
   NouvelleObservation,
+  NouvelleEspece,
   Historique ,
   Bibliotheque,
   Deconnexion,

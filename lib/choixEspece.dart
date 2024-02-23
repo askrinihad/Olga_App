@@ -5,7 +5,10 @@ import 'package:test_app/Photo.dart';
 import 'package:test_app/profile_screen.dart';
 
 class ChoixEspece extends StatefulWidget {
-  const ChoixEspece({super.key});
+  //const ChoixEspece({super.key}); modified
+  final String argumentReceived;
+
+  const ChoixEspece({required this.argumentReceived, super.key});
 
   @override
   State<ChoixEspece> createState() => _ChoixEspeceState();
@@ -14,6 +17,7 @@ class ChoixEspece extends StatefulWidget {
 class _ChoixEspeceState extends State<ChoixEspece> {
   @override
   Widget build(BuildContext context) {
+    //print("Received Argument: ${widget.argumentReceived}");
     return Padding(
   padding: EdgeInsets.only(top: 200.0), // Adjust top padding as needed
   child: Column(
@@ -31,8 +35,14 @@ class _ChoixEspeceState extends State<ChoixEspece> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo()));
-            },
+               //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo())); modified
+               String combinedArgument = "${widget.argumentReceived} protege";
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => Photo(argumentReceived: combinedArgument),
+                  ),
+                );
+                          },
             child: const Text("Espèce protègé", style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
@@ -54,7 +64,12 @@ class _ChoixEspeceState extends State<ChoixEspece> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo()));
+                String combinedArgument = "${widget.argumentReceived} indesirable";
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => Photo(argumentReceived: combinedArgument),
+                  ),
+                );
             },
             child: const Text("Espèce indésirable", style: TextStyle(
               color: Colors.white,
@@ -77,7 +92,12 @@ class _ChoixEspeceState extends State<ChoixEspece> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo()));
+              String combinedArgument = "${widget.argumentReceived} courante";
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => Photo(argumentReceived: combinedArgument),
+                  ),
+                );
             },
             child: const Text("Espèce courante", style: TextStyle(
               color: Colors.white,
