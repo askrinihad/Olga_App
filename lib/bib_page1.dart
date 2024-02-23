@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/Bibliotheque.dart';
 import 'package:test_app/Espece.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/profile_screen.dart';
 
-class NouvelleObservation extends StatefulWidget {
-  const NouvelleObservation({super.key});
+class biblio1 extends StatefulWidget {
+  const biblio1({super.key});
 
   @override
-  State<NouvelleObservation> createState() => _NouvelleObservationState();
+  State<biblio1> createState() => _biblio1State();
 }
 
-class _NouvelleObservationState extends State<NouvelleObservation> {
+class _biblio1State extends State<biblio1> {
   final floreController=TextEditingController();
   final fauneController=TextEditingController();
   final insecteController=TextEditingController();
@@ -38,7 +39,7 @@ Padding(
                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(argumentReceived: "faune"),
+                        builder: (context) => Bibliotheque(typeEspece: "faune"),
                       ),
                     );
             },
@@ -65,7 +66,7 @@ Padding(
             onPressed: () {
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(argumentReceived: "flore"),
+                        builder: (context) => Bibliotheque(typeEspece: "flore"),
                       ),
                     );
             },
@@ -95,7 +96,7 @@ Padding(
             onPressed: () {
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(argumentReceived: "insectes"),
+                        builder: (context) => Bibliotheque(typeEspece: "insectes"),
                       ),
                     );
             },

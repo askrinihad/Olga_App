@@ -3,6 +3,7 @@ import 'package:test_app/Accueil.dart';
 import 'package:test_app/Bibliotheque.dart';
 import 'package:test_app/Historique.dart';
 import 'package:test_app/ajouterEspece.dart';
+import 'package:test_app/bib_page1.dart';
 import 'package:test_app/main.dart';
 import 'package:test_app/mydrawer_header.dart';
 import 'package:test_app/NouvelleObservation.dart';
@@ -25,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       container=addSpecies();
     }
     else if (currentPage==DrawerSections.Bibliotheque){
-      container=Bibliotheque();
+      container=biblio1();
     }else if (currentPage==DrawerSections.Historique){
       container=Historique();
     }else if (currentPage==DrawerSections.Accueil){

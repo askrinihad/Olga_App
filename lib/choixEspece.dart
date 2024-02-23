@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/ChoixPhoto.dart';
 import 'package:test_app/NouvelleObservation.dart';
 import 'package:test_app/ObsType.dart';
 import 'package:test_app/Photo.dart';
+import 'package:test_app/nouvelleObs_Retour.dart';
 import 'package:test_app/profile_screen.dart';
 
 class ChoixEspece extends StatefulWidget {
@@ -18,7 +20,11 @@ class _ChoixEspeceState extends State<ChoixEspece> {
   @override
   Widget build(BuildContext context) {
     //print("Received Argument: ${widget.argumentReceived}");
-    return Padding(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+      ),
+    body: Padding(
   padding: EdgeInsets.only(top: 200.0), // Adjust top padding as needed
   child: Column(
     children: [
@@ -39,7 +45,7 @@ class _ChoixEspeceState extends State<ChoixEspece> {
                String combinedArgument = "${widget.argumentReceived} protege";
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => Photo(argumentReceived: combinedArgument),
+                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument),
                   ),
                 );
                           },
@@ -67,7 +73,7 @@ class _ChoixEspeceState extends State<ChoixEspece> {
                 String combinedArgument = "${widget.argumentReceived} indesirable";
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => Photo(argumentReceived: combinedArgument),
+                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument),
                   ),
                 );
             },
@@ -95,7 +101,7 @@ class _ChoixEspeceState extends State<ChoixEspece> {
               String combinedArgument = "${widget.argumentReceived} courante";
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => Photo(argumentReceived: combinedArgument),
+                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument),
                   ),
                 );
             },
@@ -120,7 +126,7 @@ class _ChoixEspeceState extends State<ChoixEspece> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ObsType() ));
+             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> NouvelleObservation2() ));
              
             },
             child: const Text("Retour", style: TextStyle(
@@ -133,7 +139,7 @@ class _ChoixEspeceState extends State<ChoixEspece> {
     ),
     ],
   ),
-);
+),);
   }
 }
 

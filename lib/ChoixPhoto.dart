@@ -15,6 +15,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:test_app/choixEspece.dart';
 import 'package:test_app/mymap_page.dart';
 
 
@@ -63,7 +64,11 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
     }
     // print("Received Argument 1111: $receivedArgument");
      //print("Additional Argument 22222: $additionalArgument");
-    return SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+      ),
+    body:SingleChildScrollView(
     child: Padding(
   padding: EdgeInsets.only(top: 50.0), // Adjust top padding as needed
   child: Column(
@@ -557,7 +562,7 @@ const SizedBox(height: 10),
             borderRadius: BorderRadius.circular(12.0),
           ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Espece(argumentReceived: receivedArgument)));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ChoixEspece(argumentReceived: receivedArgument)));
           },
           child: const Text(
             "Retour",
@@ -679,7 +684,7 @@ const SizedBox(height: 10),
     ],
   ),
 ),
-    );
+    ),);
   }
 //////////////////////////////////////////////
 //---------------Functions--------------------------

@@ -1,18 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/dart2js.dart';
+import 'package:test_app/bib_page1.dart';
+import 'package:test_app/biblio_retour.dart';
+import 'package:test_app/profile_screen.dart';
+import 'package:test_app/speciesInfo.dart';
 
 class Bibliotheque extends StatefulWidget {
-  const Bibliotheque({super.key});
+  final String typeEspece;
+  const Bibliotheque({required this.typeEspece, super.key});
+ 
 
   @override
   State<Bibliotheque> createState() => _BibliothequeState();
 }
 
 class _BibliothequeState extends State<Bibliotheque> {
-  var collection = FirebaseFirestore.instance.collection("amphibiens_et_invertebres");
+  
   late List<Map<String,dynamic>> items;
   bool isLoaded =false;
+  late CollectionReference<Map<String, dynamic>> collection;
 
   _incrementCounter() async{
     List<Map<String,dynamic>> templist=[];
@@ -28,7 +35,19 @@ class _BibliothequeState extends State<Bibliotheque> {
   }
   @override
   Widget build(BuildContext context) {
-    return Column(
+       if (widget.typeEspece == 'flore') {
+      collection = FirebaseFirestore.instance.collection("especes_flore");
+    } else if (widget.typeEspece == 'faune') {
+      collection = FirebaseFirestore.instance.collection("especes_faune");
+    } else {
+      collection = FirebaseFirestore.instance.collection("espece_insectes");
+    }
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+      ),
+    body:
+    Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Expanded(
@@ -39,6 +58,16 @@ class _BibliothequeState extends State<Bibliotheque> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigate to a new page when the ListTile is tapped
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => speciesInfo(item:items[index]),
+                              ),
+                            );
+                          },
                         child: ListTile(
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(width: 2),
@@ -46,7 +75,7 @@ class _BibliothequeState extends State<Bibliotheque> {
                           ),
                           title: Row(
                             children: [
-                              Text(items[index]["espece"], style: TextStyle(
+                              Text(items[index]["nom"], style: TextStyle(
                                   color: Color.fromARGB(255, 25, 25, 28),
                                   fontSize: 13.0,
                                 ),),
@@ -54,7 +83,7 @@ class _BibliothequeState extends State<Bibliotheque> {
                             ],
                           ),
                           trailing: Icon(Icons.more_vert),
-                        ),
+                        ),),
                       );
                     },
                   )
@@ -67,8 +96,33 @@ class _BibliothequeState extends State<Bibliotheque> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
-      SizedBox(height: 15,)
+    
+      SizedBox(height: 100,),
+         Container(
+      margin: EdgeInsets.only(top: 100.0, right: 160.0),
+      child: Center(
+        child: SizedBox(
+          width: 100, // Set width as needed
+          child: RawMaterialButton(
+            fillColor: const Color(0xff121F98),
+            elevation: 0.0,
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            onPressed: () {
+               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> biblioRetour()));
+            },
+            child: const Text("Retour", style: TextStyle(
+              color: Colors.white,
+              fontSize: 13.0,
+            )),
+          ),
+        ),
+      ),
+    ),
+    SizedBox(height: 30 ,),
     ],
-  );
+  ),);
   }
 }

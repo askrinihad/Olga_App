@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/Bibliotheque.dart';
 import 'package:test_app/Espece.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/profile_screen.dart';
 
-class NouvelleObservation extends StatefulWidget {
-  const NouvelleObservation({super.key});
+class biblioRetour extends StatefulWidget {
+  const biblioRetour({super.key});
 
   @override
-  State<NouvelleObservation> createState() => _NouvelleObservationState();
+  State<biblioRetour> createState() => _biblioRetourState();
 }
 
-class _NouvelleObservationState extends State<NouvelleObservation> {
+class _biblioRetourState extends State<biblioRetour> {
   final floreController=TextEditingController();
   final fauneController=TextEditingController();
   final insecteController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return 
-    //Container(child: Center(child: Text("Nouvelle observation")),)
+  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+      ),
+    body:
 Padding(
   padding: EdgeInsets.only(top: 200.0), // Adjust top padding as needed
   child: Column(
@@ -38,7 +43,7 @@ Padding(
                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(argumentReceived: "faune"),
+                        builder: (context) => Bibliotheque(typeEspece: "faune"),
                       ),
                     );
             },
@@ -65,7 +70,7 @@ Padding(
             onPressed: () {
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(argumentReceived: "flore"),
+                        builder: (context) => Bibliotheque(typeEspece: "flore"),
                       ),
                     );
             },
@@ -95,7 +100,7 @@ Padding(
             onPressed: () {
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(argumentReceived: "insectes"),
+                        builder: (context) => Bibliotheque(typeEspece: "insectes"),
                       ),
                     );
             },
@@ -132,7 +137,7 @@ Padding(
     ),
     ],
   ),
-);
+),);
 
 
 

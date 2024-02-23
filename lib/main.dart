@@ -94,12 +94,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Padding(
+    return Scaffold(
+    body: SingleChildScrollView(
+      child: Padding(
     padding: const EdgeInsets.all(16.0),
     child: Column(
+      
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 150,),
              Center(
       child: Image.asset(
         'assets/adp_logo.png', // Replace with the actual path to your image
@@ -164,7 +168,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       ],
     ),
-    ), );
+    ),),
+     );
   }
 }
   

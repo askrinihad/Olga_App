@@ -3,22 +3,25 @@ import 'package:test_app/Espece.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/profile_screen.dart';
 
-class NouvelleObservation extends StatefulWidget {
-  const NouvelleObservation({super.key});
+class NouvelleObservation2 extends StatefulWidget {
+  const NouvelleObservation2({super.key});
 
   @override
-  State<NouvelleObservation> createState() => _NouvelleObservationState();
+  State<NouvelleObservation2> createState() => _NouvelleObservationState();
 }
 
-class _NouvelleObservationState extends State<NouvelleObservation> {
+class _NouvelleObservationState extends State<NouvelleObservation2> {
   final floreController=TextEditingController();
   final fauneController=TextEditingController();
   final insecteController=TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return 
-    //Container(child: Center(child: Text("Nouvelle observation")),)
-Padding(
+     
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+      ),
+    body:Padding(
   padding: EdgeInsets.only(top: 200.0), // Adjust top padding as needed
   child: Column(
     children: [
@@ -132,7 +135,7 @@ Padding(
     ),
     ],
   ),
-);
+),);
 
 
 
