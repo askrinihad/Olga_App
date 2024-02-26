@@ -13,7 +13,7 @@ class _AccueilPageState extends State<AccueilPage> {
     return 
     Container(
       child: Center(child:  Text("BioDivObserver", style: TextStyle(color: Color.fromARGB(255, 17, 31, 157), 
-      fontSize:30, 
+      fontSize:35, 
       fontWeight: FontWeight.bold,
       fontFamily: 'Hind Siliguri'),),
       ),

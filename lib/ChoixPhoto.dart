@@ -79,7 +79,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
           "Nouvelle observation",
           style: TextStyle(
             color: Color.fromARGB(255, 17, 31, 157),
-            fontSize: 30,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
             fontFamily: 'Hind Siliguri',
           ),

@@ -75,7 +75,7 @@ class _addSpeciesState extends State<addSpecies> {
           "Nouvelle espèce",
           style: TextStyle(
             color: Color.fromARGB(255, 17, 31, 157),
-            fontSize: 30,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
             fontFamily: 'Hind Siliguri',
           ),
