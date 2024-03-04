@@ -12,7 +12,7 @@ class _AccueilPageState extends State<AccueilPage> {
   Widget build(BuildContext context) { 
     return 
     Container(
-      child: Center(child:  Text("BioDivObserver", style: TextStyle(color: Color.fromARGB(255, 17, 31, 157), 
+      child: Center(child:  Text("BioDivObserver", style: TextStyle(color: Color(0xff586CB2), 
       fontSize:35, 
       fontWeight: FontWeight.bold,
       fontFamily: 'Hind Siliguri'),),

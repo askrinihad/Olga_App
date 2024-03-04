@@ -3,6 +3,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:test_app/Espece.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +19,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/mymap_page.dart';
-
+const  List<String> phaseList = <String>['Germination', 'Développement', ' Pollinisation', 'Fructification'];
+const  List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
+const  List<String> etatList = <String>['En développement', 'Etat 1', ' Etat 2'];
 
 class ChoixPhoto extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
@@ -29,6 +33,12 @@ class ChoixPhoto extends StatefulWidget {
 }
 
 class _ChoixPhotoState extends State<ChoixPhoto> {
+  String etatValue = etatList.first;
+  String actionValue = actionList.first;
+  String phaseValue = phaseList.first;
+  int selectedNumber=1;
+  
+
   double long = 48.7882752;
   double lat = 2.4313856;
   LatLng point = LatLng(48.7882752, 2.4313856);
@@ -48,14 +58,118 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
   String? _imageUrl;
   late Stream<QuerySnapshot> streamVar;
 
+    Widget _buildEtat(){
+     return DropdownButton<String>(
+      value: etatValue,
+      isExpanded: false,
+                underline: Container(
+                  height: 0, // Set the height to 0 to hide the underline
+                  color: Colors.transparent, // Set the underline color to transparent
+                ),
+      icon: Padding(
+                padding: EdgeInsets.only(left: 84.0), // Adjust the right padding
+                child: Icon(Icons.arrow_drop_down),
+              ),
+      elevation: 16,
+      style: const TextStyle(color:Colors.grey),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          etatValue= value!;
+        });
+      },
+      items: etatList.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Padding(
+                         padding: EdgeInsets.only(left: 5.0),
+               child: Text(value),),
+        );
+      }).toList(),
+    );
+  } 
+  /////////////////////////////////////////////
+  Widget _buildPhase(){
+     return DropdownButton<String>(
+      value: phaseValue,
+      isExpanded: false,
+                underline: Container(
+                  height: 0, // Set the height to 0 to hide the underline
+                  color: Colors.transparent, // Set the underline color to transparent
+                ),
+      icon: Padding(
+                padding: EdgeInsets.only(left: 103.0), // Adjust the right padding
+                child: Icon(Icons.arrow_drop_down),
+              ),
+      elevation: 16,
+      style: const TextStyle(color:Colors.grey),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          phaseValue= value!;
+        });
+      },
+      items: phaseList.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Padding(
+                         padding: EdgeInsets.only(left: 5.0),
+               child: Text(value),),
+        );
+      }).toList(),
+    );
+  } 
+  /////////////////////////////////////////////////////////////::
+  Widget _buildAction(){
+     return DropdownButton<String>(
+      value: actionValue,
+      isExpanded: false,
+                underline: Container(
+                  height: 0, // Set the height to 0 to hide the underline
+                  color: Colors.transparent, // Set the underline color to transparent
+                ),
+      icon: Padding(
+                padding: EdgeInsets.only(left: 150.0), // Adjust the right padding
+                child: Icon(Icons.arrow_drop_down),
+              ),
+      elevation: 16,
+      style: const TextStyle(color:Colors.grey),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          actionValue= value!;
+        });
+      },
+      items: actionList.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Padding(
+                         padding: EdgeInsets.only(left: 5.0),
+               child: Text(value),),
+        );
+      }).toList(),
+    );
+  } 
+  /////////////////////////////
+    void initState() {
+    super.initState();
+    // Set the initial value to the current date
+    _dateController.text = DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now());
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    _fetchLocation();
      List<String> arguments = widget.argumentReceived.split(' ');
      String receivedArgument = arguments[0];
      String additionalArgument = arguments[1];
      if (receivedArgument == 'flore') {
-      streamVar = FirebaseFirestore.instance.collection("especes_flore").snapshots();
+      if(additionalArgument=='protege'){
+       
+        streamVar = FirebaseFirestore.instance.collection("especes_flore_protege").snapshots();
+      }
+      else {streamVar = FirebaseFirestore.instance.collection("especes_flore").snapshots();}
     } else if (receivedArgument == 'faune') {
       streamVar = FirebaseFirestore.instance.collection("especes_faune").snapshots();
     } else {
@@ -66,7 +180,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
      //print("Additional Argument 22222: $additionalArgument");
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+        backgroundColor: Color(0xff586CB2),
       ),
     body:SingleChildScrollView(
     child: Padding(
@@ -78,7 +192,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
         child: Text(
           "Nouvelle observation",
           style: TextStyle(
-            color: Color.fromARGB(255, 17, 31, 157),
+            color: Color(0xff586CB2),
             fontSize: 26,
             fontWeight: FontWeight.bold,
             fontFamily: 'Hind Siliguri',
@@ -93,7 +207,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
     child: SizedBox(
       width: 220, // Set width as needed
       child: RawMaterialButton(
-        fillColor: const Color(0xff121F98),
+        fillColor: const Color(0xff586CB2),
         elevation: 0.0,
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         shape: RoundedRectangleBorder(
@@ -128,7 +242,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
     child: SizedBox(
       width: 220, // Set width as needed
       child: RawMaterialButton(
-        fillColor: const Color(0xff121F98),
+        fillColor: const Color(0xff586CB2),
         elevation: 0.0,
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         shape: RoundedRectangleBorder(
@@ -165,7 +279,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
     child: SizedBox(
       width: 220, // Set width as needed
       child: RawMaterialButton(
-        fillColor: const Color(0xff121F98),
+        fillColor: const Color(0xff586CB2),
         elevation: 0.0,
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         shape: RoundedRectangleBorder(
@@ -208,9 +322,16 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
         )
       : Text("Séléctionner une image..."),
 ),
+ const SizedBox(height: 10),
+    Text(
+  'Latitude: ${this.point.latitude}, Longitude: ${this.point.longitude}',
+  style: TextStyle(
+    fontSize: 13,
+  ),
+),
    const SizedBox(height: 10),
           Container(
-          width: 254.0,
+          width: 260.0,
           height: 50,
            decoration: BoxDecoration(
             color: Color(0xffF6F6F6),
@@ -230,10 +351,13 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
             builder: (context, snapshot){
               List<DropdownMenuItem> especeItems = [];
               if(!snapshot.hasData){
+                
                 const CircularProgressIndicator();
               }
               else{
+                
                 final especes =  snapshot.data?.docs.reversed.toList();
+               
                 especeItems.add(DropdownMenuItem(
                   value: "aucun",
                   child: Padding(
@@ -244,12 +368,15 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                       ),
                     ),
                                       ));
+
                 for (var espece in especes!){
+                  Map<String, dynamic> data = espece.data() as Map<String, dynamic>;
+                  
                   especeItems.add(DropdownMenuItem(
                     value: espece.id,
                     child: Padding(
                          padding: EdgeInsets.only(left: 5.0),
-                    child: Text(espece['nom'],style: TextStyle(color: Colors.grey, fontSize: 12),),),
+                    child: Text(data['Nom français'],style: TextStyle(color: Colors.grey, fontSize: 12),),),
                   ));
                 }
               }
@@ -268,7 +395,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                   color: Colors.transparent, // Set the underline color to transparent
                 ),
                 icon: Padding(
-                padding: EdgeInsets.only(left: 50.0), // Adjust the right padding
+               padding: EdgeInsets.only(right:1), // Adjust the right padding
                 child: Icon(Icons.arrow_drop_down),
               ),
           
@@ -284,18 +411,18 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
               child: Container(
                 width: 254.0,
                 height: 50,
-                decoration: BoxDecoration(
+                 decoration: BoxDecoration(
                   color: Color(0xffF6F6F6),
                   borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.black.withOpacity(0.1)),
                   boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.1),
-        blurRadius: 5.0,
-        spreadRadius: 2.0,
-        offset: Offset(0, 4),
-      ),
-    ],
-                  
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -303,10 +430,10 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        _dateController.text.isEmpty ? 'Date et heure...' : _dateController.text,
+                        _dateController.text,
                         style: TextStyle(color: Colors.grey, fontSize: 12),
                       ),
-                      Icon(Icons.calendar_today),
+                              Icon(Icons.calendar_today),
                     ],
                   ),
                 ),
@@ -314,207 +441,141 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
             ),
             const SizedBox(height: 5),
              Container(
-              //margin: EdgeInsets.only(right: MediaQuery.of(context).size.width *16.5 / 100, left:MediaQuery.of(context).size.width *16 / 100 ),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
+          width: 254.0,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Color(0xffF6F6F6),
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: Colors.black.withOpacity(0.1)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 5.0,
+                spreadRadius: 2.0,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+            child: _buildPhase(),
+          ),
+           const SizedBox(height: 5),
           Container(
-         width: 125.0,
-       height: 50,
-       decoration: BoxDecoration(
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.1),
-        blurRadius: 5.0,
-        spreadRadius: 2.0,
-        offset: Offset(0, 4),
-      ),
-    ],
-  ),
-             child: TextFormField(
-               controller: _phaseController,
-               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-               hintText: 'Phase...',
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                filled: true,
-                fillColor: Color(0xffF6F6F6),
-                 border: OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(8.0),
-                 // Set the corner radius
-                 borderSide: BorderSide.none, // Remove the border
-                 ), 
-                 
-                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
-               ),
-                 
-     
-     
-              
-
-       ),
-       ),
-        const SizedBox(width: 5),
-        Container(
-         width: 125.0,
-       height: 50,
-       decoration: BoxDecoration(
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.1),
-        blurRadius: 5.0,
-        spreadRadius: 2.0,
-        offset: Offset(0, 4),
-      ),
-    ],
-  ),
-             child: TextFormField(
-               controller: _nbController,
-               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-               hintText: 'Nombre...',
-               hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                filled: true,
-                fillColor: Color(0xffF6F6F6),
-                 border: OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(8.0),
-                 // Set the corner radius
-                 borderSide: BorderSide.none, // Remove the border
-                 ), 
-                 
-                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
-               ),
-                 
-     
-     
-              
-
-       ),
-       ),
-    ],
-  ),
-             ),
-    const SizedBox(height: 5),
-             Container(
-              child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-          Container(
-         width: 125.0,
-       height: 50,
-       decoration: BoxDecoration(
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.1),
-        blurRadius: 5.0,
-        spreadRadius: 2.0,
-        offset: Offset(0, 4),
-      ),
-    ],
-  ),
-             child: TextFormField(
-               controller: _etatController,
-               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-               hintText: 'Etat...',
-               hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                filled: true,
-                fillColor: Color(0xffF6F6F6),
-                 border: OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(8.0),
-                 // Set the corner radius
-                 borderSide: BorderSide.none, // Remove the border
-                 ), 
-                 
-                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
-               ),
-                 
-     
-     
-              
-
-       ),
-       ),
-        const SizedBox(width: 5),
-        Container(
-         width: 125.0,
-       height: 50,
-       decoration: BoxDecoration(
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.1),
-        blurRadius: 5.0,
-        spreadRadius: 2.0,
-        offset: Offset(0, 4),
-      ),
-    ],
-  ),
-             child: TextFormField(
-               controller: _actionController,
-               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-               hintText: 'Action...',
-                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12
-                 ),
-                filled: true,
-                fillColor: Color(0xffF6F6F6),
-                 border: OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(8.0),
-                 // Set the corner radius
-                 borderSide: BorderSide.none, // Remove the border
-                 ), 
-                 
-                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
-               ),
-                 
-     
-     
-              
-
-       ),
-       ),
-    ],
-  ),
-             ),  
+                width: 254.0,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Color(0xffF6F6F6),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.black.withOpacity(0.1)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+                      child: DropdownButton<int>(
+                        value: selectedNumber,
+                         isExpanded: false,
+                            underline: Container(
+                              height: 0, // Set the height to 0 to hide the underline
+                              color: Colors.transparent, // Set the underline color to transparent
+                            ),
+                  icon: Padding(
+                            padding: EdgeInsets.only(left: 110.0), // Adjust the right padding
+                            child: Icon(Icons.arrow_drop_down),
+                          ),
+                        onChanged: (int? newValue) {
+                          setState(() {
+                            selectedNumber = newValue!;
+                          });
+                        },
+                        items: List.generate(200, (index) {
+                          return DropdownMenuItem<int>(
+                            value: index + 1,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.0),
+                              child: Text(' ${index + 1} indivudu (s)', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                            ),
+                          );
+                        }),
+                      ),
+),
+        const SizedBox(height: 5),
+              Container(
+          width: 254.0,
+          height: 50,
+            decoration: BoxDecoration(
+                  color: Color(0xffF6F6F6),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.black.withOpacity(0.1)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+            child: _buildEtat(),
+          ),
+           const SizedBox(height: 5),
+            Container(
+          width: 254.0,
+          height: 50,
+          decoration: BoxDecoration(
+                  color: Color(0xffF6F6F6),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.black.withOpacity(0.1)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+            child: _buildAction(),
+          ),
+          
+       
              const SizedBox(height: 5),
-  Container(
-         width: 255.0,
-       height: 50,
-       decoration: BoxDecoration(
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.1),
-        blurRadius: 5.0,
-        spreadRadius: 2.0,
-        offset: Offset(0, 4),
+ Container(
+  width: 255.0,
+  height: 200, // Adjust the height as needed for a larger TextField
+  decoration: BoxDecoration(
+                  color: Color(0xffF6F6F6),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.black.withOpacity(0.1)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+  child: TextFormField(
+    controller: _descriptionController,
+    keyboardType: TextInputType.multiline,
+    maxLines: null, // Set maxLines to null for a multi-line TextField
+    decoration: InputDecoration(
+      hintText: 'Description...',
+      hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+      filled: true,
+      fillColor: Color(0xffF6F6F6),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        borderSide: BorderSide.none,
       ),
-    ],
+    ),
   ),
-             child: TextFormField(
-               controller: _descriptionController,
-               keyboardType: TextInputType.text,
-               //maxLines: null,
-              decoration: InputDecoration(
-               hintText: 'Description...',
-              hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                filled: true,
-                fillColor: Color(0xffF6F6F6),
-                 border: OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(8.0),
-                 // Set the corner radius
-                 borderSide: BorderSide.none, // Remove the border
-                 ), 
-                 
-            // Set the background color to grey
-               ),
-                 
-     
-     
-              
+),
 
-       ),
-       ),
-const SizedBox(height: 10),
 // -----------------------Add the Google Map here
           // Container(
           //   height: 200,
@@ -545,17 +606,18 @@ const SizedBox(height: 10),
 /////////////////////////-openStreet map
 
 ///----------------------end of the map
-    const SizedBox(height: 20),
+    const SizedBox(height: 30),
  Container(
-  margin: EdgeInsets.only(top: 80.0, right: MediaQuery.of(context).size.width * 15 / 100,left: MediaQuery.of(context).size.width * 10 / 100),
+  margin: EdgeInsets.only( right: MediaQuery.of(context).size.width * 15 / 100,left: MediaQuery.of(context).size.width * 10 / 100),
  
   child: Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Container(
-        width: 100,
+        width: 30,
+        
         child: RawMaterialButton(
-          fillColor: const Color(0xff121F98),
+          fillColor: const Color(0xff586CB2),
           elevation: 0.0,
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           shape: RoundedRectangleBorder(
@@ -565,26 +627,24 @@ const SizedBox(height: 10),
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ChoixEspece(argumentReceived: receivedArgument)));
           },
           child: const Text(
-            "Retour",
+            "<",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 13.0,
+              fontSize: 10.0,
             ),
           ),
         ),
       ),
-     SizedBox(width: MediaQuery.of(context).size.width * 20 / 100), // Adjust the space between buttons
-      Container(
+     SizedBox(width: MediaQuery.of(context).size.width * 8  / 100), 
+     Container(
         width: 100,
-        child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        child: RawMaterialButton(
+          fillColor: const Color(0xff586CB2),
+          elevation: 0.0,
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
           ),
-        padding: const EdgeInsets.symmetric(vertical: 15.0),
-        elevation: 0.0,
-        primary: Color(0xff121F98), // Remove the const keyword
-         ),
          onPressed: () async{
            if (_selectedImage != null && _imageName != null) {
                   await uploadFile(_selectedImage!, _imageName!);
@@ -595,79 +655,96 @@ const SizedBox(height: 10),
                   MaterialPageRoute(
                     builder: (context) => MapApp(
                       especeType:receivedArgument,
-                      action: _actionController.text,
+                      action: actionValue,
                       date: _dateController.text,
-                      etat: _etatController.text,
-                      phase: _phaseController.text,
-                      nombre: _nbController.text,
+                      etat: etatValue,
+                      phase: phaseValue,
+                      nombre: selectedNumber,
                       statut:additionalArgument,
                       description: _descriptionController.text, // Add '.text' to get the text from the controller
                       imageUrl: _imageName!,
                       // Pass more data as needed
                     ),
                   ),
-);
+);       },
+          child: const Text(
+            "Localiser",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 13.0,
+            ),
+          ),
+        ),
+      ),
+     SizedBox(width: MediaQuery.of(context).size.width * 7 / 100), // Adjust the space between buttons
+      Container(
+        width: 100,
+        child: ElevatedButton(
+           onPressed: () async {
+             if (_selectedImage != null && _imageName != null) {
+                  await uploadFile(_selectedImage!, _imageName!);
+               }
+          CollectionReference collRef;
+          if (receivedArgument == "flore") {
+            collRef = FirebaseFirestore.instance.collection('observationFlore');
+          } else if (receivedArgument == "faune") {
+            collRef = FirebaseFirestore.instance.collection('observationFaune');
+          } else {
+            collRef = FirebaseFirestore.instance.collection('observationInsectes');
+          }
 
-            
-      
-         },
-        //  onPressed: () async{
-        //           if (this._selectedImage != null && this._imageName != null) {
-        //            await uploadFile(this._selectedImage!, this._imageName!);
-        //         }
-        //      CollectionReference collRef;
-        //      if (receivedArgument=="flore")
-        //      {
-        //       collRef = FirebaseFirestore.instance.collection('observationFlore');}
-        //      else if(receivedArgument=="faune"){
-        //        collRef = FirebaseFirestore.instance.collection('observationFaune');
-        //       }
-        //      else{
-        //       collRef = FirebaseFirestore.instance.collection('observationInsectes');
-        //      }
-              
-        //       collRef.add({
-        //         'action': _actionController.text,
-        //         'date': _dateController.text,
-        //         'etat': _etatController.text,
-        //         'phase': _phaseController.text,
-        //         'nombre': _nbController.text,
-        //         'statut':additionalArgument,
-        //         'description': _descriptionController.text, // Add '.text' to get the text from the controller
-        //         'imageUrl': await DownloadUrl(_imageName!),
-        //             }).then((value) {
-        //                 showDialog(
-        //                   context: context,
-        //                   builder: (BuildContext context) {
-        //                     return AlertDialog(
-        //                       title: Text("Succès"),
-        //                       content: Text("Observation ajoutée avec succès"),
-        //                       actions: [
-        //                         ElevatedButton(
-        //                           onPressed: () {
-        //                             Navigator.of(context).pop(); // Close the dialog
-        //                           },
-        //                           child: Text("OK"),
-        //                         ),
-        //                       ],
-        //                     );
-        //                   },
-        //                 );
-        //               })
-        //             .catchError((error, stackTrace) {
-        //               Get.snackbar(
-        //                 "Error",
-        //                 "Failed to add observation", // Add a message to display in the snackbar
-        //                 snackPosition: SnackPosition.BOTTOM,
-        //                 backgroundColor: Colors.redAccent.withOpacity(0.1),
-        //                 colorText: Colors.red, // Fix the property name
-        //               );
-        //               print(error.toString());
-        //             });
-        //           },
-
+          collRef.add({
+            'action':actionValue,
+            'date': _dateController.text,
+            'etat': etatValue,
+            'phase': phaseValue,
+            'nombre': selectedNumber,
+            'statut': additionalArgument,
+            'latitude': point.latitude,
+            'longitude': point.longitude,
+            'description': _descriptionController.text,
+            'imageUrl': await DownloadUrl( _imageName!),
+          }).then((value) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Succès"),
+                  content: Text("Observation ajoutée avec succès"),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+          }).catchError((error, stackTrace) {
+            Get.snackbar(
+              "Error",
+              "Failed to add observation",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.redAccent.withOpacity(0.1),
+              colorText: Colors.red,
+            );
+            print(error.toString());
+          });
+        },
+        style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+          ),
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        elevation: 0.0,
+        primary: Color(0xff586CB2), // Remove the const keyword
+         ),
+        
+         
         child: const Text(
-        "Localiser",
+        "Enregistrer",
          style: TextStyle(
          color: Colors.white,
          fontSize: 13.0,
@@ -680,7 +757,7 @@ const SizedBox(height: 10),
   ),
 ),
 
-
+ const SizedBox(height: 20),
     ],
   ),
 ),
@@ -738,10 +815,16 @@ Future<void> _showDateTimePicker(BuildContext context) async {
   /////////////////////////////////////////////////////////////////////////
  Future _PickImageFromCamera() async{
     final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (returnedImage == null) return;
+     if (returnedImage != null) {
+
     setState(() {
       _selectedImage = File(returnedImage.path);
+      _imageName= File(returnedImage.name);
+      
     });
+   // return returnedImage.readAsBytes();
+    }
+    else return;
   }
 ////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -777,5 +860,19 @@ Future<String?> DownloadUrl(File fileName) async {
       print("Error fetching location details: $e");
     }
   }
+  ///////////////////////////////////////::
+   _fetchLocation() async {
+  try {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+      //print("***************the location: $position");
+    setState(() {
+      point = LatLng(position.latitude, position.longitude);
+      _fetchLocationDetails(); // Call the function to update location details
+    });
+  } catch (e) {
+    print("Error fetching location: $e");
+  }
+}
 
 }

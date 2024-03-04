@@ -18,7 +18,7 @@ class MapApp extends StatefulWidget {
   final String statut;
   final String description;
   final File imageUrl;
-  final String nombre;
+  final int nombre;
   final String especeType;
 
   const MapApp({
@@ -40,15 +40,15 @@ class MapApp extends StatefulWidget {
 }
 
 class _MapAppState extends State<MapApp> {
-  double long = 48.777083;
-  double lat = 2.375192;
-  LatLng point = LatLng(48.777083, 2.375192);
+  double long = 49.013735;
+  double lat = 2.569011;
+  LatLng point = LatLng(49.013735, 2.569011);
   List<Placemark> location = []; 
   bool manuallySetLocation = false;// Use List<Placemark> instead of var
   
   @override
   Widget build(BuildContext context) {
-     _fetchLocation();
+    // _fetchLocation();
     return Stack(
       children: [
         FlutterMap(
@@ -63,7 +63,7 @@ class _MapAppState extends State<MapApp> {
               });
             },
             center: point,
-            zoom: 5.0,
+            zoom: 15.0,
           ),
           children: [
             TileLayer(

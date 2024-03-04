@@ -69,7 +69,7 @@ class _historique2State extends State<historique2> {
               //print("Coordinates: ${p.latitude}, ${p.longitude}");
             },
             center: point,
-            zoom: 5.0,
+            zoom: 15.0,
           ),
           children: [
             TileLayer(

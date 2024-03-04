@@ -4,6 +4,7 @@ import 'package:test_app/Bibliotheque.dart';
 import 'package:test_app/Historique.dart';
 import 'package:test_app/ajouterEspece.dart';
 import 'package:test_app/bib_page1.dart';
+import 'package:test_app/logOut.dart';
 import 'package:test_app/main.dart';
 import 'package:test_app/mydrawer_header.dart';
 import 'package:test_app/NouvelleObservation.dart';
@@ -32,13 +33,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }else if (currentPage==DrawerSections.Accueil){
       container=AccueilPage();
     }else if (currentPage==DrawerSections.Deconnexion){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> HomePage() ));
+       container=logOut();
     }
     
     return Scaffold(
       appBar: AppBar(
     
-        backgroundColor: const Color.fromARGB(255, 17, 31, 157),
+        backgroundColor: const Color(0xff586CB2),
       ),
       body: container,
       drawer: Drawer(

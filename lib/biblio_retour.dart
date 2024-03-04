@@ -20,7 +20,7 @@ class _biblioRetourState extends State<biblioRetour> {
     return 
   Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+        backgroundColor: Color(0xff586CB2),
       ),
     body:
 Padding(
@@ -33,7 +33,7 @@ Padding(
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff121F98),
+            fillColor: const Color(0xff586CB2),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
@@ -61,7 +61,7 @@ Padding(
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff121F98),
+            fillColor: const Color(0xff586CB2),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
@@ -91,7 +91,7 @@ Padding(
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff121F98),
+            fillColor: const Color(0xff586CB2),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
@@ -118,7 +118,7 @@ Padding(
         child: SizedBox(
           width: 100, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff121F98),
+            fillColor: const Color(0xff586CB2),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             shape: RoundedRectangleBorder(

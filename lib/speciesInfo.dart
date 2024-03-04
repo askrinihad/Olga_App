@@ -14,7 +14,7 @@ class _speciesInfoState extends State<speciesInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+        backgroundColor: Color(0xff586CB2),
       ),
    body: Center(
         child: Padding(
@@ -33,7 +33,7 @@ class _speciesInfoState extends State<speciesInfo> {
                 ),
               ),
                 Text(
-                 widget.item["nom"],
+                 widget.item["Nom français"],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color.fromARGB(255, 63, 67, 96),

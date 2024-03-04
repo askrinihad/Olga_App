@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
         keyboardType: TextInputType.emailAddress,
         decoration: const InputDecoration(
           hintText: "Email",
-          prefixIcon: Icon(Icons.mail, color: Color(0xff121F98),)
+          prefixIcon: Icon(Icons.mail, color: Color(0xff586CB2),)
         ),
       ),
       SizedBox(
@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
         obscureText: true,
         decoration: const InputDecoration(
           hintText: "Mot de passe",
-          prefixIcon: Icon(Icons.lock, color: Color(0xff121F98),)
+          prefixIcon: Icon(Icons.lock, color: Color(0xff586CB2),)
         ),
       ),
        SizedBox(
@@ -145,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Container(
         width: double.infinity,
         child: RawMaterialButton(
-          fillColor: const  Color(0xff121F98),
+          fillColor: const  Color(0xff586CB2),
           elevation: 0.0,
           padding: const  EdgeInsets.symmetric(vertical: 20.0),
           shape: RoundedRectangleBorder(

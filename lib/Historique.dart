@@ -56,7 +56,7 @@ class _HistoriqueState extends State<Historique> {
               child: Text(
                 "Historique des observations",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 17, 31, 157),
+                  color: Color(0xff586CB2),
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Hind Siliguri',
@@ -93,7 +93,7 @@ class _HistoriqueState extends State<Historique> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xff121F98),
+                        primary: const Color(0xff586CB2),
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
@@ -117,7 +117,7 @@ class _HistoriqueState extends State<Historique> {
                     SizedBox(width: 40,),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xff121F98),
+                        primary: const Color(0xff586CB2),
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(

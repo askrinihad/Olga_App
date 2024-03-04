@@ -44,7 +44,7 @@ class _BibliothequeState extends State<Bibliotheque> {
     }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+        backgroundColor: Color(0xff586CB2),
       ),
     body:
     Column(
@@ -75,7 +75,7 @@ class _BibliothequeState extends State<Bibliotheque> {
                           ),
                           title: Row(
                             children: [
-                              Text(items[index]["nom"], style: TextStyle(
+                              Text(items[index]["Nom français"], style: TextStyle(
                                   color: Color.fromARGB(255, 25, 25, 28),
                                   fontSize: 13.0,
                                 ),),
@@ -104,7 +104,7 @@ class _BibliothequeState extends State<Bibliotheque> {
         child: SizedBox(
           width: 100, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff121F98),
+            fillColor: const Color(0xff586CB2),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             shape: RoundedRectangleBorder(

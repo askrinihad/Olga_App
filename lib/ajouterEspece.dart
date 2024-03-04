@@ -13,13 +13,18 @@ class _addSpeciesState extends State<addSpecies> {
   String nom="";
   String dropdownValue = list.first;
   TextEditingController _nameController = TextEditingController();
+  TextEditingController _nameVerController = TextEditingController();
+   TextEditingController _ordreController = TextEditingController();
+  TextEditingController _genreController = TextEditingController();
+  TextEditingController _familleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildName(){
    return TextFormField(
     controller: _nameController,
                keyboardType: TextInputType.text,
               decoration: InputDecoration(
-               hintText: 'Nom ...',
+               hintText: 'Nom latin...',
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
                 filled: true,
                 fillColor: Color(0xffF6F6F6),
@@ -33,6 +38,108 @@ class _addSpeciesState extends State<addSpecies> {
                ),
    );
   } 
+  ////////////////////////////////////////////:
+     Widget _buildOrdre(){
+   return TextFormField(
+    controller: _ordreController,
+               keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+               hintText: 'Ordre...',
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                filled: true,
+                fillColor: Color(0xffF6F6F6),
+                 border: OutlineInputBorder(
+                 borderRadius: BorderRadius.circular(8.0),
+                 // Set the corner radius
+                 borderSide: BorderSide.none, // Remove the border
+                 ), 
+                 
+                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
+               ),
+   );
+  } 
+  ////////////////////////////////////////////
+    Widget _buildNameVer(){
+   return TextFormField(
+    controller: _nameVerController,
+               keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+               hintText: 'Nom vernaculaire...',
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                filled: true,
+                fillColor: Color(0xffF6F6F6),
+                 border: OutlineInputBorder(
+                 borderRadius: BorderRadius.circular(8.0),
+                 // Set the corner radius
+                 borderSide: BorderSide.none, // Remove the border
+                 ), 
+                 
+                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
+               ),
+   );
+  } 
+  ////////////////////////////////////////////:
+    Widget _buildGenre(){
+   return TextFormField(
+    controller: _genreController ,
+               keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+               hintText: 'Genre ...',
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                filled: true,
+                fillColor: Color(0xffF6F6F6),
+                 border: OutlineInputBorder(
+                 borderRadius: BorderRadius.circular(8.0),
+                 // Set the corner radius
+                 borderSide: BorderSide.none, // Remove the border
+                 ), 
+                 
+                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
+               ),
+   );
+  } 
+  //////////////////////////////////////////
+    Widget _buildFamille(){
+   return TextFormField(
+    controller: _familleController,
+               keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+               hintText: 'Famille ...',
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                filled: true,
+                fillColor: Color(0xffF6F6F6),
+                 border: OutlineInputBorder(
+                 borderRadius: BorderRadius.circular(8.0),
+                 // Set the corner radius
+                 borderSide: BorderSide.none, // Remove the border
+                 ), 
+                 
+                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
+               ),
+   );
+  } 
+  ////////////////////////:
+    Widget _buildDescription(){
+   return TextFormField(
+    controller: _descriptionController,
+               keyboardType: TextInputType.multiline,
+               maxLines: null, 
+              decoration: InputDecoration(
+               hintText: 'Description ...',
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                filled: true,
+                fillColor: Color(0xffF6F6F6),
+                 border: OutlineInputBorder(
+                 borderRadius: BorderRadius.circular(8.0),
+                 // Set the corner radius
+                 borderSide: BorderSide.none, // Remove the border
+                 ), 
+                 
+                floatingLabelBehavior: FloatingLabelBehavior.auto,// Set the background color to grey
+               ),
+   );
+  } 
+  /////////////////////////////////////////////////
   Widget _buildType(){
      return DropdownButton<String>(
       value: dropdownValue,
@@ -65,8 +172,9 @@ class _addSpeciesState extends State<addSpecies> {
   } 
   @override
   Widget build(BuildContext context) {
-    return Container(
-       //margin: EdgeInsets.all(50.0),
+    return SingleChildScrollView(
+    child: Container(
+       margin: EdgeInsets.only(top:10.0),
      child: Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -74,7 +182,7 @@ class _addSpeciesState extends State<addSpecies> {
         child: Text(
           "Nouvelle espèce",
           style: TextStyle(
-            color: Color.fromARGB(255, 17, 31, 157),
+            color: Color(0xff586CB2),
             fontSize: 26,
             fontWeight: FontWeight.bold,
             fontFamily: 'Hind Siliguri',
@@ -88,24 +196,7 @@ class _addSpeciesState extends State<addSpecies> {
        Form(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children:<Widget>[
-        Container(
-          
-            width: 254.0,
-            height: 50,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
-            child: _buildName(),
-          ),
-        SizedBox(height: 10),
-         Container(
+           Container(
           width: 254.0,
           height: 50,
            decoration: BoxDecoration(
@@ -123,10 +214,118 @@ class _addSpeciesState extends State<addSpecies> {
           ),
             child: _buildType(),
           ),
-         SizedBox(height: 100),
+         SizedBox(height: 10),
+        Container(
+          
+            width: 254.0,
+            height: 50,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: _buildName(),
+          ),
+        SizedBox(height: 10),
+        Container(
+          
+            width: 254.0,
+            height: 50,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: _buildNameVer(),
+          ),
+        SizedBox(height: 10),
+         Container(
+          
+            width: 254.0,
+            height: 50,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: _buildOrdre(),
+          ),
+        SizedBox(height: 10),
+        Container(
+          
+            width: 254.0,
+            height: 50,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: _buildGenre(),
+          ),
+        SizedBox(height: 10),
+        Container(
+          
+            width: 254.0,
+            height: 50,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: _buildFamille(),
+          ),
+        SizedBox(height: 10),
+        Container(
+          
+            width: 254.0,
+            height: 200,
+           decoration: BoxDecoration(
+                  color: Color(0xffF6F6F6),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.black.withOpacity(0.1)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+            child: _buildDescription(),
+          ),
+        SizedBox(height: 100),
+        
+    
+        
          ElevatedButton(
            style: ElevatedButton.styleFrom(
-          primary: const Color(0xff121F98),
+          primary: const Color(0xff586CB2),
           elevation: 0.0,
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           shape: RoundedRectangleBorder(
@@ -147,6 +346,10 @@ class _addSpeciesState extends State<addSpecies> {
              }
              collRef.add({
               'nom':_nameController.text,
+               'ordre':_ordreController .text,
+                'genre':_genreController.text,
+                 'famille':_familleController.text,
+                  'description':_descriptionController.text,
              }).then((value) {
                       showDialog(
                         context: context,
@@ -179,9 +382,11 @@ class _addSpeciesState extends State<addSpecies> {
           },
           child: Text("Enregistrer", style: TextStyle(color: Colors.white, fontSize: 13),), // Placeholder text, replace it with your actual button text
         ),
+        SizedBox(height: 50),
         ],
         )),
     ],
+    ),
     ),
     );
   }
