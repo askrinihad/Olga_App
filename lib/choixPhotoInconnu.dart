@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:test_app/ObsForm.dart';
@@ -21,91 +21,51 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-const  List<String> phaseList = <String>['Germination', 'Developement', ' Pollination', 'Fructification'];
+const  List<String> phaseList = <String>['Germination', 'Développement', ' Pollinisation', 'Fructification'];
 const  List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const  List<String> etatList = <String>['In development', 'Etat 1', ' Etat 2'];
+const  List<String> etatList = <String>['En développement', 'Etat 1', ' Etat 2'];
 
-class ChoixPhoto extends StatefulWidget {
+class EspeceInconnu extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
   final String argumentReceived;
   final String email;
-  const ChoixPhoto({
-    required this.argumentReceived,
-    required this.email,
-     Key? key}) : super(key: key);
+  const EspeceInconnu({required this.email ,required this.argumentReceived, Key? key}) : super(key: key);
 
   @override
-  State<ChoixPhoto> createState() => _ChoixPhotoState();
+  State<EspeceInconnu> createState() => _EspeceInconnuState();
 }
 
-class _ChoixPhotoState extends State<ChoixPhoto> {
+class _EspeceInconnuState extends State<EspeceInconnu> {
   String etatValue = etatList.first;
   String actionValue = actionList.first;
   String phaseValue = phaseList.first;
   int selectedNumber=1;
-  
   String scientificName = "";
   double score=0;
+
   double long = 48.7882752;
   double lat = 2.4313856;
   LatLng point = LatLng(48.7882752, 2.4313856);
   List<Placemark> location = [];
   String selectedEspece="aucun";
-  String  selectedCode ="aucun";
-  String species="";
+   String  selectedCode ="aucun";
+  
   final FirebaseStorage _storage = FirebaseStorage.instance;
   //late GoogleMapController mapController;
   //final Set<Marker> _markers = {};
   TextEditingController _dateController = TextEditingController();
+  TextEditingController _especeController =TextEditingController();
   TextEditingController _phaseController = TextEditingController();
   TextEditingController _nbController = TextEditingController();
   TextEditingController _etatController = TextEditingController();
   TextEditingController _actionController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   File ? _selectedImage;
+  String message = '';
   File ? _imageName;
   String? _imageUrl;
-  String nomFrancais="";
-  
- 
   late Stream<QuerySnapshot> streamVar;
-  Stream<QuerySnapshot> CodeStream = FirebaseFirestore.instance
-  .collection("codes_inventaire")
-  .where("date_fin", isGreaterThan:  DateTime.now().toString())
-  .snapshots();
-  //////////////////////////////////////////////////////////////
-  /////////////////-----------------------widgets---------------------------------------
-    Widget myStreamBuilder() {
-      setState(() {
-        nomFrancais=AppLocalizations.of(context)!.choisirEspece;
-      });
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection("especes_flore_protege")
-          .where("Nom scientifique", isEqualTo: scientificName)
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text('Loading...');
-        }
- 
-     var nomFr = snapshot.data?.docs?.isNotEmpty == true
-    ? snapshot.data!.docs![0]["Nom français"]
-    : AppLocalizations.of(context)!.especeNonTrouve;
-      var fr = snapshot.data?.docs?.isNotEmpty == true
-    ? snapshot.data!.docs![0]["Nom français"]
-    : AppLocalizations.of(context)!.choisirEspece;
-      nomFrancais=fr;
-        return Center(
-          child: Text(AppLocalizations.of(context)!.nomVer+': $nomFr'),
-        );
-      },
-    );
-  }
+  Stream<QuerySnapshot> CodeStream= FirebaseFirestore.instance.collection("codes_inventaire").snapshots();
 
     Widget _buildEtat(){
      return DropdownButton<String>(
@@ -209,42 +169,16 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
 
   @override
   Widget build(BuildContext context) {
-    
-    
     _fetchLocation();
      List<String> arguments = widget.argumentReceived.split(' ');
      String receivedArgument = arguments[0];
      String additionalArgument = arguments[1];
-     if(additionalArgument=='protègé'){
-         setState(() {
-           species=AppLocalizations.of(context)!.protege;
-         });}
-      else if(additionalArgument=='indésirable')
-      {  setState(() {
-           species=AppLocalizations.of(context)!.invasive;
-         });}
-       else if(additionalArgument=='courante')
-      {  setState(() {
-           species=AppLocalizations.of(context)!.courante;
-         });} else{
-           setState(() {
-           species=AppLocalizations.of(context)!.inconnue;
-         });
-         }
-
-
-
      if (receivedArgument == 'flore') {
       if(additionalArgument=='protègé'){
-     
+       
         streamVar = FirebaseFirestore.instance.collection("especes_flore_protege").snapshots();
-      } else if(additionalArgument=='indésirable')
-      { 
-        streamVar = FirebaseFirestore.instance.collection("especes_flore_invasive").snapshots();}
-      else {
-
-        
-        streamVar = FirebaseFirestore.instance.collection("especes_flore").snapshots();}
+      }
+      else {streamVar = FirebaseFirestore.instance.collection("especes_flore").snapshots();}
     } else if (receivedArgument == 'faune') {
       streamVar = FirebaseFirestore.instance.collection("especes_faune").snapshots();
     } else {
@@ -264,11 +198,11 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
     children: [
        //const SizedBox(height: 30),
          Center(
-        child: Text( AppLocalizations.of(context)!.nouvelleObservation + " : " + species + " "+ AppLocalizations.of(context)!.espece,
-         
+        child: Text(
+          AppLocalizations.of(context)!.nouvelleObservation + " : " + AppLocalizations.of(context)!.inconnue +" "  + AppLocalizations.of(context)!.espece,
           style: TextStyle(
             color: Color(0xFF006766),
-            fontSize: 19,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             fontFamily: 'Hind Siliguri',
           ),
@@ -298,8 +232,8 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
               color: Colors.white,
             ),
             const SizedBox(width: 20),  // Add spacing between icon and text
-             Text(
-              AppLocalizations.of(context)!.connecterAppareil,
+           Text(
+               AppLocalizations.of(context)!.connecterAppareil,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 13.0,
@@ -335,7 +269,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
               color: Colors.white,
             ),
             const SizedBox(width: 20),  // Add spacing between icon and text
-            Text(
+          Text(
               AppLocalizations.of(context)!.prendrePhoto,
               style: TextStyle(
                 color: Colors.white,
@@ -362,7 +296,6 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
         ),
         onPressed: () {
           _PickImageFromGallery();
-          
         },
         child: Row(
           children: [
@@ -396,11 +329,11 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
           _selectedImage!,
           fit: BoxFit.cover, // You can adjust the BoxFit property as needed
         )
-      : Text(AppLocalizations.of(context)!.selectionnerImage + "..."),
+      : Text(AppLocalizations.of(context)!.selectionnerImage +"..."),
 ),
  const SizedBox(height: 10),
     Text(
-  AppLocalizations.of(context)!.latitude+ ' : ${this.point.latitude},'+  AppLocalizations.of(context)!.longitude +': ${this.point.longitude}',
+  AppLocalizations.of(context)!.latitude+ ': ${this.point.latitude},'+  AppLocalizations.of(context)!.longitude +': ${this.point.longitude}',
   style: TextStyle(
     fontSize: 13,
   ),
@@ -428,10 +361,9 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
       ),
     ),
 
-
    const SizedBox(height: 15),
          Container(
-  width: 260.0,
+  width: MediaQuery.of(context).size.width * 0.71,
   height: 50,
   decoration: BoxDecoration(
     color: Color(0xffF6F6F6),
@@ -456,86 +388,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
     ),
   ),
 ),
- const SizedBox(height: 10),
-  myStreamBuilder(),
-   const SizedBox(height: 10),
-          Container(
-           width: MediaQuery.of(context).size.width * 0.71,
-          height: 50,
-           decoration: BoxDecoration(
-            color: Color(0xffF6F6F6),
-            borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(color: Colors.black.withOpacity(0.1)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 5.0,
-                spreadRadius: 2.0,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: StreamBuilder<QuerySnapshot>(
-            stream: streamVar,
-            builder: (context, snapshot){
-              List<DropdownMenuItem> especeItems = [];
-              if(!snapshot.hasData){
-                
-                const CircularProgressIndicator();
-              }
-              else{
-                
-                final especes =  snapshot.data?.docs.reversed.toList();
-              
-               
-                especeItems.add(DropdownMenuItem(
-                  value:"aucun",
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 5.0),
-                      child: Text(
-                       nomFrancais,
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
-                      ),
-                    ),
-                                      ));
-
-                for (var espece in especes!){
-                  Map<String, dynamic> data = espece.data() as Map<String, dynamic>;
-
-                
-                  especeItems.add(DropdownMenuItem(
-                    value: data['CD_NOM'],
-                    child: Padding(
-                         padding: EdgeInsets.only(left: 5.0),
-                    child: Text(data['Nom français'],style: TextStyle(color: Colors.grey, fontSize: 12),),),
-                  ));
-                }
-              }
-             
-              return DropdownButton(
-                items: especeItems, 
-                onChanged:(especeValue){
-                  setState(() {
-                    selectedEspece = especeValue;
-                  });
-                  print(especeValue);
-              },
-                value: selectedEspece,
-                isExpanded: false,
-                underline: Container(
-                  height: 0, // Set the height to 0 to hide the underline
-                  color: Colors.transparent, // Set the underline color to transparent
-                ),
-                icon: Padding(
-               padding: EdgeInsets.only(right:10), // Adjust the right padding
-                child: Icon(Icons.arrow_drop_down),
-              ),
-          
-              );
-            }),
-          ),
- 
-  const SizedBox(height: 10), 
+ const SizedBox(height: 10), 
     Container(
            width: MediaQuery.of(context).size.width * 0.71,
           height: 50,
@@ -563,7 +416,6 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
               else{
                 
                 final codes =  snapshot.data?.docs.reversed.toList();
-                print(codes);
                
                 if (codes != null && codes.isNotEmpty) {
                     codeItems.add(DropdownMenuItem(
@@ -579,10 +431,8 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                   } else {
                     // Handle the case when codes is null or empty
                     codeItems.add(DropdownMenuItem(
-                      value: "aucun",
-                      child:Padding(
-                        padding: EdgeInsets.only(left: 5.0),
-                      child: Text(AppLocalizations.of(context)!.creerInventaire, style: const TextStyle(color:Color.fromARGB(255, 255, 0, 0), fontSize: 12, fontWeight: FontWeight.bold,)),)
+                      value: AppLocalizations.of(context)!.aucun,
+                      child: Text(AppLocalizations.of(context)!.creerInventaire),
                     ));
                   }
 
@@ -612,7 +462,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                   color: Colors.transparent, // Set the underline color to transparent
                 ),
                 icon: Padding(
-               padding: EdgeInsets.only(left:40), // Adjust the right padding
+               padding: EdgeInsets.only(left:180), // Adjust the right padding
                 child: Icon(Icons.arrow_drop_down),
               ),
           
@@ -625,16 +475,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
 
 
 
-
-
-
-
-
-
-
-
-
-
+ 
   const SizedBox(height: 10), 
   GestureDetector(
               onTap: () {
@@ -673,7 +514,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
             ),
             const SizedBox(height: 5),
              Container(
-         width: MediaQuery.of(context).size.width * 0.71,
+          width: MediaQuery.of(context).size.width * 0.71,
           height: 50,
           decoration: BoxDecoration(
             color: Color(0xffF6F6F6),
@@ -728,7 +569,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                             value: index + 1,
                             child: Padding(
                               padding: EdgeInsets.only(left: 5.0),
-                              child: Text(' ${index + 1} '+ AppLocalizations.of(context)!.individu  + ' (s)', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                              child: Text(' ${index + 1} indivudu (s)', style: TextStyle(color: Colors.grey, fontSize: 12)),
                             ),
                           );
                         }),
@@ -736,7 +577,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
 ),
         const SizedBox(height: 5),
               Container(
-         width: MediaQuery.of(context).size.width * 0.71,
+          width: MediaQuery.of(context).size.width * 0.71,
           height: 50,
             decoration: BoxDecoration(
                   color: Color(0xffF6F6F6),
@@ -796,7 +637,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
     keyboardType: TextInputType.multiline,
     maxLines: null, // Set maxLines to null for a multi-line TextField
     decoration: InputDecoration(
-      hintText: AppLocalizations.of(context)!.description + '...',
+      hintText:  AppLocalizations.of(context)!.description+'...',
       hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
       filled: true,
       fillColor: Color(0xffF6F6F6),
@@ -881,31 +722,32 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
            if (_selectedImage != null && _imageName != null) {
                   await uploadFile(_selectedImage!, _imageName!);
                }
-           
+               
                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MapApp(
-                      nomEspece: selectedEspece,
-                      email:widget.email,
-                      codeInventaire:selectedCode,
-                      predictedEspece: scientificName,
-                      score: score,
+                      email: widget.email,
                       especeType:receivedArgument,
+                      codeInventaire:selectedCode,
                       action: actionValue,
                       date: _dateController.text,
                       etat: etatValue,
+                      score: score,
+                      predictedEspece: scientificName,
                       phase: phaseValue,
                       nombre: selectedNumber,
+                      nomEspece: "none",
                       statut:additionalArgument,
                       description: _descriptionController.text, // Add '.text' to get the text from the controller
                       imageUrl: _imageName!,
+                      
                       // Pass more data as needed
                     ),
                   ),
 );       },
           child: Text(
-          AppLocalizations.of(context)!.localiser,
+            AppLocalizations.of(context)!.localiser,
             style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
@@ -931,28 +773,28 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
           }
 
           collRef.add({
-            'action':actionValue,
+            'predicted espece': scientificName,
             'email':widget.email,
+            'nom espece':"none",
+            'codeInventaire':selectedCode,
+            'action':actionValue,
             'date': _dateController.text,
             'etat': etatValue,
+            'score': score,
             'phase': phaseValue,
-            'codeInventaire':selectedCode,
             'nombre': selectedNumber,
             'statut': additionalArgument,
             'latitude': point.latitude,
             'longitude': point.longitude,
             'description': _descriptionController.text,
-            'nom espece':selectedEspece,
-            'predictedEspece': scientificName,
-            'score':score,
             'imageUrl': await DownloadUrl( _imageName!),
           }).then((value) {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text(AppLocalizations.of(context)!.succes),
-                  content: Text(AppLocalizations.of(context)!.observationAjoute),
+                  title: Text( AppLocalizations.of(context)!.succes),
+                  content: Text( AppLocalizations.of(context)!.observationAjoute),
                   actions: [
                     ElevatedButton(
                       onPressed: () {
@@ -985,7 +827,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
          ),
         
          
-        child:  Text(
+        child: Text(
         AppLocalizations.of(context)!.renregistrer,
          style: TextStyle(
          color: Colors.white,
@@ -1038,8 +880,7 @@ Future<void> _showDateTimePicker(BuildContext context) async {
 }
 
 
-
-////////////////////////////////////////////////////
+  ///////////////////////////////////////////
 
  Future _PickImageFromGallery() async{
     final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -1102,6 +943,7 @@ Future<String?> DownloadUrl(File fileName) async {
     } catch (e) {
       print("Error fetching location details: $e");
     }
+
   }
   ///////////////////////////////////////::
    _fetchLocation() async {
@@ -1117,7 +959,8 @@ Future<String?> DownloadUrl(File fileName) async {
     print("Error fetching location: $e");
   }
 }
-/////////////////////////////////////////////////////////////////:
+///////////////////////////////////////////////////////////////////:
+
 Future<void> uploadImage() async {
   final Uri uri = Uri.parse("http://192.168.137.126:5000/upload"); // Update with your server's URL
   final request = http.MultipartRequest("POST", uri);
@@ -1157,9 +1000,6 @@ Future<void> uploadImage() async {
             print("Image uploaded successfully");
             print("scientific name :$scientificName" );
             print("score : $score");
-            
-
-
           } else {
             print("Failed to parse scientific_name or score from response");
           }
@@ -1178,6 +1018,9 @@ Future<void> uploadImage() async {
     print("Error uploading image: $error");
   }
 }
+
+
+
 
 
 }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/Bibliotheque.dart';
-import 'package:test_app/Espece.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/profile_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class biblio1 extends StatefulWidget {
-  const biblio1({super.key});
+  final String email;
+  const biblio1({required this.email, super.key});
 
   @override
   State<biblio1> createState() => _biblio1State();
@@ -29,7 +30,7 @@ Padding(
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
@@ -39,11 +40,11 @@ Padding(
                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Bibliotheque(typeEspece: "faune"),
+                        builder: (context) => Bibliotheque(typeEspece: "faune",email:widget.email),
                       ),
                     );
             },
-            child: const Text("Faune", style: TextStyle(
+            child: Text(AppLocalizations.of(context)!.faune, style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),
@@ -57,8 +58,7 @@ Padding(
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2
-            ),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
@@ -67,12 +67,12 @@ Padding(
             onPressed: () {
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Bibliotheque(typeEspece: "flore"),
+                        builder: (context) => Bibliotheque(typeEspece: "flore",email:widget.email),
                       ),
                     );
             },
             child:  Text(
-              "Flore", 
+               AppLocalizations.of(context)!.flore,
               style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
@@ -88,7 +88,7 @@ Padding(
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
@@ -97,11 +97,11 @@ Padding(
             onPressed: () {
                Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Bibliotheque(typeEspece: "insectes"),
+                        builder: (context) => Bibliotheque(typeEspece: "insectes",email:widget.email),
                       ),
                     );
             },
-            child: const Text("Insectes", style: TextStyle(
+            child: Text(AppLocalizations.of(context)!.insectes, style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),
@@ -115,16 +115,16 @@ Padding(
         child: SizedBox(
           width: 100, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen()));
+               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen(email: widget.email,)));
             },
-            child: const Text("Retour", style: TextStyle(
+            child:Text(AppLocalizations.of(context)!.retour, style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),

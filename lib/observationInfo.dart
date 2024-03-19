@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class obsInfo extends StatefulWidget {
   final Map<String, dynamic> item;
   const obsInfo({required this.item, super.key});
@@ -14,7 +14,7 @@ class _obsInfoState extends State<obsInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 17, 31, 157),
+        backgroundColor: Color(0xFF006766),
       ),
      body: Center(
   child: Column(
@@ -33,7 +33,7 @@ class _obsInfoState extends State<obsInfo> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Observé le : ${widget.item["date"]}",
+               AppLocalizations.of(context)!.observeLe +" : ${widget.item["date"]}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
@@ -44,7 +44,7 @@ class _obsInfoState extends State<obsInfo> {
             ),
             SizedBox(height: 10),
             Text(
-              "Phase : ${widget.item["phase"]}",
+               AppLocalizations.of(context)!.phase +" : ${widget.item["phase"]}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
@@ -55,7 +55,7 @@ class _obsInfoState extends State<obsInfo> {
             ),
             SizedBox(height: 10),
             Text(
-              "Nombre: ${widget.item["nombre"]} individu (s)",
+              AppLocalizations.of(context)!.nombre + " : ${widget.item["nombre"]} individu (s)",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
@@ -66,7 +66,7 @@ class _obsInfoState extends State<obsInfo> {
             ),
             SizedBox(height: 10),
             Text(
-              "Etat : ${widget.item["etat"]}",
+             AppLocalizations.of(context)!.etat + " : ${widget.item["etat"]}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
@@ -77,7 +77,7 @@ class _obsInfoState extends State<obsInfo> {
             ),
             SizedBox(height: 10),
             Text(
-              "Action : ${widget.item["action"]}",
+             AppLocalizations.of(context)!.action +" : ${widget.item["action"]}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,

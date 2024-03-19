@@ -61,7 +61,7 @@ class _listeObsState extends State<listeObs> {
     
       return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff586CB2),
+        backgroundColor: Color(0xFF006766),
       ),
     body:
     Column(

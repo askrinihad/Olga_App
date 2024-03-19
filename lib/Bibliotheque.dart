@@ -5,10 +5,12 @@ import 'package:test_app/bib_page1.dart';
 import 'package:test_app/biblio_retour.dart';
 import 'package:test_app/profile_screen.dart';
 import 'package:test_app/speciesInfo.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Bibliotheque extends StatefulWidget {
   final String typeEspece;
-  const Bibliotheque({required this.typeEspece, super.key});
+  final String  email;
+  const Bibliotheque({required this.email, required this.typeEspece, super.key});
  
 
   @override
@@ -44,7 +46,7 @@ class _BibliothequeState extends State<Bibliotheque> {
     }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff586CB2),
+        backgroundColor: Color(0xFF006766),
       ),
     body:
     Column(
@@ -87,7 +89,7 @@ class _BibliothequeState extends State<Bibliotheque> {
                       );
                     },
                   )
-                : Text("Aucune espèce"),
+                : Text(AppLocalizations.of(context)!.aucunEspece),
           ),
         ),
       ),
@@ -104,16 +106,16 @@ class _BibliothequeState extends State<Bibliotheque> {
         child: SizedBox(
           width: 100, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> biblioRetour()));
+               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> biblioRetour(email:widget.email)));
             },
-            child: const Text("Retour", style: TextStyle(
+            child:  Text(AppLocalizations.of(context)!.retour, style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),

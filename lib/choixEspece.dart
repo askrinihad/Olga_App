@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/ChoixPhoto.dart';
 import 'package:test_app/NouvelleObservation.dart';
-import 'package:test_app/ObsType.dart';
-import 'package:test_app/Photo.dart';
+import 'package:test_app/choixPhotoInconnu.dart';
 import 'package:test_app/nouvelleObs_Retour.dart';
 import 'package:test_app/profile_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChoixEspece extends StatefulWidget {
   //const ChoixEspece({super.key}); modified
   final String argumentReceived;
+   final String email;
 
-  const ChoixEspece({required this.argumentReceived, super.key});
+  const ChoixEspece({
+       Key? key,
+    required this.argumentReceived,
+    required this.email,
+    
+    
+  }) : super(key: key);
 
   @override
   State<ChoixEspece> createState() => _ChoixEspeceState();
@@ -22,7 +29,7 @@ class _ChoixEspeceState extends State<ChoixEspece> {
     //print("Received Argument: ${widget.argumentReceived}");
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff586CB2),
+        backgroundColor: Color(0xFF006766),
       ),
     body: Padding(
   padding: EdgeInsets.only(top: 200.0), // Adjust top padding as needed
@@ -34,7 +41,7 @@ class _ChoixEspeceState extends State<ChoixEspece> {
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
@@ -42,14 +49,14 @@ class _ChoixEspeceState extends State<ChoixEspece> {
             ),
             onPressed: () {
                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo())); modified
-               String combinedArgument = "${widget.argumentReceived} protege";
+               String combinedArgument = "${widget.argumentReceived} protègé";
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument),
+                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument, email:widget.email),
                   ),
                 );
                           },
-            child: const Text("Espèce protègé", style: TextStyle(
+            child:  Text(AppLocalizations.of(context)!.especeProtge, style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),
@@ -63,21 +70,21 @@ class _ChoixEspeceState extends State<ChoixEspece> {
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-                String combinedArgument = "${widget.argumentReceived} indesirable";
+                String combinedArgument = "${widget.argumentReceived} indésirable";
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument),
+                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument, email:widget.email),
                   ),
                 );
             },
-            child: const Text("Espèce indésirable", style: TextStyle(
+            child:  Text(AppLocalizations.of(context)!.especeInvasive, style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),
@@ -91,7 +98,7 @@ class _ChoixEspeceState extends State<ChoixEspece> {
         child: SizedBox(
           width: 200, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             shape: RoundedRectangleBorder(
@@ -101,11 +108,11 @@ class _ChoixEspeceState extends State<ChoixEspece> {
               String combinedArgument = "${widget.argumentReceived} courante";
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument),
+                    builder: (context) => ChoixPhoto(argumentReceived: combinedArgument, email:widget.email),
                   ),
                 );
             },
-            child: const Text("Espèce courante", style: TextStyle(
+            child:Text(AppLocalizations.of(context)!.especeCourante, style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),
@@ -113,23 +120,58 @@ class _ChoixEspeceState extends State<ChoixEspece> {
         ),
       ),
     ),
+     Container(
+      margin: EdgeInsets.only(top: 10.0),
+      child: Center(
+        child: SizedBox(
+          width: 200, // Set width as needed
+          child: RawMaterialButton(
+            fillColor: const Color(0xFF006766),
+            elevation: 0.0,
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            onPressed: () {
+              String combinedArgument = "${widget.argumentReceived} inconnue";
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => EspeceInconnu(argumentReceived: combinedArgument, email: widget.email,),
+                  ),
+                );
+            },
+            child:  Text(AppLocalizations.of(context)!.especeInconnue, style: TextStyle(
+              color: Colors.white,
+              fontSize: 13.0,
+            )),
+          ),
+        ),
+      ),
+    ),
+
+
+
+
+
+
+
     Container(
       margin: EdgeInsets.only(top: 100.0, right: 150.0),
       child: Center(
         child: SizedBox(
           width: 100, // Set width as needed
           child: RawMaterialButton(
-            fillColor: const Color(0xff586CB2),
+            fillColor: const Color(0xFF006766),
             elevation: 0.0,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> NouvelleObservation2() ));
+             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> NouvelleObservation2(email:widget.email) ));
              
             },
-            child: const Text("Retour", style: TextStyle(
+            child:  Text(AppLocalizations.of(context)!.retour, style: TextStyle(
               color: Colors.white,
               fontSize: 13.0,
             )),

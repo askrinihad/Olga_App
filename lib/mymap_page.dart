@@ -8,22 +8,30 @@ import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:geocoding/geocoding.dart'; // Import the geocoding package
+import 'package:geocoding/geocoding.dart'; 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';// Import the geocoding package
 
 class MapApp extends StatefulWidget {
   final String action;
+  final String codeInventaire;
   final String date;
   final String etat;
   final String phase;
   final String statut;
+  final String nomEspece;
+  final String predictedEspece;
   final String description;
   final File imageUrl;
   final int nombre;
   final String especeType;
+  final double score;
+  final String email;
 
   const MapApp({
     Key? key,
     required this.action,
+    required this.codeInventaire,
+    required this.email,
     required this.especeType,
     required this.statut,
     required this.date,
@@ -32,6 +40,10 @@ class MapApp extends StatefulWidget {
     required this.description,
     required this.imageUrl,
     required this.nombre,
+    required this.nomEspece,
+    required this.predictedEspece,
+    required this.score,
+    
   }) : super(key: key);
   //const MapApp({Key? key}) : super(key: key);
 
@@ -55,7 +67,6 @@ class _MapAppState extends State<MapApp> {
           options: MapOptions(
             onTap: (TapPosition position, LatLng p) {
               setState(() {
-                print("coooooooooordinatessss ");
                 print(p.latitude);
                 point = p;
                 manuallySetLocation = true;
@@ -120,7 +131,7 @@ class _MapAppState extends State<MapApp> {
           });
           _fetchLocation();
         },
-        child: Text("Localiser"),
+        child: Text(AppLocalizations.of(context)!.localiser),
       ),
       ElevatedButton(
         onPressed: () async {
@@ -136,21 +147,26 @@ class _MapAppState extends State<MapApp> {
           collRef.add({
             'action': widget.action,
             'date': widget.date,
+            'codeInventaire':widget.codeInventaire,
             'etat': widget.etat,
+            'email':widget.email,
             'phase': widget.phase,
             'nombre': widget.nombre,
             'statut': widget.statut,
             'latitude': point.latitude,
             'longitude': point.longitude,
             'description': widget.description,
+            'nom espece': widget.nomEspece,
+            'predicted espece': widget.predictedEspece,
+            'score':widget.score,
             'imageUrl': await DownloadUrl(widget.imageUrl),
           }).then((value) {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text("Succès"),
-                  content: Text("Observation ajoutée avec succès"),
+                  title: Text(AppLocalizations.of(context)!.succes),
+                  content: Text(AppLocalizations.of(context)!.observationAjoute),
                   actions: [
                     ElevatedButton(
                       onPressed: () {
@@ -173,7 +189,7 @@ class _MapAppState extends State<MapApp> {
             print(error.toString());
           });
         },
-        child: Text("Enregistrer"),
+        child: Text(AppLocalizations.of(context)!.renregistrer),
       ),
     ],
   ),
@@ -201,7 +217,6 @@ class _MapAppState extends State<MapApp> {
   try {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-      print("***************the location: $position");
     setState(() {
       point = LatLng(position.latitude, position.longitude);
       _fetchLocationDetails(); // Call the function to update location details

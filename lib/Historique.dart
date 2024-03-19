@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app/historique2.dart';
 import 'package:test_app/listObs.dart';
-const  List<String> list = <String>['Tout','Flore', 'Faune', 'Insectes'];
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+const  List<String> list = <String>['All','Plant life', 'Wildlife', 'Insects'];
 class Historique extends StatefulWidget {
   const Historique({super.key});
 
@@ -54,9 +55,9 @@ class _HistoriqueState extends State<Historique> {
        const SizedBox(height: 30),
         Center(
               child: Text(
-                "Historique des observations",
+                 AppLocalizations.of(context)!.historique,
                 style: TextStyle(
-                  color: Color(0xff586CB2),
+                  color: Color(0xFF006766),
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Hind Siliguri',
@@ -93,7 +94,7 @@ class _HistoriqueState extends State<Historique> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xff586CB2),
+                        primary: const Color(0xFF006766),
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
@@ -110,14 +111,14 @@ class _HistoriqueState extends State<Historique> {
                         );
                       },
                       child: Text(
-                        " Localiser ",
+                       AppLocalizations.of(context)!.localiser,
                         style: TextStyle(color: Colors.white, fontSize: 13),
                       ),
                     ),
                     SizedBox(width: 40,),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xff586CB2),
+                        primary: const Color(0xFF006766),
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
@@ -134,7 +135,7 @@ class _HistoriqueState extends State<Historique> {
                         );
                       },
                       child: Text(
-                        " Afficher  ",
+                        AppLocalizations.of(context)!.afficher,
                         style: TextStyle(color: Colors.white, fontSize: 13),
                       ),
                     ),

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-const  List<String> list = <String>['Flore', 'Faune', 'Insectes'];
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+const  List<String> list = <String>['Plant life', 'Wildlife', 'Insects'];
+
 class addSpecies extends StatefulWidget {
   const addSpecies({super.key});
 
@@ -24,7 +26,7 @@ class _addSpeciesState extends State<addSpecies> {
     controller: _nameController,
                keyboardType: TextInputType.text,
               decoration: InputDecoration(
-               hintText: 'Nom latin...',
+               hintText: AppLocalizations.of(context)!.nomLatin,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
                 filled: true,
                 fillColor: Color(0xffF6F6F6),
@@ -64,7 +66,7 @@ class _addSpeciesState extends State<addSpecies> {
     controller: _nameVerController,
                keyboardType: TextInputType.text,
               decoration: InputDecoration(
-               hintText: 'Nom vernaculaire...',
+               hintText: AppLocalizations.of(context)!.nomVer,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
                 filled: true,
                 fillColor: Color(0xffF6F6F6),
@@ -84,7 +86,7 @@ class _addSpeciesState extends State<addSpecies> {
     controller: _genreController ,
                keyboardType: TextInputType.text,
               decoration: InputDecoration(
-               hintText: 'Genre ...',
+               hintText: AppLocalizations.of(context)!.genre,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
                 filled: true,
                 fillColor: Color(0xffF6F6F6),
@@ -104,7 +106,7 @@ class _addSpeciesState extends State<addSpecies> {
     controller: _familleController,
                keyboardType: TextInputType.text,
               decoration: InputDecoration(
-               hintText: 'Famille ...',
+               hintText: AppLocalizations.of(context)!.famille,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
                 filled: true,
                 fillColor: Color(0xffF6F6F6),
@@ -172,6 +174,7 @@ class _addSpeciesState extends State<addSpecies> {
   } 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
     return SingleChildScrollView(
     child: Container(
        margin: EdgeInsets.only(top:10.0),
@@ -180,9 +183,9 @@ class _addSpeciesState extends State<addSpecies> {
     children: [
       Center(
         child: Text(
-          "Nouvelle espèce",
+          appLocalizations.nouvelleEspece,
           style: TextStyle(
-            color: Color(0xff586CB2),
+            color: Color(0xFF006766),
             fontSize: 26,
             fontWeight: FontWeight.bold,
             fontFamily: 'Hind Siliguri',
@@ -325,7 +328,7 @@ class _addSpeciesState extends State<addSpecies> {
         
          ElevatedButton(
            style: ElevatedButton.styleFrom(
-          primary: const Color(0xff586CB2),
+          primary: const Color(0xFF006766),
           elevation: 0.0,
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           shape: RoundedRectangleBorder(
@@ -335,10 +338,10 @@ class _addSpeciesState extends State<addSpecies> {
         ),
           onPressed: () {
            CollectionReference collRef;
-             if ( dropdownValue=="Flore")
+             if ( dropdownValue=="Plant life")
               {
               collRef = FirebaseFirestore.instance.collection('especes_flore');}
-             else if( dropdownValue=="Faune"){
+             else if( dropdownValue=="Wildlife"){
                collRef = FirebaseFirestore.instance.collection('especes_faune');
               }
             else{
@@ -355,8 +358,8 @@ class _addSpeciesState extends State<addSpecies> {
                         context: context,
                        builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Succès"),
-                           content: Text("Espèce ajoutée avec succès"),
+                            title: Text(appLocalizations.succes),
+                           content: Text(appLocalizations.especeAjoute),
                             actions: [
                                 ElevatedButton(
                                    onPressed: () {
@@ -380,7 +383,7 @@ class _addSpeciesState extends State<addSpecies> {
                      print(error.toString());
                   });
           },
-          child: Text("Enregistrer", style: TextStyle(color: Colors.white, fontSize: 13),), // Placeholder text, replace it with your actual button text
+          child: Text(AppLocalizations.of(context)!.renregistrer, style: TextStyle(color: Colors.white, fontSize: 13),), // Placeholder text, replace it with your actual button text
         ),
         SizedBox(height: 50),
         ],

@@ -24,7 +24,7 @@ class _MyheaderDrawerState extends State<MyheaderDrawer> {
             width: 242.0,
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              image: DecorationImage(image: AssetImage('assets/adp_logo.png'),)
+              image: DecorationImage(image: AssetImage('assets/olga.jpg',),)
             ),
           )
         ],

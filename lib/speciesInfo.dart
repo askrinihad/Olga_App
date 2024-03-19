@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class speciesInfo extends StatefulWidget {
     final Map<String, dynamic> item;
@@ -14,7 +15,7 @@ class _speciesInfoState extends State<speciesInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff586CB2),
+        backgroundColor: Color(0xFF006766),
       ),
    body: Center(
         child: Padding(
@@ -23,7 +24,7 @@ class _speciesInfoState extends State<speciesInfo> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Nom de l'espèce:",
+                 AppLocalizations.of(context)!.nomeEspece +" :",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -45,7 +46,7 @@ class _speciesInfoState extends State<speciesInfo> {
              
               SizedBox(height: 10),
               Text(
-                "Genre :",
+                 AppLocalizations.of(context)!.genre +" :",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -67,7 +68,7 @@ class _speciesInfoState extends State<speciesInfo> {
               ),
             SizedBox(height: 10),
                  Text(
-                "Famille : ",
+                 AppLocalizations.of(context)!.famille +" : ",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -88,7 +89,7 @@ class _speciesInfoState extends State<speciesInfo> {
               ),
                SizedBox(height: 10),
                Text(
-                "Description de : ${widget.item["nom"]}",
+                AppLocalizations.of(context)!.description +" "+  AppLocalizations.of(context)!.de + " : ${widget.item["nom"]}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
