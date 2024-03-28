@@ -75,6 +75,8 @@
      "action2":"Ation 2",
      "action3":"Action 3",
      "etat1":"State 1",
-     "etat2":"State 2"
+     "etat2":"State 2",
+     "bird_recognition":"Bird Recognition",
+     "selectionnerCode":"Select an inventory code"
 
 }

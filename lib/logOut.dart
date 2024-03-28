@@ -5,7 +5,8 @@ import 'package:test_app/profile_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class logOut extends StatefulWidget {
   final String email;
-  const logOut({required this.email, super.key});
+  final String aeroport;
+  const logOut({required this.email, required this.aeroport, super.key});
 
   @override
   State<logOut> createState() => _logOutState();
@@ -34,7 +35,7 @@ class _logOutState extends State<logOut> {
               fixedSize: Size(150, 50),
             ),
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen(email: widget.email) ));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen(email: widget.email, aeroport:widget.aeroport) ));
             },
             child: Text(AppLocalizations.of(context)!.non, style: TextStyle(color: Colors.white, fontSize: 13)),
           ),

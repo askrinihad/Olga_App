@@ -3,6 +3,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:enableOnBackInvokedCallback="true"
         android:label="BiodivObserver"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">

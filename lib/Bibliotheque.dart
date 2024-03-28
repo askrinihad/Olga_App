@@ -10,7 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Bibliotheque extends StatefulWidget {
   final String typeEspece;
   final String  email;
-  const Bibliotheque({required this.email, required this.typeEspece, super.key});
+  final String  aeroport;
+  const Bibliotheque({required this.email, required this.aeroport, required this.typeEspece, super.key});
  
 
   @override
@@ -45,9 +46,15 @@ class _BibliothequeState extends State<Bibliotheque> {
       collection = FirebaseFirestore.instance.collection("espece_insectes");
     }
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF006766),
-      ),
+        appBar: AppBar(
+  backgroundColor: Color(0xFF006766),
+  leading: IconButton(
+    icon: Icon(Icons.arrow_back),
+    onPressed: () {
+       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> biblioRetour(email:widget.email, aeroport: widget.aeroport)));
+    },
+  ),
+),
     body:
     Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -99,30 +106,7 @@ class _BibliothequeState extends State<Bibliotheque> {
         child: Icon(Icons.add),
       ),
     
-      SizedBox(height: 100,),
-         Container(
-      margin: EdgeInsets.only(top: 100.0, right: 160.0),
-      child: Center(
-        child: SizedBox(
-          width: 100, // Set width as needed
-          child: RawMaterialButton(
-            fillColor: const Color(0xFF006766),
-            elevation: 0.0,
-            padding: const EdgeInsets.symmetric(vertical: 15.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            onPressed: () {
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> biblioRetour(email:widget.email)));
-            },
-            child:  Text(AppLocalizations.of(context)!.retour, style: TextStyle(
-              color: Colors.white,
-              fontSize: 13.0,
-            )),
-          ),
-        ),
-      ),
-    ),
+
     SizedBox(height: 30 ,),
     ],
   ),);

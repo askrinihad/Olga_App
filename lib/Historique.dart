@@ -5,7 +5,8 @@ import 'package:test_app/listObs.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 const  List<String> list = <String>['All','Plant life', 'Wildlife', 'Insects'];
 class Historique extends StatefulWidget {
-  const Historique({super.key});
+  final String aeroport;
+  const Historique({required this.aeroport, super.key});
 
   @override
   State<Historique> createState() => _HistoriqueState();
@@ -28,7 +29,7 @@ class _HistoriqueState extends State<Historique> {
       elevation: 16,
       style: const TextStyle(color:Colors.grey),
       onChanged: (String? value) {
-        // This is called when the user selects an item.
+
         setState(() {
           dropdownValue = value!;
         });
@@ -106,7 +107,7 @@ class _HistoriqueState extends State<Historique> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => historique2(typeObs: dropdownValue),
+                            builder: (context) => historique2(typeObs: dropdownValue, aeroport: widget.aeroport),
                           ),
                         );
                       },
@@ -130,7 +131,7 @@ class _HistoriqueState extends State<Historique> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => listeObs(typeObs: dropdownValue),
+                            builder: (context) => listeObs(typeObs: dropdownValue,aeroport:widget.aeroport),
                           ),
                         );
                       },

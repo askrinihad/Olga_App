@@ -26,9 +26,11 @@ class MapApp extends StatefulWidget {
   final String especeType;
   final double score;
   final String email;
+  final String aeroport;
 
   const MapApp({
     Key? key,
+    required this.aeroport,
     required this.action,
     required this.codeInventaire,
     required this.email,
@@ -137,11 +139,44 @@ class _MapAppState extends State<MapApp> {
         onPressed: () async {
           CollectionReference collRef;
           if (widget.especeType == "flore") {
-            collRef = FirebaseFirestore.instance.collection('observationFlore');
+             if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFlore_CDG');
+
+              } else if (widget.aeroport=="Zagreb Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFlore_zagreb');
+
+              } else  if (widget.aeroport=="Milan Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFlore_milan');
+
+              } else{
+              collRef = FirebaseFirestore.instance.collection('observationFlore_cluj');
+              }
           } else if (widget.especeType == "faune") {
-            collRef = FirebaseFirestore.instance.collection('observationFaune');
+               if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFaune_CDG');
+
+              } else if (widget.aeroport=="Zagreb Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFaune_zagreb');
+
+              } else  if (widget.aeroport=="Milan Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFaune_milan');
+
+              } else{
+              collRef = FirebaseFirestore.instance.collection('observationFaune_cluj');
+              }
           } else {
-            collRef = FirebaseFirestore.instance.collection('observationInsectes');
+             if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationInsectes_CDG');
+
+              } else if (widget.aeroport=="Zagreb Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationInsectes_zagreb');
+
+              } else  if (widget.aeroport=="Milan Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationInsectes_milan');
+
+              } else{
+              collRef = FirebaseFirestore.instance.collection('observationInsectes_cluj');
+              }
           }
 
           collRef.add({

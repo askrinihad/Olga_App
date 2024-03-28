@@ -7,8 +7,9 @@ import 'package:latlong2/latlong.dart';
 
 class historique2 extends StatefulWidget {
   final String typeObs;
+  final String aeroport;
   
-  const historique2({required this.typeObs, super.key});
+  const historique2({required this.typeObs, required this.aeroport, super.key});
   
 
   @override
@@ -16,13 +17,97 @@ class historique2 extends StatefulWidget {
 }
 
 class _historique2State extends State<historique2> {
-  LatLng point = LatLng(48.777083, 2.375192);
+  LatLng pointCenter = LatLng(48.777083, 2.375192);
   late List<Map<String,dynamic>> listObs=[];
   bool isLoaded =false;
   late CollectionReference<Map<String, dynamic>> collection;
   late CollectionReference<Map<String, dynamic>> collection2;
   late CollectionReference<Map<String, dynamic>> collection3;
   _incrementCounter() async{
+     if (widget.typeObs == "Plant life") {
+        if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                collection= FirebaseFirestore.instance.collection('observationFlore_CDG');
+                print("cdg observation");
+
+              } else if (widget.aeroport=="Zagreb Airport"){
+                collection = FirebaseFirestore.instance.collection('observationFlore_zagreb');
+
+              } else  if (widget.aeroport=="Milan Airport"){
+                collection = FirebaseFirestore.instance.collection('observationFlore_milan');
+
+              } else{
+              collection = FirebaseFirestore.instance.collection('observationFlore_cluj');
+              }
+                  } else if (widget.typeObs  == "Wildlife") {
+                if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                collection = FirebaseFirestore.instance.collection('observationFaune_CDG');
+
+              } else if (widget.aeroport=="Zagreb Airport"){
+                collection = FirebaseFirestore.instance.collection('observationFaune_zagreb');
+
+              } else  if (widget.aeroport=="Milan Airport"){
+                collection = FirebaseFirestore.instance.collection('observationFaune_milan');
+
+              } else{
+              collection = FirebaseFirestore.instance.collection('observationFaune_cluj');
+              }
+                  } else if (widget.typeObs == "Insects"){
+
+                 if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                collection = FirebaseFirestore.instance.collection('observationInsectes_CDG');
+
+              } else if (widget.aeroport=="Zagreb Airport"){
+                collection = FirebaseFirestore.instance.collection('observationInsectes_zagreb');
+
+              } else  if (widget.aeroport=="Milan Airport"){
+                collection = FirebaseFirestore.instance.collection('observationInsectes_milan');
+
+              } else{
+              collection = FirebaseFirestore.instance.collection('observationInsectes_cluj');
+              }
+
+                  } else{
+                     setState(() {
+                       isLoaded=true;
+                     });
+                    
+                          if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                            collection= FirebaseFirestore.instance.collection('observationFlore_CDG');
+
+                          } else if (widget.aeroport=="Zagreb Airport"){
+                            collection = FirebaseFirestore.instance.collection('observationFlore_zagreb');
+
+                          } else  if (widget.aeroport=="Milan Airport"){
+                            collection = FirebaseFirestore.instance.collection('observationFlore_milan');
+
+                          } else{
+                          collection = FirebaseFirestore.instance.collection('observationFlore_cluj');
+                          }
+                      if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                        collection2 = FirebaseFirestore.instance.collection('observationFaune_CDG');
+
+                      } else if (widget.aeroport=="Zagreb Airport"){
+                        collection2 = FirebaseFirestore.instance.collection('observationFaune_zagreb');
+
+                      } else  if (widget.aeroport=="Milan Airport"){
+                        collection2 = FirebaseFirestore.instance.collection('observationFaune_milan');
+
+                      } else{
+                      collection2 = FirebaseFirestore.instance.collection('observationFaune_cluj');
+                      }
+                 if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                collection3 = FirebaseFirestore.instance.collection('observationInsectes_CDG');
+
+              } else if (widget.aeroport=="Zagreb Airport"){
+                collection3 = FirebaseFirestore.instance.collection('observationInsectes_zagreb');
+
+              } else  if (widget.aeroport=="Milan Airport"){
+                collection3 = FirebaseFirestore.instance.collection('observationInsectes_milan');
+
+              } else{
+              collection3 = FirebaseFirestore.instance.collection('observationInsectes_cluj');
+              }
+                  }
     List<Map<String,dynamic>> templist=[];
     var data= await collection.get();
     data.docs.forEach((element) {
@@ -38,30 +123,20 @@ class _historique2State extends State<historique2> {
       templist.add(element.data());
     });
     }
-    //print(templist);
+   
     setState(() {
       listObs=templist;
     });
+   print("listObs************************************** $listObs");
   }
   @override
+   void initState() {
+    super.initState();
+    _fetchLocation();
+    _incrementCounter();
+  }
   Widget build(BuildContext context) {
-    if (widget.typeObs == "Flore") {
-                    collection = FirebaseFirestore.instance.collection('observationFlore');
-                  } else if (widget.typeObs  == "Faune") {
-                    collection = FirebaseFirestore.instance.collection('observationFaune');
-                  } else if (widget.typeObs == "Insectes"){
-                    collection = FirebaseFirestore.instance.collection('observationInsectes');
-                  } else{
-                     setState(() {
-                       isLoaded=true;
-                     });
-                    
-                     collection = FirebaseFirestore.instance.collection('observationFlore');
-                     collection2 = FirebaseFirestore.instance.collection('observationFaune');
-                     collection3 = FirebaseFirestore.instance.collection('observationInsectes');
-                  }
-                  _incrementCounter();
-   _fetchLocation();
+
     return Stack(
       children: [
         FlutterMap(
@@ -69,8 +144,8 @@ class _historique2State extends State<historique2> {
            onTap: (TapPosition position, LatLng p) {
               //print("Coordinates: ${p.latitude}, ${p.longitude}");
             },
-            center: point,
-            zoom: 15.0,
+            center: pointCenter,
+            zoom: 16.0,
           ),
           children: [
             TileLayer(
@@ -104,7 +179,7 @@ class _historique2State extends State<historique2> {
         desiredAccuracy: LocationAccuracy.high);
      // print("***************the location: $position");
     setState(() {
-      point = LatLng(position.latitude, position.longitude);
+      pointCenter = LatLng(position.latitude, position.longitude);
     });
   } catch (e) {
     print("Error fetching location: $e");

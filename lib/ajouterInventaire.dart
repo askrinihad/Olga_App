@@ -8,7 +8,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ajouterInventaire extends StatefulWidget {
   final String email;
-  const ajouterInventaire({required this.email, super.key});
+  final String aeroport;
+  const ajouterInventaire({required this.email,required this.aeroport, super.key});
 
   @override
   State<ajouterInventaire> createState() => _ajouterInventaireState();
@@ -50,6 +51,19 @@ class _ajouterInventaireState extends State<ajouterInventaire> {
   @override
   
   Widget build(BuildContext context) {
+    CollectionReference collRef;
+    if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+      collRef = FirebaseFirestore.instance.collection('codes_inventaire_CDG');
+
+    } else if (widget.aeroport=="Zagreb Airport"){
+      collRef = FirebaseFirestore.instance.collection('codes_inventaire_zagreb');
+
+    } else  if (widget.aeroport=="Milan Airport"){
+      collRef = FirebaseFirestore.instance.collection('codes_inventaire_milan');
+
+    } else{
+     collRef = FirebaseFirestore.instance.collection('codes_inventaire_cluj');
+    }
      return SingleChildScrollView(
     child: Container(
        margin: EdgeInsets.only(top:10.0),
@@ -302,7 +316,7 @@ class _ajouterInventaireState extends State<ajouterInventaire> {
         ),
           onPressed: () {
             
-           CollectionReference collRef = FirebaseFirestore.instance.collection('codes_inventaire');
+           
              
              collRef.add({
               'code':_codeController.text,

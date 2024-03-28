@@ -23,13 +23,14 @@ import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 const  List<String> phaseList = <String>['Germination', 'Développement', ' Pollinisation', 'Fructification'];
 const  List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const  List<String> etatList = <String>['En développement', 'Etat 1', ' Etat 2'];
+const  List<String> etatList = <String>['En développement', 'State 1', ' State 2'];
 
 class EspeceInconnu extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
   final String argumentReceived;
   final String email;
-  const EspeceInconnu({required this.email ,required this.argumentReceived, Key? key}) : super(key: key);
+  final String aeroport;
+  const EspeceInconnu({required this.email ,required this.aeroport,required this.argumentReceived, Key? key}) : super(key: key);
 
   @override
   State<EspeceInconnu> createState() => _EspeceInconnuState();
@@ -63,9 +64,11 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
   File ? _selectedImage;
   String message = '';
   File ? _imageName;
+  String savedCode="";
+  String savedEspece="";
   String? _imageUrl;
   late Stream<QuerySnapshot> streamVar;
-  Stream<QuerySnapshot> CodeStream= FirebaseFirestore.instance.collection("codes_inventaire").snapshots();
+  late  Stream<QuerySnapshot> CodeStream;
 
     Widget _buildEtat(){
      return DropdownButton<String>(
@@ -169,6 +172,19 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+      CodeStream = FirebaseFirestore.instance.collection('codes_inventaire_CDG').snapshots();
+
+    } else if (widget.aeroport=="Zagreb Airport"){
+     CodeStream = FirebaseFirestore.instance.collection('codes_inventaire_zagreb').snapshots();
+
+    } else  if (widget.aeroport=="Milan Airport"){
+      CodeStream = FirebaseFirestore.instance.collection('codes_inventaire_milan').snapshots();
+
+    } else{
+    CodeStream = FirebaseFirestore.instance.collection('codes_inventaire_cluj').snapshots();
+    }
     _fetchLocation();
      List<String> arguments = widget.argumentReceived.split(' ');
      String receivedArgument = arguments[0];
@@ -188,9 +204,15 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
     // print("Received Argument 1111: $receivedArgument");
      //print("Additional Argument 22222: $additionalArgument");
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF006766),
-      ),
+         appBar: AppBar(
+  backgroundColor: Color(0xFF006766),
+  leading: IconButton(
+    icon: Icon(Icons.arrow_back),
+    onPressed: () {
+       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ChoixEspece(argumentReceived: receivedArgument,email: widget.email, aeroport: widget.aeroport,)));
+    },
+  ),
+),
     body:SingleChildScrollView(
     child: Padding(
   padding: EdgeInsets.only(top: 50.0), // Adjust top padding as needed
@@ -462,7 +484,7 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
                   color: Colors.transparent, // Set the underline color to transparent
                 ),
                 icon: Padding(
-               padding: EdgeInsets.only(left:180), // Adjust the right padding
+               padding: EdgeInsets.only(left:40), // Adjust the right padding
                 child: Icon(Icons.arrow_drop_down),
               ),
           
@@ -686,29 +708,7 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
   child: Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Container(
-        width: 30,
-        
-        child: RawMaterialButton(
-          fillColor: const Color(0xFF006766),
-          elevation: 0.0,
-          padding: const EdgeInsets.symmetric(vertical: 15.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ChoixEspece(argumentReceived: receivedArgument,email: widget.email,)));
-          },
-          child: const Text(
-            "<",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 10.0,
-            ),
-          ),
-        ),
-      ),
-     SizedBox(width: MediaQuery.of(context).size.width * 8  / 100), 
+     
      Container(
         width: 100,
         child: RawMaterialButton(
@@ -722,14 +722,15 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
            if (_selectedImage != null && _imageName != null) {
                   await uploadFile(_selectedImage!, _imageName!);
                }
-               
+                await searchInventoryCodeById(selectedCode);
                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MapApp(
+                      aeroport: widget.aeroport,
                       email: widget.email,
                       especeType:receivedArgument,
-                      codeInventaire:selectedCode,
+                      codeInventaire:savedCode,
                       action: actionValue,
                       date: _dateController.text,
                       etat: etatValue,
@@ -765,13 +766,24 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
                }
           CollectionReference collRef;
           if (receivedArgument == "flore") {
-            collRef = FirebaseFirestore.instance.collection('observationFlore');
+              if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFlore_CDG');
+
+              } else if (widget.aeroport=="Zagreb Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFlore_zagreb');
+
+              } else  if (widget.aeroport=="Milan Airport"){
+                collRef = FirebaseFirestore.instance.collection('observationFlore_milan');
+
+              } else{
+              collRef = FirebaseFirestore.instance.collection('observationFlore_cluj');
+              }
           } else if (receivedArgument == "faune") {
             collRef = FirebaseFirestore.instance.collection('observationFaune');
           } else {
             collRef = FirebaseFirestore.instance.collection('observationInsectes');
           }
-
+await searchInventoryCodeById(selectedCode);
           collRef.add({
             'predicted espece': scientificName,
             'email':widget.email,
@@ -962,7 +974,7 @@ Future<String?> DownloadUrl(File fileName) async {
 ///////////////////////////////////////////////////////////////////:
 
 Future<void> uploadImage() async {
-  final Uri uri = Uri.parse("http://192.168.137.126:5000/upload"); // Update with your server's URL
+  final Uri uri = Uri.parse("http://192.168.137.126:4000/upload"); // Update with your server's URL
   final request = http.MultipartRequest("POST", uri);
   final headers = {"Content-type": "multipart/form-data"};
 
@@ -1019,6 +1031,22 @@ Future<void> uploadImage() async {
   }
 }
 
+////////////////////////////////////////////////////
+Future<void> searchInventoryCodeById(String id) async {
+  await for (QuerySnapshot snapshot in CodeStream) {
+    for (DocumentSnapshot doc in snapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      
+      if (doc.id == id) {
+        setState(() {
+          savedCode = data['code'];
+        }); 
+        return; // Exit the function once the French name is found
+      }
+    }
+  }
+}
+////////////////////////////////////////////////////
 
 
 

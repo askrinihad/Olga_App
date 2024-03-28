@@ -6,6 +6,7 @@ import 'package:test_app/Historique.dart';
 import 'package:test_app/ajouterEspece.dart';
 import 'package:test_app/ajouterInventaire.dart';
 import 'package:test_app/bib_page1.dart';
+import 'package:test_app/bird_recognitione.dart';
 import 'package:test_app/logOut.dart';
 import 'package:test_app/main.dart';
 import 'package:test_app/mydrawer_header.dart';
@@ -16,7 +17,8 @@ import 'package:test_app/settings.dart';
 
 class ProfileScreen extends StatefulWidget {
    final String email;
-  const ProfileScreen({required this.email, super.key});
+   final String aeroport;
+  const ProfileScreen({required this.email,required this.aeroport, super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -28,17 +30,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     var container;
     if(currentPage==DrawerSections.NouvelleObservation){
-      container=NouvelleObservation(email:widget.email);
+      container=NouvelleObservation(email:widget.email,aeroport:widget.aeroport);
     } else if (currentPage==DrawerSections.NouvelleEspece){
       container=addSpecies();
     }
     else if (currentPage==DrawerSections.NouveauInventaire){
-      container=ajouterInventaire(email:widget.email);
+      container=ajouterInventaire(email:widget.email,aeroport:widget.aeroport);
     }
     else if (currentPage==DrawerSections.Bibliotheque){
-      container=biblio1(email:widget.email);
+      container=biblio1(email:widget.email,aeroport:widget.aeroport);
     }else if (currentPage==DrawerSections.Historique){
-      container=Historique();
+      container=Historique(aeroport:widget.aeroport);
     }else if (currentPage==DrawerSections.Accueil){
       container=AccueilPage();
       
@@ -46,7 +48,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       container=SettingsPage();
     }
     else if (currentPage==DrawerSections.Deconnexion){
-       container=logOut(email:widget.email);
+       container=logOut(email:widget.email,aeroport:widget.aeroport);
+    }
+       else if (currentPage==DrawerSections.bird_recognition){
+       container=bird_recognition();
     }
     
     
@@ -83,7 +88,8 @@ Widget MyDrawerList(){
         menuItem(5, AppLocalizations.of(context)!.historique, Icons.history, currentPage == DrawerSections.Historique ? true: false),
         menuItem(6, AppLocalizations.of(context)!.bibliotheque, Icons.list, currentPage == DrawerSections.Bibliotheque ? true: false),
         menuItem(7, AppLocalizations.of(context)!.parametre, Icons.settings, currentPage == DrawerSections.parametre? true: false),
-        menuItem(8, AppLocalizations.of(context)!.deconnexion, Icons.logout, currentPage == DrawerSections.Deconnexion ? true: false),
+        menuItem(8, AppLocalizations.of(context)!.bird_recognition, Icons.explore , currentPage == DrawerSections.bird_recognition? true: false),
+        menuItem(9, AppLocalizations.of(context)!.deconnexion, Icons.logout, currentPage == DrawerSections.Deconnexion ? true: false),
       ],
     ),
   );
@@ -112,6 +118,9 @@ Widget menuItem(int id, String title, IconData icon, bool selected){
           currentPage=DrawerSections.parametre;
         }
         else if(id==8){
+          currentPage=DrawerSections.bird_recognition;
+        }
+          else if(id==9){
           currentPage=DrawerSections.Deconnexion;
         }
       });
@@ -144,5 +153,6 @@ enum DrawerSections{
   Historique ,
   Bibliotheque,
   parametre,
+  bird_recognition,
   Deconnexion,
 }
