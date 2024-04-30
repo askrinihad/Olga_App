@@ -1,9 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app/historique2.dart';
 import 'package:test_app/listObs.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-const  List<String> list = <String>['All','Plant life', 'Wildlife', 'Insects'];
+
+const List<String> list = <String>['All', 'Plant life', 'Wildlife', 'Insects'];
+
 class Historique extends StatefulWidget {
   final String aeroport;
   const Historique({required this.aeroport, super.key});
@@ -14,22 +15,21 @@ class Historique extends StatefulWidget {
 
 class _HistoriqueState extends State<Historique> {
   String dropdownValue = list.first;
-  Widget _buildType(){
-     return  DropdownButton<String>(
+  Widget _buildType() {
+    return DropdownButton<String>(
       value: dropdownValue,
       isExpanded: false,
-                underline: Container(
-                  height: 0, // Set the height to 0 to hide the underline
-                  color: Colors.transparent, // Set the underline color to transparent
-                ),
+      underline: Container(
+        height: 0, // Set the height to 0 to hide the underline
+        color: Colors.transparent, // Set the underline color to transparent
+      ),
       icon: Padding(
-                padding: EdgeInsets.only(left: 150.0), // Adjust the right padding
-                child: Icon(Icons.arrow_drop_down),
-              ),
+        padding: EdgeInsets.only(left: 150.0), // Adjust the right padding
+        child: Icon(Icons.arrow_drop_down),
+      ),
       elevation: 16,
-      style: const TextStyle(color:Colors.grey),
+      style: const TextStyle(color: Colors.grey),
       onChanged: (String? value) {
-
         setState(() {
           dropdownValue = value!;
         });
@@ -38,36 +38,39 @@ class _HistoriqueState extends State<Historique> {
         return DropdownMenuItem<String>(
           value: value,
           child: Padding(
-                         padding: EdgeInsets.only(left: 5.0),
-               child: Text(value),),
+            padding: EdgeInsets.only(left: 5.0),
+            child: Text(value),
+          ),
         );
       }).toList(),
     );
-  } 
+  }
+
   /////////////////////////////////////
-  late List<Map<String,dynamic>> listObs=[];
+  late List<Map<String, dynamic>> listObs = [];
 
   @override
   Widget build(BuildContext context) {
-  return Padding(
-  padding: EdgeInsets.only(top: 50.0), // Adjust top padding as needed
-  child: Column(
-    children: [
-       const SizedBox(height: 30),
-        Center(
-              child: Text(
-                 AppLocalizations.of(context)!.historique,
-                style: TextStyle(
-                  color: Color(0xFF006766),
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+    return Padding(
+      padding: EdgeInsets.only(top: 50.0), // Adjust top padding as needed
+      child: Column(
+        children: [
+          const SizedBox(height: 30),
+          Center(
+            child: Text(
+              AppLocalizations.of(context)!.historique,
+              style: TextStyle(
+                color: Color(0xFF006766),
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Hind Siliguri',
               ),
             ),
-        
-          SizedBox(height: 100,),
-        Form(
+          ),
+          SizedBox(
+            height: 100,
+          ),
+          Form(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -95,7 +98,7 @@ class _HistoriqueState extends State<Historique> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFF006766),
+                        backgroundColor: const Color(0xFF006766),
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
@@ -107,19 +110,23 @@ class _HistoriqueState extends State<Historique> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => historique2(typeObs: dropdownValue, aeroport: widget.aeroport),
+                            builder: (context) => historique2(
+                                typeObs: dropdownValue,
+                                aeroport: widget.aeroport),
                           ),
                         );
                       },
                       child: Text(
-                       AppLocalizations.of(context)!.localiser,
+                        AppLocalizations.of(context)!.localiser,
                         style: TextStyle(color: Colors.white, fontSize: 13),
                       ),
                     ),
-                    SizedBox(width: 40,),
+                    SizedBox(
+                      width: 40,
+                    ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFF006766),
+                        backgroundColor: const Color(0xFF006766),
                         elevation: 0.0,
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         shape: RoundedRectangleBorder(
@@ -131,7 +138,9 @@ class _HistoriqueState extends State<Historique> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => listeObs(typeObs: dropdownValue,aeroport:widget.aeroport),
+                            builder: (context) => listeObs(
+                                typeObs: dropdownValue,
+                                aeroport: widget.aeroport),
                           ),
                         );
                       },
@@ -145,12 +154,8 @@ class _HistoriqueState extends State<Historique> {
               ],
             ),
           ),
-         
         ],
       ),
     );
-
-
-    
   }
 }

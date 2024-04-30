@@ -4,12 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:geocoding/geocoding.dart'; 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';// Import the geocoding package
+import 'package:geocoding/geocoding.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import the geocoding package
 
 class MapApp extends StatefulWidget {
   final String action;
@@ -45,7 +44,6 @@ class MapApp extends StatefulWidget {
     required this.nomEspece,
     required this.predictedEspece,
     required this.score,
-    
   }) : super(key: key);
   //const MapApp({Key? key}) : super(key: key);
 
@@ -57,9 +55,9 @@ class _MapAppState extends State<MapApp> {
   double long = 49.013735;
   double lat = 2.569011;
   LatLng point = LatLng(49.013735, 2.569011);
-  List<Placemark> location = []; 
-  bool manuallySetLocation = false;// Use List<Placemark> instead of var
-  
+  List<Placemark> location = [];
+  bool manuallySetLocation = false; // Use List<Placemark> instead of var
+
   @override
   Widget build(BuildContext context) {
     // _fetchLocation();
@@ -85,16 +83,16 @@ class _MapAppState extends State<MapApp> {
             MarkerLayer(
               markers: [
                 Marker(
-                    point: point,
-                    child: Container(
-                      width: 80.0,
-                      height: 80.0,
-                      child: Icon(
-                        Icons.location_on,
-                        color: Colors.red,
-                      ),
+                  point: point,
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    child: Icon(
+                      Icons.location_on,
+                      color: Colors.red,
                     ),
                   ),
+                ),
               ],
             ),
           ],
@@ -109,9 +107,7 @@ class _MapAppState extends State<MapApp> {
                   padding: const EdgeInsets.all(30.0),
                   child: Column(
                     children: [
-                      Text(
-                        " $point"
-                      ),
+                      Text(" $point"),
                     ],
                   ),
                 ),
@@ -119,126 +115,130 @@ class _MapAppState extends State<MapApp> {
             ],
           ),
         ),
-      Positioned(
-  bottom: 10.0,
-  left: 16.0,
-  right: 16.0,
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      ElevatedButton(
-        onPressed: () {
-          setState(() {
-            manuallySetLocation=false;
-          });
-          _fetchLocation();
-        },
-        child: Text(AppLocalizations.of(context)!.localiser),
-      ),
-      ElevatedButton(
-        onPressed: () async {
-          CollectionReference collRef;
-          if (widget.especeType == "flore") {
-             if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationFlore_CDG');
+        Positioned(
+          bottom: 10.0,
+          left: 16.0,
+          right: 16.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    manuallySetLocation = false;
+                  });
+                  _fetchLocation();
+                },
+                child: Text(AppLocalizations.of(context)!.localiser),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  CollectionReference collRef;
+                  if (widget.especeType == "flore") {
+                    if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationFlore_CDG');
+                    } else if (widget.aeroport == "Zagreb Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationFlore_zagreb');
+                    } else if (widget.aeroport == "Milan Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationFlore_milan');
+                    } else {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationFlore_cluj');
+                    }
+                  } else if (widget.especeType == "faune") {
+                    if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationFaune_CDG');
+                    } else if (widget.aeroport == "Zagreb Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationFaune_zagreb');
+                    } else if (widget.aeroport == "Milan Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationFaune_milan');
+                    } else {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationFaune_cluj');
+                    }
+                  } else {
+                    if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationInsectes_CDG');
+                    } else if (widget.aeroport == "Zagreb Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationInsectes_zagreb');
+                    } else if (widget.aeroport == "Milan Airport") {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationInsectes_milan');
+                    } else {
+                      collRef = FirebaseFirestore.instance
+                          .collection('observationInsectes_cluj');
+                    }
+                  }
 
-              } else if (widget.aeroport=="Zagreb Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationFlore_zagreb');
-
-              } else  if (widget.aeroport=="Milan Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationFlore_milan');
-
-              } else{
-              collRef = FirebaseFirestore.instance.collection('observationFlore_cluj');
-              }
-          } else if (widget.especeType == "faune") {
-               if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationFaune_CDG');
-
-              } else if (widget.aeroport=="Zagreb Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationFaune_zagreb');
-
-              } else  if (widget.aeroport=="Milan Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationFaune_milan');
-
-              } else{
-              collRef = FirebaseFirestore.instance.collection('observationFaune_cluj');
-              }
-          } else {
-             if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationInsectes_CDG');
-
-              } else if (widget.aeroport=="Zagreb Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationInsectes_zagreb');
-
-              } else  if (widget.aeroport=="Milan Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationInsectes_milan');
-
-              } else{
-              collRef = FirebaseFirestore.instance.collection('observationInsectes_cluj');
-              }
-          }
-
-          collRef.add({
-            'action': widget.action,
-            'date': widget.date,
-            'codeInventaire':widget.codeInventaire,
-            'etat': widget.etat,
-            'email':widget.email,
-            'phase': widget.phase,
-            'nombre': widget.nombre,
-            'statut': widget.statut,
-            'latitude': point.latitude,
-            'longitude': point.longitude,
-            'description': widget.description,
-            'nom espece': widget.nomEspece,
-            'predicted espece': widget.predictedEspece,
-            'score':widget.score,
-            'imageUrl': await DownloadUrl(widget.imageUrl),
-          }).then((value) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(AppLocalizations.of(context)!.succes),
-                  content: Text(AppLocalizations.of(context)!.observationAjoute),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
+                  collRef.add({
+                    'action': widget.action,
+                    'date': widget.date,
+                    'codeInventaire': widget.codeInventaire,
+                    'etat': widget.etat,
+                    'email': widget.email,
+                    'phase': widget.phase,
+                    'nombre': widget.nombre,
+                    'statut': widget.statut,
+                    'latitude': point.latitude,
+                    'longitude': point.longitude,
+                    'description': widget.description,
+                    'nom espece': widget.nomEspece,
+                    'predicted espece': widget.predictedEspece,
+                    'score': widget.score,
+                    'imageUrl': await DownloadUrl(widget.imageUrl),
+                  }).then((value) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(AppLocalizations.of(context)!.succes),
+                          content: Text(
+                              AppLocalizations.of(context)!.observationAjoute),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"),
+                            ),
+                          ],
+                        );
                       },
-                      child: Text("OK"),
-                    ),
-                  ],
-                );
-              },
-            );
-          }).catchError((error, stackTrace) {
-            Get.snackbar(
-              "Error",
-              "Failed to add observation",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.redAccent.withOpacity(0.1),
-              colorText: Colors.red,
-            );
-            print(error.toString());
-          });
-        },
-        child: Text(AppLocalizations.of(context)!.renregistrer),
-      ),
-    ],
-  ),
-),
-
+                    );
+                  }).catchError((error, stackTrace) {
+                    Get.snackbar(
+                      "Error",
+                      "Failed to add observation",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: Colors.redAccent.withOpacity(0.1),
+                      colorText: Colors.red,
+                    );
+                    print(error.toString());
+                  });
+                },
+                child: Text(AppLocalizations.of(context)!.renregistrer),
+              ),
+            ],
+          ),
+        ),
       ],
-      
     );
   }
+
 ////////////////////////////////////////////
-///-----------------functions--------------------------
+  ///-----------------functions--------------------------
   _fetchLocationDetails() async {
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(point.latitude, point.longitude);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(point.latitude, point.longitude);
 
       setState(() {
         location = placemarks;
@@ -247,29 +247,33 @@ class _MapAppState extends State<MapApp> {
       print("Error fetching location details: $e");
     }
   }
+
   ////////////////////////////////////////:
- _fetchLocation() async {
-  try {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      point = LatLng(position.latitude, position.longitude);
-      _fetchLocationDetails(); // Call the function to update location details
-    });
-  } catch (e) {
-    print("Error fetching location: $e");
+  _fetchLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      setState(() {
+        point = LatLng(position.latitude, position.longitude);
+        _fetchLocationDetails(); // Call the function to update location details
+      });
+    } catch (e) {
+      print("Error fetching location: $e");
+    }
   }
-}
+
   ////////////////////////////////::
-Future<String?> DownloadUrl(File fileName) async {
-  try {
-    String downloadURL = await FirebaseStorage.instance.ref('observationImage/$fileName').getDownloadURL();
-    print("Image URL: $downloadURL");
-    return downloadURL;
-  } on FirebaseException catch (e) {
-    print(e);
-    return null;
+  Future<String?> DownloadUrl(File fileName) async {
+    try {
+      String downloadURL = await FirebaseStorage.instance
+          .ref('observationImage/$fileName')
+          .getDownloadURL();
+      print("Image URL: $downloadURL");
+      return downloadURL;
+    } on FirebaseException catch (e) {
+      print(e);
+      return null;
+    }
   }
-}
 /////////////////
 }

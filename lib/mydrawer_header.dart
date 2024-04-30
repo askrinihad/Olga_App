@@ -23,13 +23,15 @@ class _MyheaderDrawerState extends State<MyheaderDrawer> {
             height: 150.0,
             width: 242.0,
             decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: DecorationImage(image: AssetImage('assets/olga.jpg',),)
-            ),
+                shape: BoxShape.rectangle,
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/olga.jpg',
+                  ),
+                )),
           )
         ],
       ),
-
     );
   }
 }

@@ -34,7 +34,8 @@ class MyDrawer extends StatelessWidget {
   Widget MyDrawerList() {
     return Column(
       children: [
-        menuItem(1, "Accueil", Icons.home, currentPage == DrawerSections.Accueil),
+        menuItem(
+            1, "Accueil", Icons.home, currentPage == DrawerSections.Accueil),
         menuItem(
           2,
           "Nouvelle observation",
@@ -47,8 +48,10 @@ class MyDrawer extends StatelessWidget {
           Icons.history,
           currentPage == DrawerSections.Historique,
         ),
-        menuItem(4, "Bibliothèque", Icons.list, currentPage == DrawerSections.Bibliotheque),
-        menuItem(5, "Déconnexion", Icons.logout, currentPage == DrawerSections.Deconnexion),
+        menuItem(4, "Bibliothèque", Icons.list,
+            currentPage == DrawerSections.Bibliotheque),
+        menuItem(5, "Déconnexion", Icons.logout,
+            currentPage == DrawerSections.Deconnexion),
       ],
     );
   }
