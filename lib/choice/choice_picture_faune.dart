@@ -1195,7 +1195,7 @@ class _ChoixPhoto_fauneState extends State<ChoixPhoto_faune> {
 /////////////////////////////////////////////////////////////////:
   Future<void> uploadImage() async {
     final Uri uri = Uri.parse(
-        "http://192.168.137.126:4000/upload"); // Update with your server's URL
+        "http://olga1.mercier.pro:9999/upload"); // Update with your server's URL
     final request = http.MultipartRequest("POST", uri);
     final headers = {"Content-type": "multipart/form-data"};
 
@@ -1258,7 +1258,7 @@ class _ChoixPhoto_fauneState extends State<ChoixPhoto_faune> {
 //////////////////////////////////////////////
   Future<void> uploadBird() async {
     final Uri uri = Uri.parse(
-        "http://192.168.137.126:4000//bird_recognition"); // Update with your server's URL
+        "http://olga1.mercier.pro:9999/bird_recognition"); // Update with your server's URL
     final request = http.MultipartRequest("POST", uri);
     final headers = {"Content-type": "multipart/form-data"};
 
