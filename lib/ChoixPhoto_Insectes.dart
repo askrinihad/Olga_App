@@ -467,7 +467,7 @@ class _ChoixPhoto_insectesState extends State<ChoixPhoto_insectes> {
                                 if (espece.id == especeValue) {
                                  
                                   setState(() {
-                                    savedEspece = data['Nom français'];
+                                    savedEspece = data['Nom scientifique'];
                                     
                                   });
                                    print("in on change: $savedEspece");

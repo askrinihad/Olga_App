@@ -524,7 +524,7 @@ Container(
                                 if (espece.id == especeValue) {
                                  
                                   setState(() {
-                                    savedEspece = data['Nom français'];
+                                    savedEspece = data['Nom scientifique'];
                                     
                                   });
                                    print("in on change: $savedEspece");
@@ -577,7 +577,7 @@ Container(
               else{
                 
                 codes =  snapshot.data?.docs.reversed.toList();
-                print(codes);
+                
                
                 if (codes != null && codes?.isNotEmpty == true)  {
                     codeItems.add(DropdownMenuItem(
@@ -939,7 +939,7 @@ Container(
                   await uploadFile(_selectedImage!, _imageName!);
                }
           CollectionReference collRef;
-        if (receivedArgument == "faune") {
+       
              if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
                 collRef = FirebaseFirestore.instance.collection('observationFaune_CDG');
 
@@ -953,25 +953,13 @@ Container(
               collRef = FirebaseFirestore.instance.collection('observationFaune_cluj');
               }
 
-          } else {
-               if(widget.aeroport=="Paris-Charles de Gaulle Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationInsectes_CDG');
-
-              } else if (widget.aeroport=="Zagreb Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationInsectes_zagreb');
-
-              } else  if (widget.aeroport=="Milan Airport"){
-                collRef = FirebaseFirestore.instance.collection('observationInsectes_milan');
-
-              } else{
-              collRef = FirebaseFirestore.instance.collection('observationInsectes_cluj');
-              }
-          }
+        
             if(selectedEspece=="aucun"){
                  setState(() {
                    savedEspece=scientificName;
                  });
                }
+               print(savedEspece);
           collRef.add({
             'action':actionValue,
             'email':widget.email,

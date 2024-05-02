@@ -105,12 +105,31 @@ class _ChoixEspeceState extends State<ChoixEspece> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-                String combinedArgument = "${widget.argumentReceived} indésirable";
+          
+                 if(widget.argumentReceived=='flore'){
+               //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo())); modified
+               String combinedArgument = "${widget.argumentReceived} indésirable";
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => ChoixPhoto(argumentReceived: combinedArgument, email:widget.email, aeroport: widget.aeroport),
                   ),
                 );
+                } else if(widget.argumentReceived=='insectes'){
+                   String combinedArgument = "${widget.argumentReceived} indésirable";
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => ChoixPhoto_insectes(argumentReceived: combinedArgument, email:widget.email, aeroport: widget.aeroport),
+                  ),
+                );
+                }
+                else {
+                  String combinedArgument = "${widget.argumentReceived} indésirable";
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => ChoixPhoto_faune(argumentReceived: combinedArgument, email:widget.email, aeroport: widget.aeroport),
+                  ),
+                );
+                }
             },
             child:  Text(AppLocalizations.of(context)!.especeInvasive, style: TextStyle(
               color: Colors.white,
@@ -133,12 +152,37 @@ class _ChoixEspeceState extends State<ChoixEspece> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () {
-              String combinedArgument = "${widget.argumentReceived} courante";
+          
+
+   
+
+                   if(widget.argumentReceived=='flore'){
+               //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo())); modified
+               String combinedArgument = "${widget.argumentReceived} courante";
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => ChoixPhoto(argumentReceived: combinedArgument, email:widget.email, aeroport: widget.aeroport),
                   ),
                 );
+                } else if(widget.argumentReceived=='insectes'){
+                   String combinedArgument = "${widget.argumentReceived} courante";
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => ChoixPhoto_insectes(argumentReceived: combinedArgument, email:widget.email, aeroport: widget.aeroport),
+                  ),
+                );
+                }
+                else {
+                  String combinedArgument = "${widget.argumentReceived} courante";
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => ChoixPhoto_faune(argumentReceived: combinedArgument, email:widget.email, aeroport: widget.aeroport),
+                  ),
+                );
+                }
+
+
+
             },
             child:Text(AppLocalizations.of(context)!.especeCourante, style: TextStyle(
               color: Colors.white,
