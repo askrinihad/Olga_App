@@ -10,7 +10,8 @@ class AccueilPage extends StatefulWidget {
 class _AccueilPageState extends State<AccueilPage> {
   @override
   Widget build(BuildContext context) { 
-    return 
+    return
+    // Container contenant l'affiche de la page d'accueil
     Container(
       child: Center(child:  Text("BioDivObserver", style: TextStyle(color: Color(0xFF006766), 
       fontSize:35, 

@@ -411,6 +411,8 @@ class _ChoixPhoto_fauneState extends State<ChoixPhoto_faune> {
                   fontSize: 13,
                 ),
               ),
+
+              // Bouton "Reconnaissance Automatique"
               const SizedBox(height: 10),
               Container(
                 margin: EdgeInsets.only(top: 10.0),
