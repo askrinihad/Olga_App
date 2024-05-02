@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:test_app/choixEspece.dart';
+import 'package:test_app/choice/choice_specie.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,12 +23,12 @@ const List<String> phaseList = <String>[
 const List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
 const List<String> etatList = <String>['In development', 'State 1', ' State 2'];
 
-class ChoixPhoto extends StatefulWidget {
+class ChoixPhoto_insectes extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
   final String argumentReceived;
   final String email;
   final String aeroport;
-  const ChoixPhoto(
+  const ChoixPhoto_insectes(
       {required this.argumentReceived,
       required this.email,
       required this.aeroport,
@@ -36,30 +36,29 @@ class ChoixPhoto extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ChoixPhoto> createState() => _ChoixPhotoState();
+  State<ChoixPhoto_insectes> createState() => _ChoixPhoto_insectesState();
 }
 
-class _ChoixPhotoState extends State<ChoixPhoto> {
+class _ChoixPhoto_insectesState extends State<ChoixPhoto_insectes> {
   String etatValue = etatList.first;
   String actionValue = actionList.first;
   String phaseValue = phaseList.first;
   int selectedNumber = 1;
 
   String scientificName = "";
-  var Especes;
+  String savedEspece = "";
+  String savedCode = "";
   double score = 0;
   double long = 48.7882752;
   double lat = 2.4313856;
   LatLng point = LatLng(48.7882752, 2.4313856);
   List<Placemark> location = [];
   String selectedEspece = "aucun";
-  String savedEspece = "";
-  String savedCode = "";
   String selectedCode = "aucun";
+  List<DocumentSnapshot>? especes;
+  List<DocumentSnapshot>? codes;
   String species = "";
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  List<DocumentSnapshot>? especes;
-  List<DocumentSnapshot>? codes; // Define especes at the class level
   //late GoogleMapController mapController;
   //final Set<Marker> _markers = {};
   TextEditingController _dateController = TextEditingController();
@@ -76,97 +75,6 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
   late Stream<QuerySnapshot> streamVar;
   late Stream<QuerySnapshot> CodeStream;
   //////////////////////////////////////////////////////////////
-  /////////////////-----------------------widgets---------------------------------------
-  Widget myStreamBuilder() {
-    setState(() {
-      nomFrancais = AppLocalizations.of(context)!.choisirEspece;
-    });
-    List<String> arguments = widget.argumentReceived.split(' ');
-    String receivedArgument = arguments[0];
-    String additionalArgument = arguments[1];
-    if (additionalArgument == 'protègé') {
-      return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("especes_flore_protege")
-            .where("Nom scientifique", isEqualTo: scientificName)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text('Loading...');
-          }
-
-          var nomFr = snapshot.data?.docs?.isNotEmpty == true
-              ? snapshot.data!.docs![0]["Nom français"]
-              : AppLocalizations.of(context)!.especeNonTrouve;
-          var fr = snapshot.data?.docs?.isNotEmpty == true
-              ? snapshot.data!.docs![0]["Nom français"]
-              : AppLocalizations.of(context)!.choisirEspece;
-          nomFrancais = fr;
-          return Center(
-            child: Text(AppLocalizations.of(context)!.nomVer + ': $nomFr'),
-          );
-        },
-      );
-    } else if (additionalArgument == 'indésirable') {
-      return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("especes_flore_invasive")
-            .where("Nom scientifique", isEqualTo: scientificName)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text('Loading...');
-          }
-
-          var nomFr = snapshot.data?.docs?.isNotEmpty == true
-              ? snapshot.data!.docs![0]["Nom français"]
-              : AppLocalizations.of(context)!.especeNonTrouve;
-          var fr = snapshot.data?.docs?.isNotEmpty == true
-              ? snapshot.data!.docs![0]["Nom français"]
-              : AppLocalizations.of(context)!.choisirEspece;
-          nomFrancais = fr;
-          return Center(
-            child: Text(AppLocalizations.of(context)!.nomVer + ': $nomFr'),
-          );
-        },
-      );
-    } else {
-      return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("especes_flore")
-            .where("Nom scientifique", isEqualTo: scientificName)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text('Loading...');
-          }
-
-          var nomFr = snapshot.data?.docs?.isNotEmpty == true
-              ? snapshot.data!.docs![0]["Nom français"]
-              : AppLocalizations.of(context)!.especeNonTrouve;
-          var fr = snapshot.data?.docs?.isNotEmpty == true
-              ? snapshot.data!.docs![0]["Nom français"]
-              : AppLocalizations.of(context)!.choisirEspece;
-          nomFrancais = fr;
-          return Center(
-            child: Text(AppLocalizations.of(context)!.nomVer + ': $nomFr'),
-          );
-        },
-      );
-    }
-  }
 
   Widget _buildEtat() {
     return DropdownButton<String>(
@@ -320,18 +228,8 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
       });
     }
 
-    if (additionalArgument == 'protègé') {
-      streamVar = FirebaseFirestore.instance
-          .collection("especes_flore_protege")
-          .snapshots();
-    } else if (additionalArgument == 'indésirable') {
-      streamVar = FirebaseFirestore.instance
-          .collection("especes_flore_invasive")
-          .snapshots();
-    } else {
-      streamVar =
-          FirebaseFirestore.instance.collection("especes_flore").snapshots();
-    }
+    streamVar =
+        FirebaseFirestore.instance.collection("espece_insectes").snapshots();
 
     // print("Received Argument 1111: $receivedArgument");
     //print("Additional Argument 22222: $additionalArgument");
@@ -508,59 +406,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                 ),
               ),
               const SizedBox(height: 10),
-              Container(
-                margin: EdgeInsets.only(top: 10.0),
-                child: Center(
-                  child: SizedBox(
-                    width: 210, // Set width as needed
-                    child: RawMaterialButton(
-                      fillColor: const Color(0xFF006766),
-                      elevation: 0.0,
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      onPressed: uploadImage,
-                      child: Text(AppLocalizations.of(context)!.reconnaissance,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.0,
-                          )),
-                    ),
-                  ),
-                ),
-              ),
 
-              const SizedBox(height: 15),
-              Container(
-                width: 260.0,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Text(
-                    "$scientificName, score: $score",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 104, 102, 102),
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              myStreamBuilder(),
-              const SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width * 0.71,
                 height: 50,
@@ -591,7 +437,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                           child: Padding(
                             padding: EdgeInsets.only(left: 5.0),
                             child: Text(
-                              nomFrancais,
+                              AppLocalizations.of(context)!.choisirEspece,
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 12),
                             ),
@@ -611,7 +457,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                                 child: Padding(
                                   padding: EdgeInsets.only(left: 5.0),
                                   child: Text(
-                                    data['Nom français'],
+                                    data['Nom scientifique'],
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     style: TextStyle(
@@ -683,6 +529,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                         const CircularProgressIndicator();
                       } else {
                         codes = snapshot.data?.docs.reversed.toList();
+                        print(codes);
 
                         if (codes != null && codes?.isNotEmpty == true) {
                           codeItems.add(DropdownMenuItem(
@@ -986,7 +833,11 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(width: 10),
+                    Container(
+                      width: 30,
+                    ),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width * 7 / 100),
                     Container(
                       width: 100,
                       child: RawMaterialButton(
@@ -1000,6 +851,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                           if (_selectedImage != null && _imageName != null) {
                             await uploadFile(_selectedImage!, _imageName!);
                           }
+
                           if (selectedEspece == "aucun") {
                             setState(() {
                               savedEspece = scientificName;
@@ -1041,34 +893,35 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
                     ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width *
-                            0.2), // Adjust the space between buttons
+                            7 /
+                            100), // Adjust the space between buttons
                     Container(
                       width: 100,
                       child: ElevatedButton(
                         onPressed: () async {
-                          if (selectedEspece == "aucun") {
-                            setState(() {
-                              savedEspece = scientificName;
-                            });
-                          }
-
                           if (_selectedImage != null && _imageName != null) {
                             await uploadFile(_selectedImage!, _imageName!);
                           }
                           CollectionReference collRef;
+
                           if (widget.aeroport ==
                               "Paris-Charles de Gaulle Airport") {
                             collRef = FirebaseFirestore.instance
-                                .collection('observationFlore_CDG');
+                                .collection('observationInsectes_CDG');
                           } else if (widget.aeroport == "Zagreb Airport") {
                             collRef = FirebaseFirestore.instance
-                                .collection('observationFlore_zagreb');
+                                .collection('observationInsectes_zagreb');
                           } else if (widget.aeroport == "Milan Airport") {
                             collRef = FirebaseFirestore.instance
-                                .collection('observationFlore_milan');
+                                .collection('observationInsectes_milan');
                           } else {
                             collRef = FirebaseFirestore.instance
-                                .collection('observationFlore_cluj');
+                                .collection('observationInsectes_cluj');
+                          }
+                          if (selectedEspece == "aucun") {
+                            setState(() {
+                              savedEspece = scientificName;
+                            });
                           }
 
                           collRef.add({
@@ -1295,6 +1148,7 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
           //print("Response body: $responseData");
 
           final List<dynamic>? results = responseData['results'];
+          print(results);
 
           if (results != null && results.isNotEmpty) {
             final Map<String, dynamic> firstResult = results.first;
@@ -1304,10 +1158,10 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
             if (resultScientificName != null && resScore != null) {
               setState(() {
                 scientificName = resultScientificName.toString();
+                selectedEspece = resultScientificName.toString();
                 score = resScore;
                 // _especeController.text= resultScientificName.toString();
               });
-
               print("Image uploaded successfully");
               print("scientific name :$scientificName");
               print("score : $score");
@@ -1329,6 +1183,6 @@ class _ChoixPhotoState extends State<ChoixPhoto> {
       print("Error uploading image: $error");
     }
   }
-
+/////////////////////////////////////////
 ////////////////////////////////////////////////////
 }

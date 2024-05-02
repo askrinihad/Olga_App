@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:test_app/choixEspece.dart';
+import 'package:test_app/choice/choice_specie.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

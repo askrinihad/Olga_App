@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/ChoixPhoto.dart';
-import 'package:test_app/ChoixPhoto_Insectes.dart';
-import 'package:test_app/ChoixPhoto_faune.dart';
-import 'package:test_app/choixPhotoInconnu.dart';
+import 'package:test_app/choice/choice_picture.dart';
+import 'package:test_app/choice/choice_picture_insect.dart';
+import 'package:test_app/choice/choice_picture_faune.dart';
+import 'package:test_app/choice/choice_picture_unknown.dart';
 import 'package:test_app/especeInconnu_faune.dart';
-import 'package:test_app/nouvelleObs_Retour.dart';
+import 'package:test_app/observation/new_observation_return.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChoixEspece extends StatefulWidget {

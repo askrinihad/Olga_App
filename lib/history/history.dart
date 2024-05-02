@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/historique2.dart';
-import 'package:test_app/listObs.dart';
+import 'package:test_app/history/history_2.dart';
+import 'package:test_app/observation/observation_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const List<String> list = <String>['All', 'Plant life', 'Wildlife', 'Insects'];

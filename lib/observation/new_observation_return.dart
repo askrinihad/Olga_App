@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/Bibliotheque.dart';
+import 'package:test_app/choice/choice_specie.dart';
 import 'package:test_app/profile_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class biblioRetour extends StatefulWidget {
+class NouvelleObservation2 extends StatefulWidget {
   final String email;
   final String aeroport;
-  const biblioRetour({required this.email, required this.aeroport, super.key});
+  const NouvelleObservation2(
+      {required this.email, required this.aeroport, super.key});
 
   @override
-  State<biblioRetour> createState() => _biblioRetourState();
+  State<NouvelleObservation2> createState() => _NouvelleObservationState();
 }
 
-class _biblioRetourState extends State<biblioRetour> {
+class _NouvelleObservationState extends State<NouvelleObservation2> {
   final floreController = TextEditingController();
   final fauneController = TextEditingController();
   final insecteController = TextEditingController();
@@ -50,8 +51,8 @@ class _biblioRetourState extends State<biblioRetour> {
                       //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => Bibliotheque(
-                              typeEspece: "faune",
+                          builder: (context) => ChoixEspece(
+                              argumentReceived: "faune",
                               email: widget.email,
                               aeroport: widget.aeroport),
                         ),
@@ -81,8 +82,8 @@ class _biblioRetourState extends State<biblioRetour> {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => Bibliotheque(
-                              typeEspece: "flore",
+                          builder: (context) => ChoixEspece(
+                              argumentReceived: "flore",
                               email: widget.email,
                               aeroport: widget.aeroport),
                         ),
@@ -114,8 +115,8 @@ class _biblioRetourState extends State<biblioRetour> {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => Bibliotheque(
-                              typeEspece: "insectes",
+                          builder: (context) => ChoixEspece(
+                              argumentReceived: "insectes",
                               email: widget.email,
                               aeroport: widget.aeroport),
                         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/language.dart';
-import 'package:test_app/language_constants.dart';
+import 'package:test_app/language/language.dart';
+import 'package:test_app/language/language_constants.dart';
 import 'package:test_app/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

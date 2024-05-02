@@ -3,6 +3,8 @@ import 'package:test_app/main.dart';
 import 'package:test_app/profile_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'package:test_app/pages/home_page.dart';
+
 class logOut extends StatefulWidget {
   final String email;
   final String aeroport;

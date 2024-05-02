@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/observationInfo.dart';
+import 'package:test_app/observation/observation_info.dart';
 
 class listeObs extends StatefulWidget {
   final String typeObs;

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/Accueil.dart';
-import 'package:test_app/Historique.dart';
-import 'package:test_app/ajouterEspece.dart';
-import 'package:test_app/ajouterInventaire.dart';
-import 'package:test_app/bib_page1.dart';
+import 'package:test_app/history/history.dart';
+import 'package:test_app/add/add_specie.dart';
+import 'package:test_app/add/add_inventory.dart';
+import 'package:test_app/library/bib_page1.dart';
 import 'package:test_app/bird_recognitione.dart';
-import 'package:test_app/logOut.dart';
-import 'package:test_app/mydrawer_header.dart';
-import 'package:test_app/NouvelleObservation.dart';
+import 'package:test_app/log/log_out.dart';
+import 'package:test_app/menu/my_drawer_header.dart';
+import 'package:test_app/observation/new_observation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/settings.dart';
+import 'package:test_app/pages/accueil.dart';
+import 'package:test_app/pages/settings.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String email;
