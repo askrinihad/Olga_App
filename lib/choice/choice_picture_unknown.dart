@@ -1037,7 +1037,7 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
 
   Future<void> uploadImage() async {
     final Uri uri = Uri.parse(
-        "http://192.168.137.126:4000/upload"); // Update with your server's URL
+        "http://olga1.mercier.pro:9999/upload"); // Update with your server's URL
     final request = http.MultipartRequest("POST", uri);
     final headers = {"Content-type": "multipart/form-data"};
 
