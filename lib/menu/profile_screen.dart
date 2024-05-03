@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/history/history.dart';
 import 'package:test_app/add/add_specie.dart';
 import 'package:test_app/add/add_inventory.dart';
-import 'package:test_app/library/bib_page1.dart';
+import 'package:test_app/library/library_page_1.dart';
 import 'package:test_app/recognition/bird_recognition.dart';
 import 'package:test_app/log/log_out.dart';
 import 'package:test_app/menu/my_drawer_header.dart';

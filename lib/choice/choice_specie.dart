@@ -3,7 +3,7 @@ import 'package:test_app/choice/choice_picture.dart';
 import 'package:test_app/choice/choice_picture_insect.dart';
 import 'package:test_app/choice/choice_picture_faune.dart';
 import 'package:test_app/choice/choice_picture_unknown.dart';
-import 'package:test_app/recognition/especeInconnu_faune.dart';
+import 'package:test_app/recognition/specie_unknow_faune.dart';
 import 'package:test_app/observation/new_observation_return.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
