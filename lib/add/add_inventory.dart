@@ -5,22 +5,29 @@ import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ajouterInventaire extends StatefulWidget {
+  // The email and airport are required parameters for this widget.
   final String email;
   final String aeroport;
   const ajouterInventaire(
       {required this.email, required this.aeroport, super.key});
 
   @override
+  // Create the state for this widget.
   State<ajouterInventaire> createState() => _ajouterInventaireState();
 }
 
 class _ajouterInventaireState extends State<ajouterInventaire> {
+  // Define the controllers for the text fields.
   TextEditingController _codeController = TextEditingController();
   TextEditingController _dateDebutController = TextEditingController();
   TextEditingController _dateFinController = TextEditingController();
+
+  // Define the lists to store the users and their selection status.
   List<Map<String, dynamic>> users = []; // List to store users
   List<bool> selectedUsers = [];
   List<String> selectedUserEmails = [];
+
+  // _buildCode creates a TextFormField for the code input.
   Widget _buildCode() {
     return TextFormField(
       controller: _codeController,

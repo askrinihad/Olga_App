@@ -23,7 +23,8 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: 50,
             ),
-            // The title of the page is displayed at the top.
+
+            // The title of the page
             Text(
               AppLocalizations.of(context)!.parametre,
               style: TextStyle(
@@ -33,9 +34,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 fontFamily: 'Hind Siliguri',
               ),
             ),
+
+            // A SizedBox is used to add space between the title and the DropdownButton.
             SizedBox(
               height: 100,
             ),
+
             // A DropdownButton allows the user to select a language. When a language is selected, the locale is updated.
             DropdownButton<Language>(
               iconSize: 25,
@@ -47,6 +51,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   MyApp.setLocale(context, _locale);
                 }
               },
+
+              // The items of the DropdownButton are the languages in the Language.languageList() list.
               items: Language.languageList()
                   .map<DropdownMenuItem<Language>>(
                     (e) => DropdownMenuItem<Language>(
