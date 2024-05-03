@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/choice/choice_specie.dart';
-import 'package:test_app/profile_screen.dart';
+import 'package:test_app/menu/profile_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NouvelleObservation2 extends StatefulWidget {

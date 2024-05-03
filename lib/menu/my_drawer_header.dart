@@ -7,6 +7,7 @@ class MyheaderDrawer extends StatefulWidget {
   State<MyheaderDrawer> createState() => _MyheaderDrawerState();
 }
 
+// Return a container with a header image
 class _MyheaderDrawerState extends State<MyheaderDrawer> {
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@
     "accueil":"Home",
     "nouvelleObservation":"New observation",
     "nouvelleEspece":"New species",
-    "nouveauInventaire":"New inventory",
+    "nouveauInventaire":"New inventory Code",
     "historique":"History of observations",
     "bibliotheque":"Bibliotheque",
     "deconnexion":"Logout",
@@ -78,5 +78,4 @@
      "etat2":"State 2",
      "bird_recognition":"Bird Recognition",
      "selectionnerCode":"Select an inventory code"
-
 }

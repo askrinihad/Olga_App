@@ -11,7 +11,7 @@ class _AccueilPageState extends State<AccueilPage> {
   @override
   Widget build(BuildContext context) { 
     return
-    // Container contenant l'affiche de la page d'accueil
+    // Container containing the text "BioDivObserver"
     Container(
       child: Center(child:  Text("BioDivObserver", style: TextStyle(color: Color(0xFF006766), 
       fontSize:35, 

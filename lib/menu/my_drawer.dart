@@ -12,6 +12,7 @@ class MyDrawer extends StatelessWidget {
     required this.context,
   });
 
+  // Contains a menu list created by the MyDrawerList method
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,6 +32,7 @@ class MyDrawer extends StatelessWidget {
     );
   }
 
+  // Creates a Column of menuItem widgets. Each menuItem is a ListTile which will display a title, an icon
   Widget MyDrawerList() {
     return Column(
       children: [
@@ -56,6 +58,8 @@ class MyDrawer extends StatelessWidget {
     );
   }
 
+  //Receives 4 id parameters to identify the element, an icon, a title, and a boolean selected 
+  //to indicate if the button is currently selected
   Widget menuItem(int id, String title, IconData icon, bool selected) {
     return ListTile(
       onTap: () {
@@ -71,6 +75,7 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
+// Enum to define the different sections of the drawer
 enum DrawerSections {
   Accueil,
   NouvelleObservation,
