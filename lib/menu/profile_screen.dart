@@ -3,7 +3,7 @@ import 'package:test_app/history/history.dart';
 import 'package:test_app/add/add_specie.dart';
 import 'package:test_app/add/add_inventory.dart';
 import 'package:test_app/library/bib_page1.dart';
-import 'package:test_app/bird_recognitione.dart';
+import 'package:test_app/recognition/bird_recognition.dart';
 import 'package:test_app/log/log_out.dart';
 import 'package:test_app/menu/my_drawer_header.dart';
 import 'package:test_app/observation/new_observation.dart';
@@ -21,10 +21,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  // currentPage keeps track of the currently selected menu item.
   var currentPage = DrawerSections.Accueil;
   @override
   Widget build(BuildContext context) {
     var container;
+    // Depending on the value of currentPage, a different page is displayed.
     if (currentPage == DrawerSections.NouvelleObservation) {
       container =
           NouvelleObservation(email: widget.email, aeroport: widget.aeroport);
@@ -47,6 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       container = bird_recognition();
     }
 
+    // The Scaffold contains an AppBar, the currently selected page as the body, and a Drawer for navigation.
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF006766),
@@ -68,6 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  // MyDrawerList creates the list of menu items in the drawer.
   Widget MyDrawerList() {
     return Container(
       padding: EdgeInsets.only(
@@ -75,6 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       child: Column(
         children: [
+          // Each menuItem is created with an id, title, icon, and a boolean indicating whether it is currently selected.
           menuItem(1, AppLocalizations.of(context)!.accueil, Icons.home,
               currentPage == DrawerSections.Accueil ? true : false),
           menuItem(
@@ -110,6 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  // menuItem creates a single menu item. When tapped, it updates the value of currentPage and the UI is updated to reflect the change.
   Widget menuItem(int id, String title, IconData icon, bool selected) {
     return Material(
         color:
@@ -165,6 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
+// DrawerSections is an enumeration of all the possible sections that can be displayed in the ProfileScreen.
 enum DrawerSections {
   Accueil,
   NouvelleObservation,

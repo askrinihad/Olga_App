@@ -14,6 +14,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    // The UI consists of a Container with a Column of widgets.
     return Container(
       child: Center(
         child: Column(
@@ -22,6 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: 50,
             ),
+            // The title of the page is displayed at the top.
             Text(
               AppLocalizations.of(context)!.parametre,
               style: TextStyle(
@@ -34,6 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: 100,
             ),
+            // A DropdownButton allows the user to select a language. When a language is selected, the locale is updated.
             DropdownButton<Language>(
               iconSize: 25,
               hint: Text(AppLocalizations.of(context)!.changeLanguage,
