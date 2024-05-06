@@ -83,18 +83,21 @@ class _MapAppState extends State<MapApp> {
             MarkerLayer(
               markers: [
                 Marker(
-                  point: point,
-                  child: Container(
-                    width: 80.0,
-                    height: 80.0,
-                    child: Icon(
-                      Icons.location_on,
-                      color: Colors.red,
-                    ),
-                  ),
+                  point:
+                      point, // Make sure this is defined as LatLng somewhere in your code
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: 80.0,
+                      height: 80.0,
+                      child: Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                      ),
+                    );
+                  },
                 ),
               ],
-            ),
+            )
           ],
         ),
         Padding(
