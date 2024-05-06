@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/main.dart';
 import 'package:test_app/menu/profile_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -29,25 +28,29 @@ class _logOutState extends State<logOut> {
             mainAxisAlignment:
                 MainAxisAlignment.center, // Align buttons to the center
             children: [
-
               // Button for "No"
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF006766), // Set color to green
+                  backgroundColor:
+                      const Color(0xFF006766), // Set color to green
                   elevation: 0.0,
                   padding: const EdgeInsets.symmetric(vertical: 15.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0), // Set rounded corners
+                    borderRadius:
+                        BorderRadius.circular(12.0), // Set rounded corners
                   ),
                   fixedSize: Size(150, 50),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute( // Navigate to ProfileScreen
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      // Navigate to ProfileScreen
                       builder: (context) => ProfileScreen(
                           email: widget.email, aeroport: widget.aeroport)));
                 },
                 child: Text(AppLocalizations.of(context)!.non,
-                    style: TextStyle(color: Colors.white, fontSize: 13)), // Color of text is white
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13)), // Color of text is white
               ),
               SizedBox(width: MediaQuery.of(context).size.width * 10 / 100),
 

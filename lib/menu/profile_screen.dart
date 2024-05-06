@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else if (currentPage == DrawerSections.Bibliotheque) {
       container = biblio1(email: widget.email, aeroport: widget.aeroport);
     } else if (currentPage == DrawerSections.Historique) {
-      container = Historique(aeroport: widget.aeroport);
+      container = History(aeroport: widget.aeroport);
     } else if (currentPage == DrawerSections.Accueil) {
       container = AccueilPage();
     } else if (currentPage == DrawerSections.parametre) {

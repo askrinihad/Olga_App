@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/history/history_2.dart';
+import 'package:test_app/history/history2.dart';
 import 'package:test_app/observation/observation_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const List<String> list = <String>['All', 'Plant life', 'Wildlife', 'Insects'];
 
-class Historique extends StatefulWidget {
+class History extends StatefulWidget {
   final String aeroport;
-  const Historique({required this.aeroport, super.key});
+  const History({required this.aeroport, super.key});
 
   @override
-  State<Historique> createState() => _HistoriqueState();
+  State<History> createState() => _HistoryState();
 }
 
-class _HistoriqueState extends State<Historique> {
+class _HistoryState extends State<History> {
   String dropdownValue = list.first;
+  late List<Map<String, dynamic>> listObs = [];
+
   Widget _buildType() {
     return DropdownButton<String>(
       value: dropdownValue,
@@ -47,7 +49,6 @@ class _HistoriqueState extends State<Historique> {
   }
 
   /////////////////////////////////////
-  late List<Map<String, dynamic>> listObs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,7 @@ class _HistoriqueState extends State<Historique> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => historique2(
+                            builder: (context) => History2(
                                 typeObs: dropdownValue,
                                 aeroport: widget.aeroport),
                           ),
