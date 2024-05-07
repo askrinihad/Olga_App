@@ -76,6 +76,10 @@
      "etat1":"Etat 1",
      "etat2":"Etat 2",
      "bird_recognition":"Reconnaissance des oiseaux",
-     "selectionnerCode":"Séléctionner un code"
+     "selectionnerCode":"Séléctionner un code",
+     "classe":"Classe",
+     "regne":"Règne",
+     "groupegrandpublic":"Groupe Grand Public"
+     
 
 }

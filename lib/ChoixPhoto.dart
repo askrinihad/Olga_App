@@ -22,8 +22,8 @@ import 'package:test_app/choixEspece.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 const  List<String> phaseList = <String>['Germination', 'Developement', ' Pollination', 'Fructification'];
-const  List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const  List<String> etatList = <String>['In development', 'State 1', ' State 2'];
+const  List<String> actionList = <String>['No action', 'Protect', 'Remove','Monitor'];
+const  List<String> etatList = <String>['In development', 'Regressing', ' Stable'];
 
 class ChoixPhoto extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
@@ -1175,6 +1175,7 @@ Future<void> _showDateTimePicker(BuildContext context) async {
       _imageName= File(returnedImage.name);
       
     });
+   print("image name***************************** ${returnedImage.name}");
    // return returnedImage.readAsBytes();
     }
     else return;
@@ -1243,7 +1244,7 @@ Future<String?> DownloadUrl(File fileName) async {
 }
 /////////////////////////////////////////////////////////////////:
 Future<void> uploadImage() async {
-  final Uri uri = Uri.parse("http://192.168.137.126:4000/upload"); // Update with your server's URL
+  final Uri uri = Uri.parse("http://olga1.mercier.pro:9999/upload"); // Update with your server's URL
   final request = http.MultipartRequest("POST", uri);
   final headers = {"Content-type": "multipart/form-data"};
 

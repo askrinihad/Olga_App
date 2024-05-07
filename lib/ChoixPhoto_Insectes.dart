@@ -21,9 +21,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-const  List<String> phaseList = <String>['Germination', 'Developement', ' Pollination', 'Fructification'];
-const  List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const  List<String> etatList = <String>['In development', 'State 1', ' State 2'];
+const  List<String> phaseList = <String>['Birth', 'Growing', ' Adult'];
+const  List<String> actionList = <String>['No action', 'Protect', 'Remove','Monitor'];
+const  List<String> etatList = <String>['In development', 'Regressing', ' Stable'];
 
 class ChoixPhoto_insectes extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified

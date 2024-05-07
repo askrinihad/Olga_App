@@ -6,6 +6,7 @@ import 'package:test_app/biblio_retour.dart';
 import 'package:test_app/profile_screen.dart';
 import 'package:test_app/speciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/speciesInfo_faune&insects.dart';
 
 class Bibliotheque extends StatefulWidget {
   final String typeEspece;
@@ -69,13 +70,23 @@ class _BibliothequeState extends State<Bibliotheque> {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            // Navigate to a new page when the ListTile is tapped
-                            Navigator.push(
+                            if (widget.typeEspece == 'flore') {
+                                Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => speciesInfo(item:items[index]),
                               ),
                             );
+                            }
+                            else{
+                                        Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => speciesInfo_faune_flore(item: items[index]),
+                              ),
+                            );
+                            }
+                           
                           },
                         child: ListTile(
                           shape: RoundedRectangleBorder(
@@ -83,15 +94,23 @@ class _BibliothequeState extends State<Bibliotheque> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           title: Row(
-                            children: [
-                              Text(items[index]["Nom français"], style: TextStyle(
-                                  color: Color.fromARGB(255, 25, 25, 28),
-                                  fontSize: 13.0,
-                                ),),
-                              SizedBox(width: 10),
-                            ],
-                          ),
-                          trailing: Icon(Icons.more_vert),
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        items[index]["Nom scientifique"], 
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        style: TextStyle(
+                                          color: Color.fromARGB(255, 25, 25, 28),
+                                          fontSize: 13.0,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
+                                ),
+
+                          //trailing: Icon(Icons.more_vert),
                         ),),
                       );
                     },

@@ -21,9 +21,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-const  List<String> phaseList = <String>['Germination', 'Développement', ' Pollinisation', 'Fructification'];
-const  List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const  List<String> etatList = <String>['En développement', 'State 1', ' State 2'];
+const  List<String> phaseList = <String>['Germination', 'Developement', ' Pollinisation', 'Fructification'];
+const  List<String> actionList = <String>['No action', 'Protect', 'Remove','Monitor'];
+const  List<String> etatList = <String>['In development', 'Regressing', ' Stable'];
 
 class EspeceInconnu extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
@@ -49,6 +49,7 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
   LatLng point = LatLng(48.7882752, 2.4313856);
   List<Placemark> location = [];
   String selectedEspece="aucun";
+  List<DocumentSnapshot>? codes; 
    String  selectedCode ="aucun";
   
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -427,7 +428,7 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
               ),
             ],
           ),
-          child: StreamBuilder<QuerySnapshot>(
+         child: StreamBuilder<QuerySnapshot>(
             stream: CodeStream,
             builder: (context, snapshot){
               List<DropdownMenuItem> codeItems = [];
@@ -437,15 +438,16 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
               }
               else{
                 
-                final codes =  snapshot.data?.docs.reversed.toList();
+                codes =  snapshot.data?.docs.reversed.toList();
+                
                
-                if (codes != null && codes.isNotEmpty) {
+                if (codes != null && codes?.isNotEmpty == true)  {
                     codeItems.add(DropdownMenuItem(
                       value: "aucun",
                       child: Padding(
                         padding: EdgeInsets.only(left: 5.0),
                         child: Text(
-                         codes[codes.length - 1]["code"], 
+                         AppLocalizations.of(context)!.selectionnerCode, 
                            style: const TextStyle(color:Colors.grey, fontSize: 12)// Access the last element in the list
                         ),
                       ),
@@ -453,8 +455,10 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
                   } else {
                     // Handle the case when codes is null or empty
                     codeItems.add(DropdownMenuItem(
-                      value: AppLocalizations.of(context)!.aucun,
-                      child: Text(AppLocalizations.of(context)!.creerInventaire),
+                      value: "aucun",
+                      child:Padding(
+                        padding: EdgeInsets.only(left: 5.0),
+                      child: Text(AppLocalizations.of(context)!.creerInventaire, style: const TextStyle(color:Color.fromARGB(255, 255, 0, 0), fontSize: 12, fontWeight: FontWeight.bold,)),)
                     ));
                   }
 
@@ -471,11 +475,25 @@ class _EspeceInconnuState extends State<EspeceInconnu> {
               }
               return DropdownButton(
                 items: codeItems, 
-                onChanged:(codeValue){
-                  setState(() {
-                    selectedCode = codeValue;
-                  });
-                  print(codeValue);
+                   onChanged:(codeValue){
+                        setState(() {
+                        selectedCode=codeValue;
+                      });
+                          for (var code in codes!) {
+                                Map<String, dynamic> data = code.data() as Map<String, dynamic>;
+                                if (code.id == codeValue) {
+                                 
+                                  setState(() {
+                                    savedCode = data['code'];
+                                    
+                                  });
+                                   print("in on change: $savedCode");
+                                 break;
+                                  
+                                }
+                              }
+                            
+                          
               },
                 value:  selectedCode ,
                 isExpanded: false,
@@ -974,7 +992,7 @@ Future<String?> DownloadUrl(File fileName) async {
 ///////////////////////////////////////////////////////////////////:
 
 Future<void> uploadImage() async {
-  final Uri uri = Uri.parse("http://192.168.137.126:4000/upload"); // Update with your server's URL
+  final Uri uri = Uri.parse("http://olga1.mercier.pro:9999/upload"); // Update with your server's URL
   final request = http.MultipartRequest("POST", uri);
   final headers = {"Content-type": "multipart/form-data"};
 

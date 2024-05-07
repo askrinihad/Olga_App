@@ -21,9 +21,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-const  List<String> phaseList = <String>['Germination', 'Développement', ' Pollinisation', 'Fructification'];
-const  List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const  List<String> etatList = <String>['En développement', 'Etat 1', ' Etat 2'];
+const  List<String> phaseList = <String>['Birth', 'Growing', ' Adult'];
+const  List<String> actionList = <String>['No action', 'Protect', 'Remove','Monitor'];
+const  List<String> etatList = <String>['In development', 'Regressing', ' Stable'];
 
 class EspeceInconnu_faune extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
@@ -65,8 +65,10 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune > {
   String message = '';
   File ? _imageName;
   String? _imageUrl;
+  String savedCode="";
   late Stream<QuerySnapshot> streamVar;
   late  Stream<QuerySnapshot> CodeStream;
+  List<DocumentSnapshot>? codes; 
 
     Widget _buildEtat(){
      return DropdownButton<String>(
@@ -438,15 +440,16 @@ Container(
               }
               else{
                 
-                final codes =  snapshot.data?.docs.reversed.toList();
+               codes =  snapshot.data?.docs.reversed.toList();
                
-                if (codes != null && codes.isNotEmpty) {
+               
+                if (codes != null && codes?.isNotEmpty == true) {
                     codeItems.add(DropdownMenuItem(
                       value: "aucun",
                       child: Padding(
                         padding: EdgeInsets.only(left: 5.0),
                         child: Text(
-                         codes[codes.length - 1]["code"], 
+                         AppLocalizations.of(context)!.selectionnerCode, 
                            style: const TextStyle(color:Colors.grey, fontSize: 12)// Access the last element in the list
                         ),
                       ),
@@ -454,14 +457,16 @@ Container(
                   } else {
                     // Handle the case when codes is null or empty
                     codeItems.add(DropdownMenuItem(
-                      value: AppLocalizations.of(context)!.aucun,
-                      child: Text(AppLocalizations.of(context)!.creerInventaire),
+                      value: "aucun",
+                      child:Padding(
+                        padding: EdgeInsets.only(left: 5.0),
+                      child: Text(AppLocalizations.of(context)!.creerInventaire, style: const TextStyle(color:Color.fromARGB(255, 255, 0, 0), fontSize: 12, fontWeight: FontWeight.bold,)),)
                     ));
                   }
 
                 for (var code in codes!){
                   Map<String, dynamic> data = code.data() as Map<String, dynamic>;
-                
+                   
                   codeItems.add(DropdownMenuItem(
                     value: code.id,
                     child: Padding(
@@ -473,10 +478,24 @@ Container(
               return DropdownButton(
                 items: codeItems, 
                 onChanged:(codeValue){
-                  setState(() {
-                    selectedCode = codeValue;
-                  });
-                  print(codeValue);
+                        setState(() {
+                        selectedCode=codeValue;
+                      });
+                          for (var code in codes!) {
+                                Map<String, dynamic> data = code.data() as Map<String, dynamic>;
+                                if (code.id == codeValue) {
+                                 
+                                  setState(() {
+                                    savedCode = data['code'];
+                                    
+                                  });
+                                   print("in on change: $savedCode");
+                                 break;
+                                  
+                                }
+                              }
+                            
+                          
               },
                 value:  selectedCode ,
                 isExpanded: false,
@@ -731,7 +750,7 @@ Container(
                       aeroport: widget.aeroport,
                       email: widget.email,
                       especeType:receivedArgument,
-                      codeInventaire:selectedCode,
+                      codeInventaire:savedCode,
                       action: actionValue,
                       date: _dateController.text,
                       etat: etatValue,
@@ -976,7 +995,7 @@ Future<String?> DownloadUrl(File fileName) async {
 
 
 Future<void> uploadBird() async {
-  final Uri uri = Uri.parse("http://192.168.137.126:4000//bird_recognition"); // Update with your server's URL
+  final Uri uri = Uri.parse("http://olga1.mercier.pro:9999/bird_recognition"); // Update with your server's URL
   final request = http.MultipartRequest("POST", uri);
   final headers = {"Content-type": "multipart/form-data"};
 

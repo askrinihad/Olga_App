@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
     supportedLocales: AppLocalizations.supportedLocales,
     locale:_locale,
       home: HomePage(),
-      //home: ProfileScreen(),
+      //home: ImageMetadata(),
       //home: MapApp(),
     
        

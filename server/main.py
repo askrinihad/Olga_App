@@ -62,9 +62,9 @@ def predict():
 
             # Delete the processed image file
             try:
-                os.remove(image_path)
+               
                 print(f"Deleted image: {image_path}")
-            except Exception as e:
+            except Exception as e: os.remove(image_path)
                 print(f"Error deleting image {image_path}: {e}")
 
         # Set the flag to indicate that images have been processed

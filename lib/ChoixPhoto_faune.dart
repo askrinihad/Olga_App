@@ -21,9 +21,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test_app/choixEspece.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-const  List<String> phaseList = <String>['Germination', 'Developement', ' Pollination', 'Fructification'];
-const  List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const  List<String> etatList = <String>['In development', 'State 1', ' State 2'];
+const  List<String> phaseList = <String>['Birth', 'Growing', ' Adult'];
+const  List<String> actionList = <String>['No action', 'Protect', 'Remove','Monitor'];
+const  List<String> etatList = <String>['In development', 'Regressing', ' Stable'];
 
 class ChoixPhoto_faune extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
@@ -1149,7 +1149,7 @@ Future<String?> DownloadUrl(File fileName) async {
 }
 /////////////////////////////////////////////////////////////////:
 Future<void> uploadImage() async {
-  final Uri uri = Uri.parse("http://192.168.137.126:4000/upload"); // Update with your server's URL
+  final Uri uri = Uri.parse("http://olga1.mercier.pro:9999/upload"); // Update with your server's URL
   final request = http.MultipartRequest("POST", uri);
   final headers = {"Content-type": "multipart/form-data"};
 
@@ -1211,7 +1211,7 @@ Future<void> uploadImage() async {
 }
 //////////////////////////////////////////////
 Future<void> uploadBird() async {
-  final Uri uri = Uri.parse("http://192.168.137.126:4000//bird_recognition"); // Update with your server's URL
+  final Uri uri = Uri.parse("http://olga1.mercier.pro:9999/bird_recognition"); // Update with your server's URL
   final request = http.MultipartRequest("POST", uri);
   final headers = {"Content-type": "multipart/form-data"};
 

@@ -76,5 +76,8 @@
      "etat1":"Etat 1",
      "etat2":"Etat 2",
      "bird_recognition":"Bird Recognition",
-     "selectionnerCode":"Select an inventory code"
+     "selectionnerCode":"Select an inventory code",
+     "classe":"Classe",
+     "regne":"Reign",
+     "groupegrandpublic":"Groupe Grand Public"
 }
