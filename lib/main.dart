@@ -139,6 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
        //create the textfield controller
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String _errorMessage = '';
   String aeroportValue = aeroportList.first;
    static Future<User?> loginUsingEmailPassword(
     {required String email, required String password, required BuildContext context}) async{
@@ -195,108 +196,113 @@ class _LoginScreenState extends State<LoginScreen> {
 /////////////////////////////////////////////////
 
   @override
-  Widget build(BuildContext context) {
+Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
-      
-
-    body: SingleChildScrollView(
-      child: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Column(
-      
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
-             Center(
-      child: Image.asset(
-        'assets/olga.jpg', // Replace with the actual path to your image
-        width: 242.0, // Set the desired width
-        height: 242.0, // Set the desired height
-      ),
-    ), // Adjust the path based on your project structure
-      SizedBox(
-        height: 20.0,
-      ),
-      
-             Container(
-         width: double.infinity,
-          height: 50,
-           decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border(
-                bottom: BorderSide(
-                  color: Color(0xFF006766), // Set the border color when focused
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
+              Center(
+                child: Image.asset(
+                  'assets/olga.jpg',
+                  width: 242.0,
+                  height: 242.0,
                 ),
               ),
-            ),
-                      child: _buildAeroport(),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Color(0xFF006766),
+                    ),
+                  ),
+                ),
+                child: _buildAeroport(),
+              ),
+              const SizedBox(height: 26),
+              TextField(
+                controller:_emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  hintText: appLocalizations.email,
+                  prefixIcon: Icon(Icons.mail, color: Color(0xFF006766),),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF006766)),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 26.0,
+              ),
+              TextField(
+                controller:_passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: appLocalizations.motdepasse,
+                  prefixIcon: Icon(Icons.lock, color: Color(0xFF006766),),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF006766)),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Text(
+                appLocalizations.motdepasseOublie,
+                style: TextStyle(color:  Color(0xff8E7F7F))),
+              
+              SizedBox(
+                height: MediaQuery.of(context).size.width * 0.06,
+              ),
+              Text(
+                _errorMessage,
+                style: TextStyle(color: Colors.red),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width * 0.08,
+              ),
+              Container(
+                width: double.infinity,
+                child: RawMaterialButton(
+                  fillColor: const  Color(0xFF006766),
+                  elevation: 0.0,
+                  padding: const  EdgeInsets.symmetric(vertical: 20.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0)),
+                  onPressed: () async{
+                    print('in on press');
+                    User? user = await loginUsingEmailPassword(email: _emailController.text, password: _passwordController.text, context: context);
+                    print(user);
+                    
+                    if(user != null) { 
+                      print('Navigating to AccueilPage');
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen(email:_emailController.text, aeroport:aeroportValue)));
+                    } else {
+                      setState(() {
+                        _errorMessage = 'Email or password is incorrect';
+                      });
+                    }
+                  },
+                  child: Text(appLocalizations.connexion, style: TextStyle(color: Colors.white, fontSize: 13.0)),
+                ),
+              ),
+            ],
           ),
-           const SizedBox(height: 26),
-      TextField(
-        controller:_emailController,
-        keyboardType: TextInputType.emailAddress,
-        decoration:  InputDecoration(
-          hintText: appLocalizations.email,
-          prefixIcon: Icon(Icons.mail, color: Color(0xFF006766),),
-          focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF006766)), // Set the border color when focused
-    ),
         ),
       ),
-      SizedBox(
-        height: 26.0,
-      ),
-      TextField(
-        controller:_passwordController,
-        obscureText: true,
-        decoration:  InputDecoration(
-          hintText: appLocalizations.motdepasse,
-          prefixIcon: Icon(Icons.lock, color: Color(0xFF006766),),
-              focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF006766)), // Set the border color when focused
-    ),
-        ),
-      ),
-       SizedBox(
-        height: 16.0,
-      ),
-      Text(
-            appLocalizations.motdepasseOublie,
-            style: TextStyle(color:  Color(0xff8E7F7F))),
-        
-      SizedBox(
-        height: MediaQuery.of(context).size.width * 0.1,
-      ),
-      Container(
-        width: double.infinity,
-        child: RawMaterialButton(
-          fillColor: const  Color(0xFF006766),
-          elevation: 0.0,
-          padding: const  EdgeInsets.symmetric(vertical: 20.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0)),
-          onPressed: () async{
-            print('in on press');
-            User? user = await loginUsingEmailPassword(email: _emailController.text, password: _passwordController.text, context: context);
-            print(user);
-            
-            if(user != null)
-            { 
-              print('Navigating to AccueilPage');
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen(email:_emailController.text, aeroport:aeroportValue)));
-            }
-          },
-          child: Text(appLocalizations.connexion, style: TextStyle(color: Colors.white,
-          fontSize: 13.0
-          )),
-          ),
-      ),
-      ],
-    ),
-    ),),
-     );
+    );
   }
 }
   
