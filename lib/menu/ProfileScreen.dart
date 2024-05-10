@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/history/History.dart';
-import 'package:test_app/add/add_specie.dart';
-import 'package:test_app/add/add_inventory.dart';
+import 'package:test_app/add/AddSpecie.dart';
+import 'package:test_app/add/AddInventory.dart';
 import 'package:test_app/library/Library1.dart';
 import 'package:test_app/recognition/BirdRecognition.dart';
 import 'package:test_app/log/LogOut.dart';
@@ -62,9 +62,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return Observation(
             email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.NouvelleEspece:
-        return addSpecies();
+        return AddSpecie();
       case DrawerSections.NouveauInventaire:
-        return ajouterInventaire(
+        return AddInventory(
             email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Bibliotheque:
         return Library1(email: widget.email, aeroport: widget.aeroport);

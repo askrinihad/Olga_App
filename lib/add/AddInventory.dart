@@ -4,19 +4,19 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ajouterInventaire extends StatefulWidget {
+class AddInventory extends StatefulWidget {
   // The email and airport are required parameters for this widget.
   final String email;
   final String aeroport;
-  const ajouterInventaire(
+  const AddInventory(
       {required this.email, required this.aeroport, super.key});
 
   @override
   // Create the state for this widget.
-  State<ajouterInventaire> createState() => _ajouterInventaireState();
+  State<AddInventory> createState() => _AddInventoryState();
 }
 
-class _ajouterInventaireState extends State<ajouterInventaire> {
+class _AddInventoryState extends State<AddInventory> {
   // Define the controllers for the text fields.
   TextEditingController _codeController = TextEditingController();
   TextEditingController _dateDebutController = TextEditingController();

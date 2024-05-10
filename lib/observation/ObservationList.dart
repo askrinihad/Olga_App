@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/observation/ObservationInfo.dart';
 
 class ObservationList extends StatefulWidget {
@@ -18,15 +19,17 @@ class _ObservationListState extends State<ObservationList> {
   late CollectionReference<Map<String, dynamic>> collection;
   late CollectionReference<Map<String, dynamic>> collection2;
   late CollectionReference<Map<String, dynamic>> collection3;
+
   _incrementCounter() async {
+    var collections = select_collection_airport_typeobs(widget.aeroport, widget.typeObs);
     List<Map<String, dynamic>> templist = [];
-    var data = await collection.get();
+    var data = await collections[0].get();
     data.docs.forEach((element) {
       templist.add(element.data());
     });
-    if (isLoaded == true) {
-      var data2 = await collection2.get();
-      var data3 = await collection3.get();
+    if (collections.length > 1) {
+      var data2 = await collections[1].get();
+      var data3 = await collections[2].get();
       data2.docs.forEach((element) {
         templist.add(element.data());
       });
@@ -34,7 +37,6 @@ class _ObservationListState extends State<ObservationList> {
         templist.add(element.data());
       });
     }
-    //print(templist);
     setState(() {
       listObs = templist;
       found = listObs.isNotEmpty;
@@ -43,94 +45,6 @@ class _ObservationListState extends State<ObservationList> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.typeObs == "Plant life") {
-      if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFlore_CDG');
-        print("cdg observation");
-      } else if (widget.aeroport == "Zagreb Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFlore_zagreb');
-      } else if (widget.aeroport == "Milan Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFlore_milan');
-      } else {
-        collection =
-            FirebaseFirestore.instance.collection('observationFlore_cluj');
-      }
-    } else if (widget.typeObs == "Wildlife") {
-      if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFaune_CDG');
-      } else if (widget.aeroport == "Zagreb Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFaune_zagreb');
-      } else if (widget.aeroport == "Milan Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFaune_milan');
-      } else {
-        collection =
-            FirebaseFirestore.instance.collection('observationFaune_cluj');
-      }
-    } else if (widget.typeObs == "Insects") {
-      if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationInsectes_CDG');
-      } else if (widget.aeroport == "Zagreb Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationInsectes_zagreb');
-      } else if (widget.aeroport == "Milan Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationInsectes_milan');
-      } else {
-        collection =
-            FirebaseFirestore.instance.collection('observationInsectes_cluj');
-      }
-    } else {
-      setState(() {
-        isLoaded = true;
-      });
-
-      if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFlore_CDG');
-      } else if (widget.aeroport == "Zagreb Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFlore_zagreb');
-      } else if (widget.aeroport == "Milan Airport") {
-        collection =
-            FirebaseFirestore.instance.collection('observationFlore_milan');
-      } else {
-        collection =
-            FirebaseFirestore.instance.collection('observationFlore_cluj');
-      }
-      if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-        collection2 =
-            FirebaseFirestore.instance.collection('observationFaune_CDG');
-      } else if (widget.aeroport == "Zagreb Airport") {
-        collection2 =
-            FirebaseFirestore.instance.collection('observationFaune_zagreb');
-      } else if (widget.aeroport == "Milan Airport") {
-        collection2 =
-            FirebaseFirestore.instance.collection('observationFaune_milan');
-      } else {
-        collection2 =
-            FirebaseFirestore.instance.collection('observationFaune_cluj');
-      }
-      if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-        collection3 =
-            FirebaseFirestore.instance.collection('observationInsectes_CDG');
-      } else if (widget.aeroport == "Zagreb Airport") {
-        collection3 =
-            FirebaseFirestore.instance.collection('observationInsectes_zagreb');
-      } else if (widget.aeroport == "Milan Airport") {
-        collection3 =
-            FirebaseFirestore.instance.collection('observationInsectes_milan');
-      } else {
-        collection3 =
-            FirebaseFirestore.instance.collection('observationInsectes_cluj');
-      }
-    }
     _incrementCounter();
 
     return Scaffold(

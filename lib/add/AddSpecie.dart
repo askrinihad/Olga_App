@@ -5,14 +5,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const List<String> list = <String>['Plant life', 'Wildlife', 'Insects'];
 
-class addSpecies extends StatefulWidget {
-  const addSpecies({super.key});
+class AddSpecie extends StatefulWidget {
+  const AddSpecie({super.key});
 
   @override
-  State<addSpecies> createState() => _addSpeciesState();
+  State<AddSpecie> createState() => _AddSpecieState();
 }
 
-class _addSpeciesState extends State<addSpecies> {
+class _AddSpecieState extends State<AddSpecie> {
   String nom = "";
   String dropdownValue = list.first;
   TextEditingController _nameController = TextEditingController();

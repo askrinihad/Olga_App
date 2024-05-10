@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/history/history2.dart';
+import 'package:test_app/history/historymap.dart';
 import 'package:test_app/observation/ObservationList.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const List<String> list = <String>['All', 'Plant life', 'Wildlife', 'Insects'];
 
+/**
+ * Displays the main observation history page
+ * 
+ */
 class History extends StatefulWidget {
   final String aeroport;
   const History({required this.aeroport, super.key});
@@ -108,14 +112,14 @@ class _HistoryState extends State<History> {
                         fixedSize: Size(150, 50),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => History2(
-                                typeObs: dropdownValue,
-                                aeroport: widget.aeroport),
-                          ),
-                        );
+                         Navigator.push(
+                           context,
+                           MaterialPageRoute(
+                             builder: (context) => HistoryMap(
+                                 typeObs: dropdownValue,
+                                 aeroport: widget.aeroport),
+                           ),
+                         );
                       },
                       child: Text(
                         AppLocalizations.of(context)!.localiser,
