@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/history/history.dart';
+import 'package:test_app/history/History.dart';
 import 'package:test_app/add/add_specie.dart';
 import 'package:test_app/add/add_inventory.dart';
-import 'package:test_app/library/library_page_1.dart';
-import 'package:test_app/recognition/bird_recognition.dart';
-import 'package:test_app/log/log_out.dart';
-import 'package:test_app/observation/new_observation.dart';
-import 'package:test_app/pages/accueil.dart';
-import 'package:test_app/pages/settings.dart';
-import 'package:test_app/menu/drawer/navigation_sections.dart';
-import 'package:test_app/menu/drawer/navigation_drawer_header.dart';
-import 'package:test_app/menu/drawer/navigation_drawer_list.dart';
+import 'package:test_app/library/Library1.dart';
+import 'package:test_app/recognition/BirdRecognition.dart';
+import 'package:test_app/log/LogOut.dart';
+import 'package:test_app/observation/Observation.dart';
+import 'package:test_app/pages/AccueilPage.dart';
+import 'package:test_app/pages/SettingsPage.dart';
+import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/menu/drawer/HeaderDrawer.dart';
+import 'package:test_app/menu/drawer/MyDrawerList.dart';
 
 // sert a afficher le menu de navigation et créer les redirections
 class ProfileScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                MyheaderDrawer(),
+                HeaderDrawer(),
                 MyDrawerList(
                     currentPage: currentPage,
                     onSelection: (section) {
@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget getContainer(DrawerSections currentPage) {
     switch (currentPage) {
       case DrawerSections.NouvelleObservation:
-        return NouvelleObservation(
+        return Observation(
             email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.NouvelleEspece:
         return addSpecies();
@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return ajouterInventaire(
             email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Bibliotheque:
-        return biblio1(email: widget.email, aeroport: widget.aeroport);
+        return Library1(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Historique:
         return History(aeroport: widget.aeroport);
       case DrawerSections.Accueil:
@@ -75,9 +75,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       case DrawerSections.parametre:
         return SettingsPage();
       case DrawerSections.Deconnexion:
-        return logOut(email: widget.email, aeroport: widget.aeroport);
+        return LogOut(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.bird_recognition:
-        return bird_recognition();
+        return BirdRecognition();
       default:
         return Container();
     }

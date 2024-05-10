@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ObsForm extends StatefulWidget {
-  const ObsForm({super.key});
+class ObservationForm extends StatefulWidget {
+  const ObservationForm({super.key});
 
   @override
-  State<ObsForm> createState() => _ObsFormState();
+  State<ObservationForm> createState() => _ObservationFormState();
 }
 
-class _ObsFormState extends State<ObsForm> {
+class _ObservationFormState extends State<ObservationForm> {
   @override
   Widget build(BuildContext context) {
     return Container(

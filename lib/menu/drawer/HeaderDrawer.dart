@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/menu/drawer/navigation_sections.dart';
-import 'package:test_app/menu/drawer/navigation_drawer_item.dart';
 
 // sert à afficher le titre et l'icone pour les items du menu
-class MyheaderDrawer extends StatefulWidget {
-  const MyheaderDrawer({super.key});
+class HeaderDrawer extends StatefulWidget {
+  const HeaderDrawer({super.key});
 
   @override
-  State<MyheaderDrawer> createState() => _MyheaderDrawerState();
+  State<HeaderDrawer> createState() => _HeaderDrawerState();
 }
 
 // Return a container with a header image
-class _MyheaderDrawerState extends State<MyheaderDrawer> {
+class _HeaderDrawerState extends State<HeaderDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(

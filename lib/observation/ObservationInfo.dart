@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class obsInfo extends StatefulWidget {
+class ObservationInfo extends StatefulWidget {
   final Map<String, dynamic> item;
-  const obsInfo({required this.item, super.key});
+  const ObservationInfo({required this.item, super.key});
 
   @override
-  State<obsInfo> createState() => _obsInfoState();
+  State<ObservationInfo> createState() => _ObservationInfoState();
 }
 
-class _obsInfoState extends State<obsInfo> {
+class _ObservationInfoState extends State<ObservationInfo> {
   late String imageUrl = '';
   @override
   Widget build(BuildContext context) {

@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/library/library.dart';
+import 'package:test_app/choice/ChoiceSpecie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class biblio1 extends StatefulWidget {
+class Observation extends StatefulWidget {
   final String email;
   final String aeroport;
-  const biblio1({required this.email, required this.aeroport, super.key});
+  const Observation(
+      {required this.email, required this.aeroport, super.key});
 
   @override
-  State<biblio1> createState() => _biblio1State();
+  State<Observation> createState() => _ObservationState();
 }
 
-class _biblio1State extends State<biblio1> {
+class _ObservationState extends State<Observation> {
   final floreController = TextEditingController();
   final fauneController = TextEditingController();
   final insecteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
     return
         //Container(child: Center(child: Text("Nouvelle observation")),)
         Padding(
@@ -39,14 +41,14 @@ class _biblio1State extends State<biblio1> {
                     //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Bibliotheque(
-                            typeEspece: "faune",
+                        builder: (context) => ChoiceSpecie(
+                            argumentReceived: "faune",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),
                     );
                   },
-                  child: Text(AppLocalizations.of(context)!.faune,
+                  child: Text(appLocalizations.faune,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 13.0,
@@ -70,15 +72,15 @@ class _biblio1State extends State<biblio1> {
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Bibliotheque(
-                            typeEspece: "flore",
+                        builder: (context) => ChoiceSpecie(
+                            argumentReceived: "flore",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),
                     );
                   },
                   child: Text(
-                    AppLocalizations.of(context)!.flore,
+                    appLocalizations.flore,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13.0,
@@ -103,14 +105,14 @@ class _biblio1State extends State<biblio1> {
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Bibliotheque(
-                            typeEspece: "insectes",
+                        builder: (context) => ChoiceSpecie(
+                            argumentReceived: "insectes",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),
                     );
                   },
-                  child: Text(AppLocalizations.of(context)!.insectes,
+                  child: Text(appLocalizations.insectes,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 13.0,

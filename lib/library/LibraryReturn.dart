@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/choice/choice_specie.dart';
-import 'package:test_app/menu/profile_screen.dart';
+import 'package:test_app/library/Library.dart';
+import 'package:test_app/menu/ProfileScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class NouvelleObservation2 extends StatefulWidget {
+class LibraryReturn extends StatefulWidget {
   final String email;
   final String aeroport;
-  const NouvelleObservation2(
-      {required this.email, required this.aeroport, super.key});
+  const LibraryReturn({required this.email, required this.aeroport, super.key});
 
   @override
-  State<NouvelleObservation2> createState() => _NouvelleObservationState();
+  State<LibraryReturn> createState() => _LibraryReturnState();
 }
 
-class _NouvelleObservationState extends State<NouvelleObservation2> {
+class _LibraryReturnState extends State<LibraryReturn> {
   final floreController = TextEditingController();
   final fauneController = TextEditingController();
   final insecteController = TextEditingController();
@@ -51,8 +50,8 @@ class _NouvelleObservationState extends State<NouvelleObservation2> {
                       //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => ChoixEspece(
-                              argumentReceived: "faune",
+                          builder: (context) => Library(
+                              typeEspece: "faune",
                               email: widget.email,
                               aeroport: widget.aeroport),
                         ),
@@ -82,8 +81,8 @@ class _NouvelleObservationState extends State<NouvelleObservation2> {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => ChoixEspece(
-                              argumentReceived: "flore",
+                          builder: (context) => Library(
+                              typeEspece: "flore",
                               email: widget.email,
                               aeroport: widget.aeroport),
                         ),
@@ -115,8 +114,8 @@ class _NouvelleObservationState extends State<NouvelleObservation2> {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => ChoixEspece(
-                              argumentReceived: "insectes",
+                          builder: (context) => Library(
+                              typeEspece: "insectes",
                               email: widget.email,
                               aeroport: widget.aeroport),
                         ),

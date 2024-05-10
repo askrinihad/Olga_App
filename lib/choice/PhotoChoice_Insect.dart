@@ -10,8 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:test_app/choice/choice_specie.dart';
-import 'package:test_app/mymap_page.dart';
+import 'package:test_app/choice/ChoiceSpecie.dart';
+import 'package:test_app/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const List<String> phaseList = <String>[
@@ -23,12 +23,12 @@ const List<String> phaseList = <String>[
 const List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
 const List<String> etatList = <String>['In development', 'State 1', ' State 2'];
 
-class ChoixPhoto_insectes extends StatefulWidget {
+class PhotoChoice_Insect extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
   final String argumentReceived;
   final String email;
   final String aeroport;
-  const ChoixPhoto_insectes(
+  const PhotoChoice_Insect(
       {required this.argumentReceived,
       required this.email,
       required this.aeroport,
@@ -36,10 +36,10 @@ class ChoixPhoto_insectes extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ChoixPhoto_insectes> createState() => _ChoixPhoto_insectesState();
+  State<PhotoChoice_Insect> createState() => _PhotoChoice_InsectState();
 }
 
-class _ChoixPhoto_insectesState extends State<ChoixPhoto_insectes> {
+class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
   String etatValue = etatList.first;
   String actionValue = actionList.first;
   String phaseValue = phaseList.first;
@@ -240,7 +240,7 @@ class _ChoixPhoto_insectesState extends State<ChoixPhoto_insectes> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => ChoixEspece(
+                builder: (context) => ChoiceSpecie(
                       argumentReceived: receivedArgument,
                       email: widget.email,
                       aeroport: widget.aeroport,

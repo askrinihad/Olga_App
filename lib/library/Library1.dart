@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/choice/choice_specie.dart';
+import 'package:test_app/library/Library.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class NouvelleObservation extends StatefulWidget {
+class Library1 extends StatefulWidget {
   final String email;
   final String aeroport;
-  const NouvelleObservation(
-      {required this.email, required this.aeroport, super.key});
+  const Library1({required this.email, required this.aeroport, super.key});
 
   @override
-  State<NouvelleObservation> createState() => _NouvelleObservationState();
+  State<Library1> createState() => _Library1State();
 }
 
-class _NouvelleObservationState extends State<NouvelleObservation> {
+class _Library1State extends State<Library1> {
   final floreController = TextEditingController();
   final fauneController = TextEditingController();
   final insecteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
     return
         //Container(child: Center(child: Text("Nouvelle observation")),)
         Padding(
@@ -41,14 +39,14 @@ class _NouvelleObservationState extends State<NouvelleObservation> {
                     //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(
-                            argumentReceived: "faune",
+                        builder: (context) => Library(
+                            typeEspece: "faune",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),
                     );
                   },
-                  child: Text(appLocalizations.faune,
+                  child: Text(AppLocalizations.of(context)!.faune,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 13.0,
@@ -72,15 +70,15 @@ class _NouvelleObservationState extends State<NouvelleObservation> {
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(
-                            argumentReceived: "flore",
+                        builder: (context) => Library(
+                            typeEspece: "flore",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),
                     );
                   },
                   child: Text(
-                    appLocalizations.flore,
+                    AppLocalizations.of(context)!.flore,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13.0,
@@ -105,14 +103,14 @@ class _NouvelleObservationState extends State<NouvelleObservation> {
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ChoixEspece(
-                            argumentReceived: "insectes",
+                        builder: (context) => Library(
+                            typeEspece: "insectes",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),
                     );
                   },
-                  child: Text(appLocalizations.insectes,
+                  child: Text(AppLocalizations.of(context)!.insectes,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 13.0,

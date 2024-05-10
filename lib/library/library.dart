@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/library/library_return.dart';
-import 'package:test_app/speciesInfo.dart';
+import 'package:test_app/library/LibraryReturn.dart';
+import 'package:test_app/SpeciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class Bibliotheque extends StatefulWidget {
+class Library extends StatefulWidget {
   final String typeEspece;
   final String email;
   final String aeroport;
-  const Bibliotheque(
+  const Library(
       {required this.email,
       required this.aeroport,
       required this.typeEspece,
       super.key});
 
   @override
-  State<Bibliotheque> createState() => _BibliothequeState();
+  State<Library> createState() => _LibraryState();
 }
 
-class _BibliothequeState extends State<Bibliotheque> {
+class _LibraryState extends State<Library> {
   late List<Map<String, dynamic>> items;
   bool isLoaded = false;
   late CollectionReference<Map<String, dynamic>> collection;
@@ -52,7 +52,7 @@ class _BibliothequeState extends State<Bibliotheque> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => biblioRetour(
+                builder: (context) => LibraryReturn(
                     email: widget.email, aeroport: widget.aeroport)));
           },
         ),
@@ -76,7 +76,7 @@ class _BibliothequeState extends State<Bibliotheque> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        speciesInfo(item: items[index]),
+                                        SpeciesInfo(item: items[index]),
                                   ),
                                 );
                               },

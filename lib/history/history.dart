@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/history/history2.dart';
-import 'package:test_app/observation/observation_list.dart';
+import 'package:test_app/observation/ObservationList.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const List<String> list = <String>['All', 'Plant life', 'Wildlife', 'Insects'];
@@ -139,7 +139,7 @@ class _HistoryState extends State<History> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => listeObs(
+                            builder: (context) => ObservationList(
                                 typeObs: dropdownValue,
                                 aeroport: widget.aeroport),
                           ),

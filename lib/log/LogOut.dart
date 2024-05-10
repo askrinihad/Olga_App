@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/menu/profile_screen.dart';
+import 'package:test_app/menu/ProfileScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:test_app/pages/home_page.dart';
+import 'package:test_app/pages/HomePage.dart';
 
-class logOut extends StatefulWidget {
+class LogOut extends StatefulWidget {
   final String email;
   final String aeroport;
-  const logOut({required this.email, required this.aeroport, super.key});
+  const LogOut({required this.email, required this.aeroport, super.key});
 
   @override
-  State<logOut> createState() => _logOutState();
+  State<LogOut> createState() => _LogOutState();
 }
 
-class _logOutState extends State<logOut> {
+class _LogOutState extends State<LogOut> {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/menu/drawer/navigation_sections.dart';
+import 'package:test_app/menu/drawer/DrawerSections.dart';
 
 // sert à définir les items du menu de navigation
 class MenuItemWidget extends StatelessWidget {

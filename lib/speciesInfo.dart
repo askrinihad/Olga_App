@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class speciesInfo extends StatefulWidget {
+class SpeciesInfo extends StatefulWidget {
   final Map<String, dynamic> item;
-  const speciesInfo({required this.item, super.key});
+  const SpeciesInfo({required this.item, super.key});
 
   @override
-  State<speciesInfo> createState() => _speciesInfoState();
+  State<SpeciesInfo> createState() => _SpeciesInfoState();
 }
 
-class _speciesInfoState extends State<speciesInfo> {
+class _SpeciesInfoState extends State<SpeciesInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

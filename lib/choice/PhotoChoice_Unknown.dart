@@ -10,8 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:test_app/choice/choice_specie.dart';
-import 'package:test_app/mymap_page.dart';
+import 'package:test_app/choice/ChoiceSpecie.dart';
+import 'package:test_app/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const List<String> phaseList = <String>[
@@ -21,14 +21,14 @@ const List<String> phaseList = <String>[
   'Fructification'
 ];
 const List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const List<String> etatList = <String>['En développement', 'Etat 1', ' Etat 2'];
+const List<String> etatList = <String>['En développement','State 1',' State 2'];
 
-class EspeceInconnu_faune extends StatefulWidget {
+class PhotoChoice_Unknown extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
   final String argumentReceived;
   final String email;
   final String aeroport;
-  const EspeceInconnu_faune(
+  const PhotoChoice_Unknown(
       {required this.email,
       required this.aeroport,
       required this.argumentReceived,
@@ -36,16 +36,16 @@ class EspeceInconnu_faune extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<EspeceInconnu_faune> createState() => _EspeceInconnu_fauneState();
+  State<PhotoChoice_Unknown> createState() => _PhotoChoice_UnknownState();
 }
 
-class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
+class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
   String etatValue = etatList.first;
   String actionValue = actionList.first;
   String phaseValue = phaseList.first;
   int selectedNumber = 1;
-  String class_name = "";
-  String confidence = "0.0";
+  String scientificName = "";
+  double score = 0;
 
   double long = 48.7882752;
   double lat = 2.4313856;
@@ -67,6 +67,8 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
   File? _selectedImage;
   String message = '';
   File? _imageName;
+  String savedCode = "";
+  String savedEspece = "";
   String? _imageUrl;
   late Stream<QuerySnapshot> streamVar;
   late Stream<QuerySnapshot> CodeStream;
@@ -226,7 +228,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => ChoixEspece(
+                builder: (context) => ChoiceSpecie(
                       argumentReceived: receivedArgument,
                       email: widget.email,
                       aeroport: widget.aeroport,
@@ -404,7 +406,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      onPressed: uploadBird,
+                      onPressed: uploadImage,
                       child: Text(AppLocalizations.of(context)!.reconnaissance,
                           style: TextStyle(
                             color: Colors.white,
@@ -414,9 +416,10 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 15),
               Container(
-                width: 270.0,
+                width: MediaQuery.of(context).size.width * 0.71,
                 height: 50,
                 decoration: BoxDecoration(
                   color: Color(0xffF6F6F6),
@@ -433,7 +436,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                 ),
                 child: Center(
                   child: Text(
-                    " $class_name, Confidence: $confidence",
+                    "$scientificName, score: $score",
                     style: TextStyle(
                       color: Color.fromARGB(255, 104, 102, 102),
                       fontSize: 13,
@@ -441,7 +444,6 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width * 0.71,
@@ -760,7 +762,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                           if (_selectedImage != null && _imageName != null) {
                             await uploadFile(_selectedImage!, _imageName!);
                           }
-
+                          await searchInventoryCodeById(selectedCode);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -768,12 +770,12 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                                 aeroport: widget.aeroport,
                                 email: widget.email,
                                 especeType: receivedArgument,
-                                codeInventaire: selectedCode,
+                                codeInventaire: savedCode,
                                 action: actionValue,
                                 date: _dateController.text,
                                 etat: etatValue,
-                                score: double.parse(confidence),
-                                predictedEspece: class_name,
+                                score: score,
+                                predictedEspece: scientificName,
                                 phase: phaseValue,
                                 nombre: selectedNumber,
                                 nomEspece: "none",
@@ -830,16 +832,16 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                             collRef = FirebaseFirestore.instance
                                 .collection('observationInsectes');
                           }
-
+                          await searchInventoryCodeById(selectedCode);
                           collRef.add({
-                            'predicted espece': class_name,
+                            'predicted espece': scientificName,
                             'email': widget.email,
                             'nom espece': "none",
                             'codeInventaire': selectedCode,
                             'action': actionValue,
                             'date': _dateController.text,
                             'etat': etatValue,
-                            'score': confidence,
+                            'score': score,
                             'phase': phaseValue,
                             'nombre': selectedNumber,
                             'statut': additionalArgument,
@@ -1029,9 +1031,9 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
   }
 ///////////////////////////////////////////////////////////////////:
 
-  Future<void> uploadBird() async {
+  Future<void> uploadImage() async {
     final Uri uri = Uri.parse(
-        "http://olga1.mercier.pro:9999/bird_recognition"); // Update with your server's URL
+        "http://olga1.mercier.pro:9999/upload"); // Update with your server's URL
     final request = http.MultipartRequest("POST", uri);
     final headers = {"Content-type": "multipart/form-data"};
 
@@ -1053,25 +1055,24 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
 
         if (responseData != null) {
           //print("Response body: $responseData");
-          //print(responseData['results']);
 
-          if (responseData['results'] != null) {
-            final Map<String, dynamic> result = responseData['results'];
-            // print(result);
+          final List<dynamic>? results = responseData['results'];
+          print(results);
 
-            final dynamic conf = result['confidence'];
-            final dynamic classN = result['class_name'];
+          if (results != null && results.isNotEmpty) {
+            final Map<String, dynamic> firstResult = results.first;
+            final dynamic resultScientificName = firstResult['scientific_name'];
+            final dynamic resScore = firstResult['score'];
 
-            setState(() {
-              class_name = classN;
-              confidence = conf.toStringAsFixed(2);
-            });
-            //final File resScore = result['predicted_image_path'];
-
-            if (confidence != null && class_name != null) {
+            if (resultScientificName != null && resScore != null) {
+              setState(() {
+                scientificName = resultScientificName.toString();
+                score = resScore;
+                // _especeController.text= resultScientificName.toString();
+              });
               print("Image uploaded successfully");
-              print("class name :$class_name");
-              print("confidence :$confidence");
+              print("scientific name :$scientificName");
+              print("score : $score");
             } else {
               print("Failed to parse scientific_name or score from response");
             }
@@ -1090,4 +1091,21 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
       print("Error uploading image: $error");
     }
   }
+
+////////////////////////////////////////////////////
+  Future<void> searchInventoryCodeById(String id) async {
+    await for (QuerySnapshot snapshot in CodeStream) {
+      for (DocumentSnapshot doc in snapshot.docs) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        if (doc.id == id) {
+          setState(() {
+            savedCode = data['code'];
+          });
+          return; // Exit the function once the French name is found
+        }
+      }
+    }
+  }
+////////////////////////////////////////////////////
 }

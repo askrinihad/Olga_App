@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:test_app/language/language.dart';
+import 'package:test_app/language/Language.dart';
 import 'package:test_app/language/language_constants.dart';
 
 import 'package:test_app/main.dart';
-import 'package:test_app/log/login_screen.dart';
+import 'package:test_app/log/LoginScreen.dart';
 
 // HomePage is a StatefulWidget that initializes Firebase and displays the LoginScreen.
 class HomePage extends StatefulWidget {

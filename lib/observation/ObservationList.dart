@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/observation/observation_info.dart';
+import 'package:test_app/observation/ObservationInfo.dart';
 
-class listeObs extends StatefulWidget {
+class ObservationList extends StatefulWidget {
   final String typeObs;
   final String aeroport;
-  const listeObs({required this.typeObs, required this.aeroport, super.key});
+  const ObservationList({required this.typeObs, required this.aeroport, super.key});
 
   @override
-  State<listeObs> createState() => _listeObsState();
+  State<ObservationList> createState() => _ObservationListState();
 }
 
-class _listeObsState extends State<listeObs> {
+class _ObservationListState extends State<ObservationList> {
   late List<Map<String, dynamic>> listObs = [];
   bool isLoaded = false;
   bool found = false;
@@ -156,7 +156,7 @@ class _listeObsState extends State<listeObs> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        obsInfo(item: listObs[index]),
+                                        ObservationInfo(item: listObs[index]),
                                   ),
                                 );
                               },

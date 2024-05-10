@@ -6,14 +6,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 
-class bird_recognition extends StatefulWidget {
-  const bird_recognition({super.key});
+class BirdRecognition extends StatefulWidget {
+  const BirdRecognition({super.key});
 
   @override
-  State<bird_recognition> createState() => _bird_recognitionState();
+  State<BirdRecognition> createState() => _BirdRecognitionState();
 }
 
-class _bird_recognitionState extends State<bird_recognition> {
+class _BirdRecognitionState extends State<BirdRecognition> {
   File? _selectedImage;
   File? _imageName;
   String class_name = "";
