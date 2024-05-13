@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/history/historymap.dart';
+import 'package:test_app/history/HistoryMap.dart';
 import 'package:test_app/observation/ObservationList.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -112,14 +112,14 @@ class _HistoryState extends State<History> {
                         fixedSize: Size(150, 50),
                       ),
                       onPressed: () {
-                         Navigator.push(
-                           context,
-                           MaterialPageRoute(
-                             builder: (context) => HistoryMap(
-                                 typeObs: dropdownValue,
-                                 aeroport: widget.aeroport),
-                           ),
-                         );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HistoryMap(
+                                typeObs: dropdownValue,
+                                aeroport: widget.aeroport),
+                          ),
+                        );
                       },
                       child: Text(
                         AppLocalizations.of(context)!.localiser,
