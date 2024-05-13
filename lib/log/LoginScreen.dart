@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/menu/ProfileScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:test_app/menu/drawer/DrawerSections.dart';
 
 const List<String> aeroportList = <String>[
   'Paris-Charles de Gaulle Airport',
@@ -28,13 +29,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// Create a function to log in using email and password
   /// Take the email and password as parameters
-  static Future<User?> loginUsingEmailPassword({required String email,
-    required String password,
-    required BuildContext context}) async {
+  static Future<User?> loginUsingEmailPassword(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
     // Create an instance of FirebaseAuth
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
-    try { // Try to sign in using the email and password
+    try {
+      // Try to sign in using the email and password
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       user = userCredential.user;
@@ -103,10 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.06,
+                height: MediaQuery.of(context).size.height * 0.06,
               ),
 
               // Image Olga
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              
+
               // Text for the password reset
               SizedBox(
                 height: 16.0,
@@ -185,10 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(appLocalizations.motdepasseOublie,
                   style: TextStyle(color: Color(0xff8E7F7F))),
               SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.1,
+                height: MediaQuery.of(context).size.width * 0.1,
               ),
 
               // Button for the login
@@ -212,13 +209,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (user != null) {
                       print('Navigating to AccueilPage');
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) =>
-                              ProfileScreen(
-                                  email: _emailController.text,
-                                  aeroport: aeroportValue)));
+                          builder: (context) => ProfileScreen(
+                              email: _emailController.text,
+                              aeroport: aeroportValue,
+                              currentPage: DrawerSections.Accueil)));
                     }
                   },
-
                   child: Text(appLocalizations.connexion,
                       style: TextStyle(color: Colors.white, fontSize: 13.0)),
                 ),

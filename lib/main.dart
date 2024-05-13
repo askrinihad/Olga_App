@@ -10,7 +10,7 @@ void main() {
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
   @override
-State<MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 
   static void setLocale(BuildContext context, Locale newLocale) {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
@@ -36,13 +36,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: _locale,
-      home: HomePage(),
-      //home: ProfileScreen(),
-      //home: MapApp(),
-    );
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: _locale,
+        home: HomePage());
   }
 }
-

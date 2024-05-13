@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/menu/ProfileScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/menu/drawer/DrawerSections.dart';
 
 import 'package:test_app/pages/HomePage.dart';
 
@@ -45,7 +46,9 @@ class _LogOutState extends State<LogOut> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       // Navigate to ProfileScreen
                       builder: (context) => ProfileScreen(
-                          email: widget.email, aeroport: widget.aeroport)));
+                          email: widget.email,
+                          aeroport: widget.aeroport,
+                          currentPage: DrawerSections.Accueil)));
                 },
                 child: Text(AppLocalizations.of(context)!.non,
                     style: TextStyle(

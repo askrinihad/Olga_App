@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/observation/ObservationInfo.dart';
@@ -16,9 +15,6 @@ class _ObservationListState extends State<ObservationList> {
   late List<Map<String, dynamic>> listObs = [];
   bool isLoaded = false;
   bool found = false;
-  late CollectionReference<Map<String, dynamic>> collection;
-  late CollectionReference<Map<String, dynamic>> collection2;
-  late CollectionReference<Map<String, dynamic>> collection3;
 
   _incrementCounter() async {
     var collections = select_collection_airport_typeobs(widget.aeroport, widget.typeObs);

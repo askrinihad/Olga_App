@@ -16,15 +16,23 @@ import 'package:test_app/menu/drawer/MyDrawerList.dart';
 class ProfileScreen extends StatefulWidget {
   final String email;
   final String aeroport;
-  const ProfileScreen({required this.email, required this.aeroport, super.key});
+  final DrawerSections currentPage;
+  const ProfileScreen(
+      {required this.email,
+      required this.aeroport,
+      super.key,
+      required this.currentPage});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState(currentPage);
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   // currentPage keeps track of the currently selected menu item.
-  var currentPage = DrawerSections.Accueil;
+  DrawerSections currentPage;
+
+  _ProfileScreenState(DrawerSections this.currentPage);
+
   @override
   Widget build(BuildContext context) {
     // The Scaffold contains an AppBar, the currently selected page as the body, and a Drawer for navigation.
@@ -59,13 +67,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget getContainer(DrawerSections currentPage) {
     switch (currentPage) {
       case DrawerSections.NouvelleObservation:
-        return Observation(
-            email: widget.email, aeroport: widget.aeroport);
+        return Observation(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.NouvelleEspece:
         return AddSpecie();
       case DrawerSections.NouveauInventaire:
-        return AddInventory(
-            email: widget.email, aeroport: widget.aeroport);
+        return AddInventory(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Bibliotheque:
         return Library1(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Historique:

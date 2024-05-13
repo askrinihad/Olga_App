@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/library/LibraryReturn.dart';
 import 'package:test_app/SpeciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/menu/ProfileScreen.dart';
+import 'package:test_app/menu/drawer/DrawerSections.dart';
 
 class Library extends StatefulWidget {
   final String typeEspece;
@@ -52,8 +53,10 @@ class _LibraryState extends State<Library> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => LibraryReturn(
-                    email: widget.email, aeroport: widget.aeroport)));
+                builder: (context) => ProfileScreen(
+                    email: widget.email,
+                    aeroport: widget.aeroport,
+                    currentPage: DrawerSections.Bibliotheque)));
           },
         ),
       ),

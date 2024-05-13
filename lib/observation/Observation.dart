@@ -5,8 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Observation extends StatefulWidget {
   final String email;
   final String aeroport;
-  const Observation(
-      {required this.email, required this.aeroport, super.key});
+  const Observation({required this.email, required this.aeroport, super.key});
 
   @override
   State<Observation> createState() => _ObservationState();
