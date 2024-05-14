@@ -11,6 +11,13 @@ class ObservationInfo extends StatefulWidget {
 
 class _ObservationInfoState extends State<ObservationInfo> {
   late String imageUrl = '';
+
+  TextStyle fontstyle = TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Hind Siliguri',
+                    );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,60 +45,35 @@ class _ObservationInfoState extends State<ObservationInfo> {
                     AppLocalizations.of(context)!.observeLe +
                         " : ${widget.item["date"]}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Hind Siliguri',
-                    ),
+                    style: fontstyle,
                   ),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.phase +
                         " : ${widget.item["phase"]}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Hind Siliguri',
-                    ),
+                    style: fontstyle,
                   ),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.nombre +
                         " : ${widget.item["nombre"]} individu (s)",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Hind Siliguri',
-                    ),
+                    style: fontstyle,
                   ),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.etat +
                         " : ${widget.item["etat"]}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Hind Siliguri',
-                    ),
+                    style: fontstyle,
                   ),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.action +
                         " : ${widget.item["action"]}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Hind Siliguri',
-                    ),
+                    style: fontstyle,
                   ),
                 ],
               ),

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:test_app/library/Library.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class Library1 extends StatefulWidget {
+class LibrarySelectType extends StatefulWidget {
   final String email;
   final String aeroport;
-  const Library1({required this.email, required this.aeroport, super.key});
+  const LibrarySelectType({required this.email, required this.aeroport, super.key});
 
   @override
-  State<Library1> createState() => _Library1State();
+  State<LibrarySelectType> createState() => _LibrarySelectTypeState();
 }
 
-class _Library1State extends State<Library1> {
+class _LibrarySelectTypeState extends State<LibrarySelectType> {
   final floreController = TextEditingController();
   final fauneController = TextEditingController();
   final insecteController = TextEditingController();
