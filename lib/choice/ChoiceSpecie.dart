@@ -7,6 +7,7 @@ import 'package:test_app/choice/specie_unknow_faune.dart';
 import 'package:test_app/menu/ProfileScreen.dart';
 import 'package:test_app/menu/drawer/DrawerSections.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class ChoiceSpecie extends StatefulWidget {
   //const ChoixEspece({super.key}); modified
@@ -97,10 +98,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       }
                     },
                     child: Text(AppLocalizations.of(context)!.especeProtge,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13.0,
-                        )),
+                        style: StyleText.getButton()),
                   ),
                 ),
               ),
@@ -155,10 +153,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       }
                     },
                     child: Text(AppLocalizations.of(context)!.especeInvasive,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13.0,
-                        )),
+                        style: StyleText.getButton()),
                   ),
                 ),
               ),
@@ -213,10 +208,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       }
                     },
                     child: Text(AppLocalizations.of(context)!.especeCourante,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13.0,
-                        )),
+                        style: StyleText.getButton()),
                   ),
                 ),
               ),
@@ -257,10 +249,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       }
                     },
                     child: Text(AppLocalizations.of(context)!.especeInconnue,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13.0,
-                        )),
+                        style: StyleText.getButton()),
                   ),
                 ),
               ),

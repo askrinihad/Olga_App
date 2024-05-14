@@ -5,6 +5,7 @@ import 'package:test_app/language/language_constants.dart';
 
 import 'package:test_app/main.dart';
 import 'package:test_app/log/LoginScreen.dart';
+import 'package:test_app/style/StyleText.dart';
 
 // HomePage is a StatefulWidget that initializes Firebase and displays the LoginScreen.
 class HomePage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                       children: <Widget>[
                         Text(
                           e.flag,
-                          style: const TextStyle(fontSize: 30),
+                          style: StyleText.getBody(size: 30),
                         ),
                         Text(e.name)
                       ],

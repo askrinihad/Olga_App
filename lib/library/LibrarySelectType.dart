@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/library/Library.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class LibrarySelectType extends StatefulWidget {
   final String email;
@@ -47,10 +48,7 @@ class _LibrarySelectTypeState extends State<LibrarySelectType> {
                     );
                   },
                   child: Text(AppLocalizations.of(context)!.faune,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13.0,
-                      )),
+                      style: StyleText.getButton()),
                 ),
               ),
             ),
@@ -79,10 +77,7 @@ class _LibrarySelectTypeState extends State<LibrarySelectType> {
                   },
                   child: Text(
                     AppLocalizations.of(context)!.flore,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13.0,
-                    ),
+                    style: StyleText.getButton(),
                   ),
                 ),
               ),
@@ -111,10 +106,7 @@ class _LibrarySelectTypeState extends State<LibrarySelectType> {
                     );
                   },
                   child: Text(AppLocalizations.of(context)!.insectes,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13.0,
-                      )),
+                      style: StyleText.getButton()),
                 ),
               ),
             ),

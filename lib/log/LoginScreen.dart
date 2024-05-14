@@ -3,6 +3,7 @@ import 'package:test_app/menu/ProfileScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/style/StyleText.dart';
 
 const List<String> aeroportList = <String>[
   'Paris-Charles de Gaulle Airport',
@@ -64,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Icon(Icons.arrow_drop_down), // Add the icon
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey), // Set the text color
+      style: StyleText.getHintForm(), // Set the text color
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -183,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 16.0,
               ),
               Text(appLocalizations.motdepasseOublie,
-                  style: TextStyle(color: Color(0xff8E7F7F))),
+                  style: StyleText.getBody(color: Color(0xff8E7F7F))),
               SizedBox(
                 height: MediaQuery.of(context).size.width * 0.1,
               ),
@@ -216,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   child: Text(appLocalizations.connexion,
-                      style: TextStyle(color: Colors.white, fontSize: 13.0)),
+                      style: StyleText.getButton()),
                 ),
               ),
             ],

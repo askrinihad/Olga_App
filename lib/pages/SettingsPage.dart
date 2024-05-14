@@ -3,6 +3,7 @@ import 'package:test_app/language/Language.dart';
 import 'package:test_app/language/language_constants.dart';
 import 'package:test_app/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -27,12 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
             // The title of the page
             Text(
               AppLocalizations.of(context)!.parametre,
-              style: TextStyle(
-                color: Color(0xFF006766),
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Hind Siliguri',
-              ),
+              style: StyleText.getTitle(),
             ),
 
             // A SizedBox is used to add space between the title and the DropdownButton.
@@ -44,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
             DropdownButton<Language>(
               iconSize: 25,
               hint: Text(AppLocalizations.of(context)!.changeLanguage,
-                  style: TextStyle(fontSize: 13, fontFamily: 'Hind Siliguri')),
+                  style: StyleText.getHintForm()),
               onChanged: (Language? language) async {
                 if (language != null) {
                   Locale _locale = await setLocale(language.languageCode);
@@ -62,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         children: <Widget>[
                           Text(
                             e.flag,
-                            style: const TextStyle(fontSize: 30),
+                            style: StyleText.getBody(size: 30),
                           ),
                           Text(e.name)
                         ],

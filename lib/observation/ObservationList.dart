@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/observation/ObservationInfo.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class ObservationList extends StatefulWidget {
   final String typeObs;
@@ -79,9 +80,8 @@ class _ObservationListState extends State<ObservationList> {
                                   children: [
                                     Text(
                                       listObs[index]["date"],
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 25, 25, 28),
-                                        fontSize: 13.0,
+                                      style: StyleText.getBody(
+                                        color: Color.fromARGB(255, 25, 25, 28)
                                       ),
                                     ),
                                     SizedBox(width: 10),

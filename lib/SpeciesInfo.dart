@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class SpeciesInfo extends StatefulWidget {
   final Map<String, dynamic> item;
@@ -10,6 +11,13 @@ class SpeciesInfo extends StatefulWidget {
 }
 
 class _SpeciesInfoState extends State<SpeciesInfo> {
+  static TextStyle styleblack =
+      StyleText.getBody(color: Colors.black, size: 18, weight: FontWeight.bold);
+  static TextStyle stylegrey = StyleText.getBody(
+    color: Color.fromARGB(255, 63, 67, 96),
+    weight: FontWeight.bold,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,64 +33,34 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
               Text(
                 AppLocalizations.of(context)!.nomeEspece + " :",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: styleblack,
               ),
               Text(
                 widget.item["Nom français"],
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color.fromARGB(255, 63, 67, 96),
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: stylegrey,
               ),
               SizedBox(height: 10),
               Text(
                 AppLocalizations.of(context)!.genre + " :",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: styleblack,
               ),
               Text(
                 widget.item["genre"],
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color.fromARGB(255, 63, 67, 96),
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: stylegrey,
               ),
               SizedBox(height: 10),
               Text(
                 AppLocalizations.of(context)!.famille + " : ",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: styleblack,
               ),
               Text(
                 widget.item["famille"],
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color.fromARGB(255, 63, 67, 96),
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: stylegrey,
               ),
               SizedBox(height: 10),
               Text(
@@ -91,23 +69,13 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
                     AppLocalizations.of(context)!.de +
                     " : ${widget.item["nom"]}",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: styleblack,
               ),
               SizedBox(height: 10),
               Text(
                 widget.item["description"],
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color.fromARGB(255, 63, 67, 96),
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: stylegrey,
               ),
             ],
           ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
+import 'package:test_app/style/StyleText.dart';
 
 class BirdRecognition extends StatefulWidget {
   const BirdRecognition({super.key});
@@ -27,12 +28,7 @@ class _BirdRecognitionState extends State<BirdRecognition> {
           Center(
             child: Text(
               AppLocalizations.of(context)!.bird_recognition,
-              style: TextStyle(
-                color: Color(0xFF006766),
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Hind Siliguri',
-              ),
+              style: StyleText.getTitle(),
             ),
           ),
           const SizedBox(height: 30),
@@ -63,10 +59,7 @@ class _BirdRecognitionState extends State<BirdRecognition> {
                           width: 20), // Add spacing between icon and text
                       Text(
                         AppLocalizations.of(context)!.importerPhoto,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13.0,
-                        ),
+                        style: StyleText.getButton(),
                       ),
                     ],
                   ),
@@ -101,10 +94,7 @@ class _BirdRecognitionState extends State<BirdRecognition> {
                   ),
                   onPressed: uploadBird,
                   child: Text(AppLocalizations.of(context)!.reconnaissance,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13.0,
-                      )),
+                      style: StyleText.getButton()),
                 ),
               ),
             ),
@@ -129,9 +119,8 @@ class _BirdRecognitionState extends State<BirdRecognition> {
             child: Center(
               child: Text(
                 " $class_name, Confidence: $confidence",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 104, 102, 102),
-                  fontSize: 13,
+                style: StyleText.getBody(
+                  color: Color.fromARGB(255, 104, 102, 102)
                 ),
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/menu/drawer/DrawerSections.dart';
 
 import 'package:test_app/pages/HomePage.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class LogOut extends StatefulWidget {
   final String email;
@@ -23,7 +24,7 @@ class _LogOutState extends State<LogOut> {
         children: [
           SizedBox(height: 200),
           Text(AppLocalizations.of(context)!.voulezDeconnecter,
-              style: TextStyle(fontSize: 13)), // Text for logout
+              style: StyleText.getBody()), // Text for logout
           SizedBox(height: 100),
           Row(
             mainAxisAlignment:
@@ -51,9 +52,7 @@ class _LogOutState extends State<LogOut> {
                           currentPage: DrawerSections.Accueil)));
                 },
                 child: Text(AppLocalizations.of(context)!.non,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13)), // Color of text is white
+                    style: StyleText.getButton()), // Color of text is white
               ),
               SizedBox(width: MediaQuery.of(context).size.width * 10 / 100),
 
@@ -73,7 +72,7 @@ class _LogOutState extends State<LogOut> {
                       MaterialPageRoute(builder: (context) => HomePage()));
                 },
                 child: Text(AppLocalizations.of(context)!.oui,
-                    style: TextStyle(color: Colors.white, fontSize: 13)),
+                    style: StyleText.getButton()),
               ),
             ],
           ),

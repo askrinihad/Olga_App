@@ -4,6 +4,7 @@ import 'package:test_app/SpeciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/menu/ProfileScreen.dart';
 import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class Library extends StatefulWidget {
   final String typeEspece;
@@ -92,10 +93,7 @@ class _LibraryState extends State<Library> {
                                   children: [
                                     Text(
                                       items[index]["Nom français"],
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 25, 25, 28),
-                                        fontSize: 13.0,
-                                      ),
+                                      style: StyleText.getBody(),
                                     ),
                                     SizedBox(width: 10),
                                   ],

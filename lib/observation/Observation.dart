@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/choice/ChoiceSpecie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class Observation extends StatefulWidget {
   final String email;
@@ -48,10 +49,7 @@ class _ObservationState extends State<Observation> {
                     );
                   },
                   child: Text(appLocalizations.faune,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13.0,
-                      )),
+                      style: StyleText.getButton()),
                 ),
               ),
             ),
@@ -80,10 +78,7 @@ class _ObservationState extends State<Observation> {
                   },
                   child: Text(
                     appLocalizations.flore,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13.0,
-                    ),
+                    style: StyleText.getButton(),
                   ),
                 ),
               ),
@@ -112,10 +107,7 @@ class _ObservationState extends State<Observation> {
                     );
                   },
                   child: Text(appLocalizations.insectes,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13.0,
-                      )),
+                      style: StyleText.getButton()),
                 ),
               ),
             ),

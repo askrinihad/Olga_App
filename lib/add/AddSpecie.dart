@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 const List<String> list = <String>['Plant life', 'Wildlife', 'Insects'];
 
@@ -28,7 +29,7 @@ class _AddSpecieState extends State<AddSpecie> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: AppLocalizations.of(context)!.nomLatin,
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        hintStyle: StyleText.getHintForm(),
         filled: true,
         fillColor: Color(0xffF6F6F6),
         border: OutlineInputBorder(
@@ -50,7 +51,7 @@ class _AddSpecieState extends State<AddSpecie> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: 'Ordre...',
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        hintStyle: StyleText.getHintForm(),
         filled: true,
         fillColor: Color(0xffF6F6F6),
         border: OutlineInputBorder(
@@ -72,7 +73,7 @@ class _AddSpecieState extends State<AddSpecie> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: AppLocalizations.of(context)!.nomVer,
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        hintStyle: StyleText.getHintForm(),
         filled: true,
         fillColor: Color(0xffF6F6F6),
         border: OutlineInputBorder(
@@ -94,7 +95,7 @@ class _AddSpecieState extends State<AddSpecie> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: AppLocalizations.of(context)!.genre,
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        hintStyle: StyleText.getHintForm(),
         filled: true,
         fillColor: Color(0xffF6F6F6),
         border: OutlineInputBorder(
@@ -116,7 +117,7 @@ class _AddSpecieState extends State<AddSpecie> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: AppLocalizations.of(context)!.famille,
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        hintStyle: StyleText.getHintForm(),
         filled: true,
         fillColor: Color(0xffF6F6F6),
         border: OutlineInputBorder(
@@ -139,7 +140,7 @@ class _AddSpecieState extends State<AddSpecie> {
       maxLines: null,
       decoration: InputDecoration(
         hintText: 'Description ...',
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        hintStyle: StyleText.getHintForm(),
         filled: true,
         fillColor: Color(0xffF6F6F6),
         border: OutlineInputBorder(
@@ -168,7 +169,7 @@ class _AddSpecieState extends State<AddSpecie> {
         child: Icon(Icons.arrow_drop_down),
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey),
+      style: StyleText.getHintForm(),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -199,12 +200,7 @@ class _AddSpecieState extends State<AddSpecie> {
             Center(
               child: Text(
                 appLocalizations.nouvelleEspece,
-                style: TextStyle(
-                  color: Color(0xFF006766),
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Hind Siliguri',
-                ),
+                style: StyleText.getTitle(),
               ),
             ),
             SizedBox(height: 100),
@@ -390,7 +386,7 @@ class _AddSpecieState extends State<AddSpecie> {
                   },
                   child: Text(
                     AppLocalizations.of(context)!.renregistrer,
-                    style: TextStyle(color: Colors.white, fontSize: 13),
+                    style: StyleText.getButton(),
                   ), // Placeholder text, replace it with your actual button text
                 ),
                 SizedBox(height: 50),

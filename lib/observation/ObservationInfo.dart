@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class ObservationInfo extends StatefulWidget {
   final Map<String, dynamic> item;
@@ -12,11 +13,10 @@ class ObservationInfo extends StatefulWidget {
 class _ObservationInfoState extends State<ObservationInfo> {
   late String imageUrl = '';
 
-  TextStyle fontstyle = TextStyle(
+  TextStyle fontstyle = StyleText.getBody(
                       color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Hind Siliguri',
+                      size: 18,
+                      weight: FontWeight.bold,
                     );
   @override
   Widget build(BuildContext context) {

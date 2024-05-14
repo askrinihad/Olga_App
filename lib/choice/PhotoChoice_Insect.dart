@@ -13,6 +13,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:test_app/choice/ChoiceSpecie.dart';
 import 'package:test_app/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 const List<String> phaseList = <String>[
   'Germination',
@@ -89,7 +90,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
         child: Icon(Icons.arrow_drop_down),
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey),
+      style: StyleText.getHintForm(),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -122,7 +123,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
         child: Icon(Icons.arrow_drop_down),
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey),
+      style: StyleText.getHintForm(),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -155,7 +156,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
         child: Icon(Icons.arrow_drop_down),
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey),
+      style: StyleText.getHintForm(),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -261,12 +262,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                       species +
                       " " +
                       AppLocalizations.of(context)!.espece,
-                  style: TextStyle(
-                    color: Color(0xFF006766),
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Hind Siliguri',
-                  ),
+                  style: StyleText.getTitle(size: 19),
                 ),
               ),
               const SizedBox(height: 30),
@@ -295,10 +291,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                               width: 20), // Add spacing between icon and text
                           Text(
                             AppLocalizations.of(context)!.connecterAppareil,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.0,
-                            ),
+                            style: StyleText.getButton(),
                           ),
                         ],
                       ),
@@ -333,10 +326,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                               width: 20), // Add spacing between icon and text
                           Text(
                             AppLocalizations.of(context)!.prendrePhoto,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.0,
-                            ),
+                            style: StyleText.getButton(),
                           ),
                         ],
                       ),
@@ -371,10 +361,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                               width: 20), // Add spacing between icon and text
                           Text(
                             AppLocalizations.of(context)!.importerPhoto,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.0,
-                            ),
+                            style: StyleText.getButton(),
                           ),
                         ],
                       ),
@@ -401,9 +388,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                     ' : ${this.point.latitude},' +
                     AppLocalizations.of(context)!.longitude +
                     ': ${this.point.longitude}',
-                style: TextStyle(
-                  fontSize: 13,
-                ),
+                style: StyleText.getBody(),
               ),
               const SizedBox(height: 10),
 
@@ -439,7 +424,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                             child: Text(
                               AppLocalizations.of(context)!.choisirEspece,
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                                  StyleText.getHintForm(),
                             ),
                           ),
                         ));
@@ -460,8 +445,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                                     data['Nom scientifique'],
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12),
+                                    style: StyleText.getHintForm(),
                                   ),
                                 ),
                               )));
@@ -539,10 +523,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                               child: Text(
                                   AppLocalizations.of(context)!
                                       .selectionnerCode,
-                                  style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize:
-                                          12) // Access the last element in the list
+                                  style: StyleText.getHintForm() // Access the last element in the list
                                   ),
                             ),
                           ));
@@ -555,10 +536,10 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                                 child: Text(
                                     AppLocalizations.of(context)!
                                         .creerInventaire,
-                                    style: const TextStyle(
+                                    style:  StyleText.getBody(
                                       color: Color.fromARGB(255, 255, 0, 0),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
+                                      size: 12,
+                                      weight: FontWeight.bold,
                                     )),
                               )));
                         }
@@ -574,7 +555,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                               child: Text(
                                 data['code'],
                                 style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
+                                    StyleText.getHintForm(),
                               ),
                             ),
                           ));
@@ -643,7 +624,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                       children: [
                         Text(
                           _dateController.text,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: StyleText.getHintForm(),
                         ),
                         Icon(Icons.calendar_today),
                       ],
@@ -714,7 +695,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                             ' ${index + 1} ' +
                                 AppLocalizations.of(context)!.individu +
                                 ' (s)',
-                            style: TextStyle(color: Colors.grey, fontSize: 12)),
+                            style: StyleText.getHintForm()),
                       ),
                     );
                   }),
@@ -784,7 +765,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                       null, // Set maxLines to null for a multi-line TextField
                   decoration: InputDecoration(
                     hintText: AppLocalizations.of(context)!.description + '...',
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                    hintStyle: StyleText.getHintForm(),
                     filled: true,
                     fillColor: Color(0xffF6F6F6),
                     border: OutlineInputBorder(
@@ -884,10 +865,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                         },
                         child: Text(
                           AppLocalizations.of(context)!.localiser,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.0,
-                          ),
+                          style: StyleText.getButton(),
                         ),
                       ),
                     ),
@@ -982,10 +960,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.renregistrer,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.0,
-                          ),
+                          style: StyleText.getButton(),
                         ),
                       ),
                     ),

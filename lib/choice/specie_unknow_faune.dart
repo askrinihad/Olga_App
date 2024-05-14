@@ -13,6 +13,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:test_app/choice/ChoiceSpecie.dart';
 import 'package:test_app/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 const List<String> phaseList = <String>[
   'Germination',
@@ -89,7 +90,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
         child: Icon(Icons.arrow_drop_down),
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey),
+      style: StyleText.getHintForm(),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -122,7 +123,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
         child: Icon(Icons.arrow_drop_down),
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey),
+      style: StyleText.getHintForm(),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -155,7 +156,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
         child: Icon(Icons.arrow_drop_down),
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey),
+      style: StyleText.getHintForm(),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -252,12 +253,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                       AppLocalizations.of(context)!.inconnue +
                       " " +
                       AppLocalizations.of(context)!.espece,
-                  style: TextStyle(
-                    color: Color(0xFF006766),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Hind Siliguri',
-                  ),
+                  style: StyleText.getTitle(size: 19),
                 ),
               ),
               const SizedBox(height: 30),
@@ -286,10 +282,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                               width: 20), // Add spacing between icon and text
                           Text(
                             AppLocalizations.of(context)!.connecterAppareil,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.0,
-                            ),
+                            style: StyleText.getButton(),
                           ),
                         ],
                       ),
@@ -324,10 +317,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                               width: 20), // Add spacing between icon and text
                           Text(
                             AppLocalizations.of(context)!.prendrePhoto,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.0,
-                            ),
+                            style: StyleText.getButton(),
                           ),
                         ],
                       ),
@@ -362,10 +352,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                               width: 20), // Add spacing between icon and text
                           Text(
                             AppLocalizations.of(context)!.importerPhoto,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.0,
-                            ),
+                            style: StyleText.getButton(),
                           ),
                         ],
                       ),
@@ -392,9 +379,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                     ': ${this.point.latitude},' +
                     AppLocalizations.of(context)!.longitude +
                     ': ${this.point.longitude}',
-                style: TextStyle(
-                  fontSize: 13,
-                ),
+                style: StyleText.getBody(),
               ),
               const SizedBox(height: 10),
               Container(
@@ -411,10 +396,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                       ),
                       onPressed: uploadBird,
                       child: Text(AppLocalizations.of(context)!.reconnaissance,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.0,
-                          )),
+                          style: StyleText.getButton()),
                     ),
                   ),
                 ),
@@ -439,9 +421,8 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                 child: Center(
                   child: Text(
                     " $class_name, Confidence: $confidence",
-                    style: TextStyle(
+                    style: StyleText.getBody(
                       color: Color.fromARGB(255, 104, 102, 102),
-                      fontSize: 13,
                     ),
                   ),
                 ),
@@ -479,10 +460,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 5.0),
                               child: Text(codes[codes.length - 1]["code"],
-                                  style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize:
-                                          12) // Access the last element in the list
+                                  style: StyleText.getHintForm() // Access the last element in the list
                                   ),
                             ),
                           ));
@@ -506,7 +484,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                               child: Text(
                                 data['code'],
                                 style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
+                                    StyleText.getHintForm(),
                               ),
                             ),
                           ));
@@ -565,7 +543,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                       children: [
                         Text(
                           _dateController.text,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: StyleText.getHintForm(),
                         ),
                         Icon(Icons.calendar_today),
                       ],
@@ -633,7 +611,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 5.0),
                         child: Text(' ${index + 1} indivudu (s)',
-                            style: TextStyle(color: Colors.grey, fontSize: 12)),
+                            style: StyleText.getHintForm()),
                       ),
                     );
                   }),
@@ -703,7 +681,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                       null, // Set maxLines to null for a multi-line TextField
                   decoration: InputDecoration(
                     hintText: AppLocalizations.of(context)!.description + '...',
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                    hintStyle: StyleText.getHintForm(),
                     filled: true,
                     fillColor: Color(0xffF6F6F6),
                     border: OutlineInputBorder(
@@ -794,10 +772,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                         },
                         child: Text(
                           AppLocalizations.of(context)!.localiser,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.0,
-                          ),
+                          style: StyleText.getButton(),
                         ),
                       ),
                     ),
@@ -894,10 +869,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.renregistrer,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.0,
-                          ),
+                          style: StyleText.getButton(),
                         ),
                       ),
                     ),

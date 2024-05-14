@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/history/HistoryMap.dart';
 import 'package:test_app/observation/ObservationList.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 const List<String> list = <String>['All', 'Plant life', 'Wildlife', 'Insects'];
 
@@ -34,7 +35,7 @@ class _HistoryState extends State<History> {
         child: Icon(Icons.arrow_drop_down),
       ),
       elevation: 16,
-      style: const TextStyle(color: Colors.grey),
+      style: StyleText.getHintForm(),
       onChanged: (String? value) {
         setState(() {
           dropdownValue = value!;
@@ -64,12 +65,7 @@ class _HistoryState extends State<History> {
           Center(
             child: Text(
               AppLocalizations.of(context)!.historique,
-              style: TextStyle(
-                color: Color(0xFF006766),
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Hind Siliguri',
-              ),
+              style: StyleText.getTitle(),
             ),
           ),
           SizedBox(
@@ -123,7 +119,7 @@ class _HistoryState extends State<History> {
                       },
                       child: Text(
                         AppLocalizations.of(context)!.localiser,
-                        style: TextStyle(color: Colors.white, fontSize: 13),
+                        style: StyleText.getButton(),
                       ),
                     ),
                     SizedBox(
@@ -151,7 +147,7 @@ class _HistoryState extends State<History> {
                       },
                       child: Text(
                         AppLocalizations.of(context)!.afficher,
-                        style: TextStyle(color: Colors.white, fontSize: 13),
+                        style: StyleText.getButton(),
                       ),
                     ),
                   ],

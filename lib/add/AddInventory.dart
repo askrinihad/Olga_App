@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class AddInventory extends StatefulWidget {
   // The email and airport are required parameters for this widget.
   final String email;
   final String aeroport;
-  const AddInventory(
-      {required this.email, required this.aeroport, super.key});
+  const AddInventory({required this.email, required this.aeroport, super.key});
 
   @override
   // Create the state for this widget.
@@ -27,6 +27,11 @@ class _AddInventoryState extends State<AddInventory> {
   List<bool> selectedUsers = [];
   List<String> selectedUserEmails = [];
 
+  static TextStyle styletext = StyleText.getBody(
+      color: Color.fromARGB(255, 88, 89, 92),
+      size: 14,
+      weight: FontWeight.bold);
+
   // _buildCode creates a TextFormField for the code input.
   Widget _buildCode() {
     return TextFormField(
@@ -34,7 +39,7 @@ class _AddInventoryState extends State<AddInventory> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: 'Code ...',
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        hintStyle: StyleText.getHintForm(),
         filled: true,
         fillColor: Color(0xffF6F6F6),
         border: OutlineInputBorder(
@@ -80,12 +85,7 @@ class _AddInventoryState extends State<AddInventory> {
         Center(
           child: Text(
             AppLocalizations.of(context)!.nouveauInventaire,
-            style: TextStyle(
-              color: Color(0xFF006766),
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Hind Siliguri',
-            ),
+            style: StyleText.getTitle(),
           ),
         ),
         SizedBox(height: 100),
@@ -102,12 +102,7 @@ class _AddInventoryState extends State<AddInventory> {
                       child: Center(
                         child: Text(
                           AppLocalizations.of(context)!.codeInventaire,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 88, 89, 92),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Hind Siliguri',
-                          ),
+                          style: styletext,
                         ),
                       ),
                     ),
@@ -142,12 +137,7 @@ class _AddInventoryState extends State<AddInventory> {
                     child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.dateDebut,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 88, 89, 92),
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Hind Siliguri',
-                        ),
+                        style: styletext,
                       ),
                     ),
                   ),
@@ -179,8 +169,7 @@ class _AddInventoryState extends State<AddInventory> {
                           children: [
                             Text(
                               _dateDebutController.text,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              style: StyleText.getHintForm(),
                             ),
                             Icon(Icons.calendar_today),
                           ],
@@ -199,12 +188,7 @@ class _AddInventoryState extends State<AddInventory> {
                     child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.dateFin,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 88, 89, 92),
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Hind Siliguri',
-                        ),
+                        style: styletext,
                       ),
                     ),
                   ),
@@ -236,8 +220,7 @@ class _AddInventoryState extends State<AddInventory> {
                           children: [
                             Text(
                               _dateFinController.text,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              style: StyleText.getHintForm(),
                             ),
                             Icon(Icons.calendar_today),
                           ],
@@ -257,12 +240,7 @@ class _AddInventoryState extends State<AddInventory> {
                       child: Center(
                         child: Text(
                           AppLocalizations.of(context)!.membres,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 88, 89, 92),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Hind Siliguri',
-                          ),
+                          style: styletext,
                         ),
                       ),
                     ),
@@ -354,7 +332,7 @@ class _AddInventoryState extends State<AddInventory> {
                   },
                   child: Text(
                     AppLocalizations.of(context)!.renregistrer,
-                    style: TextStyle(color: Colors.white, fontSize: 13),
+                    style: StyleText.getButton(),
                   ), // Placeholder text, replace it with your actual button text
                 ),
               ),

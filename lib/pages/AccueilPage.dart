@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/style/StyleText.dart';
 
 class AccueilPage extends StatefulWidget {
   const AccueilPage({super.key});
@@ -9,14 +10,15 @@ class AccueilPage extends StatefulWidget {
 
 class _AccueilPageState extends State<AccueilPage> {
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return
-    // Container containing the text "BioDivObserver"
-    Container(
-      child: Center(child:  Text("BioDivObserver", style: TextStyle(color: Color(0xFF006766), 
-      fontSize:35, 
-      fontWeight: FontWeight.bold,
-      fontFamily: 'Hind Siliguri'),),
+        // Container containing the text "BioDivObserver"
+        Container(
+      child: Center(
+        child: Text(
+          "BioDivObserver",
+          style: StyleText.getTitle(size: 35),
+        ),
       ),
     );
   }

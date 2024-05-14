@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/style/StyleText.dart';
 
 // sert à définir les items du menu de navigation
 class MenuItemWidget extends StatelessWidget {
@@ -42,9 +43,8 @@ class MenuItemWidget extends StatelessWidget {
               ),
               Text(
                 title,
-                style: TextStyle(
-                  color: selected ? Color(0xFF006766) : Colors.black,
-                  fontSize: 16,
+                style: StyleText.getMenu(
+                  selected: selected,
                 ),
               ),
             ]),
