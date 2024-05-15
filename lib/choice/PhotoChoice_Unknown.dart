@@ -13,6 +13,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:test_app/choice/ChoiceSpecie.dart';
 import 'package:test_app/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/menu/NavBackbar.dart';
 import 'package:test_app/style/StyleText.dart';
 
 const List<String> phaseList = <String>[
@@ -222,21 +223,7 @@ class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
     }
     // print("Received Argument 1111: $receivedArgument");
     //print("Additional Argument 22222: $additionalArgument");
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF006766),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => ChoiceSpecie(
-                      argumentReceived: receivedArgument,
-                      email: widget.email,
-                      aeroport: widget.aeroport,
-                    )));
-          },
-        ),
-      ),
+    return NavBackbar(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 50.0), // Adjust top padding as needed

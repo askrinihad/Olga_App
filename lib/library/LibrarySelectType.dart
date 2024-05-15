@@ -37,8 +37,7 @@ class _LibrarySelectTypeState extends State<LibrarySelectType> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   onPressed: () {
-                    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => Library(
                             typeEspece: "faune",
@@ -66,7 +65,7 @@ class _LibrarySelectTypeState extends State<LibrarySelectType> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => Library(
                             typeEspece: "flore",
@@ -96,7 +95,7 @@ class _LibrarySelectTypeState extends State<LibrarySelectType> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => Library(
                             typeEspece: "insectes",

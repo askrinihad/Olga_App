@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app/SpeciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/menu/ProfileScreen.dart';
-import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/menu/NavBackbar.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class Library extends StatefulWidget {
@@ -47,20 +46,7 @@ class _LibraryState extends State<Library> {
     } else {
       collection = FirebaseFirestore.instance.collection("espece_insectes");
     }
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF006766),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => ProfileScreen(
-                    email: widget.email,
-                    aeroport: widget.aeroport,
-                    currentPage: DrawerSections.Bibliotheque)));
-          },
-        ),
-      ),
+    return NavBackbar(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

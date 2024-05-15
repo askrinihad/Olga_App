@@ -4,8 +4,7 @@ import 'package:test_app/choice/PhotoChoice_Insect.dart';
 import 'package:test_app/choice/PhotoChoice_Fauna.dart';
 import 'package:test_app/choice/PhotoChoice_Unknown.dart';
 import 'package:test_app/choice/specie_unknow_faune.dart';
-import 'package:test_app/menu/ProfileScreen.dart';
-import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/menu/NavBackbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/style/StyleText.dart';
 
@@ -29,21 +28,7 @@ class ChoiceSpecie extends StatefulWidget {
 class _ChoiceSpecieState extends State<ChoiceSpecie> {
   @override
   Widget build(BuildContext context) {
-    //print("Received Argument: ${widget.argumentReceived}");
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF006766),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => ProfileScreen(
-                    email: widget.email,
-                    aeroport: widget.aeroport,
-                    currentPage: DrawerSections.NouvelleObservation)));
-          },
-        ),
-      ),
+    return NavBackbar(
       body: Padding(
         padding: EdgeInsets.only(top: 200.0), // Adjust top padding as needed
         child: Column(
@@ -62,10 +47,9 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                     ),
                     onPressed: () {
                       if (widget.argumentReceived == 'flore') {
-                        //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo())); modified
                         String combinedArgument =
                             "${widget.argumentReceived} protégé";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Flora(
                                 argumentReceived: combinedArgument,
@@ -76,7 +60,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       } else if (widget.argumentReceived == 'insectes') {
                         String combinedArgument =
                             "${widget.argumentReceived} protégé";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Insect(
                                 argumentReceived: combinedArgument,
@@ -87,7 +71,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       } else {
                         String combinedArgument =
                             "${widget.argumentReceived} protégé";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Fauna(
                                 argumentReceived: combinedArgument,
@@ -117,10 +101,9 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                     ),
                     onPressed: () {
                       if (widget.argumentReceived == 'flore') {
-                        //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo())); modified
                         String combinedArgument =
                             "${widget.argumentReceived} indésirable";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Flora(
                                 argumentReceived: combinedArgument,
@@ -131,7 +114,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       } else if (widget.argumentReceived == 'insectes') {
                         String combinedArgument =
                             "${widget.argumentReceived} indésirable";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Insect(
                                 argumentReceived: combinedArgument,
@@ -142,7 +125,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       } else {
                         String combinedArgument =
                             "${widget.argumentReceived} indésirable";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Fauna(
                                 argumentReceived: combinedArgument,
@@ -172,10 +155,9 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                     ),
                     onPressed: () {
                       if (widget.argumentReceived == 'flore') {
-                        //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Photo())); modified
                         String combinedArgument =
                             "${widget.argumentReceived} courante";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Flora(
                                 argumentReceived: combinedArgument,
@@ -186,7 +168,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       } else if (widget.argumentReceived == 'insectes') {
                         String combinedArgument =
                             "${widget.argumentReceived} courante";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Insect(
                                 argumentReceived: combinedArgument,
@@ -197,7 +179,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       } else {
                         String combinedArgument =
                             "${widget.argumentReceived} courante";
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Fauna(
                                 argumentReceived: combinedArgument,
@@ -229,7 +211,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                       String combinedArgument =
                           "${widget.argumentReceived} inconnue";
                       if (widget.argumentReceived == "flore") {
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PhotoChoice_Unknown(
                                 argumentReceived: combinedArgument,
@@ -238,7 +220,7 @@ class _ChoiceSpecieState extends State<ChoiceSpecie> {
                           ),
                         );
                       } else {
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => EspeceInconnu_faune(
                                 argumentReceived: combinedArgument,

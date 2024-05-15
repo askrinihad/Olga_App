@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/BDD/bdd_function.dart';
+import 'package:test_app/menu/NavBackbar.dart';
 import 'package:test_app/observation/ObservationInfo.dart';
 import 'package:test_app/style/StyleText.dart';
 
@@ -44,10 +45,7 @@ class _ObservationListState extends State<ObservationList> {
   Widget build(BuildContext context) {
     _incrementCounter();
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF006766),
-      ),
+    return NavBackbar(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

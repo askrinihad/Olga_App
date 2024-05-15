@@ -38,8 +38,7 @@ class _ObservationState extends State<Observation> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   onPressed: () {
-                    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Espece()));
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ChoiceSpecie(
                             argumentReceived: "faune",
@@ -67,7 +66,7 @@ class _ObservationState extends State<Observation> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ChoiceSpecie(
                             argumentReceived: "flore",
@@ -97,7 +96,7 @@ class _ObservationState extends State<Observation> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ChoiceSpecie(
                             argumentReceived: "insectes",

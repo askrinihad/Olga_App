@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/menu/NavBackbar.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class ObservationInfo extends StatefulWidget {
@@ -20,10 +21,7 @@ class _ObservationInfoState extends State<ObservationInfo> {
                     );
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF006766),
-      ),
+    return NavBackbar(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
