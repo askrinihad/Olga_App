@@ -92,7 +92,9 @@ class _LibraryState extends State<Library> {
                                 title: Row(
                                   children: [
                                     Text(
-                                      items[index]["Nom français"],
+                                      items[index]["Nom français"] == null
+                                          ? items[index]["Nom scientifique"]
+                                          : items[index]["Nom français"],
                                       style: StyleText.getBody(),
                                     ),
                                     SizedBox(width: 10),

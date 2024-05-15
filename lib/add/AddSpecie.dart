@@ -22,7 +22,7 @@ class _AddSpecieState extends State<AddSpecie> {
   TextEditingController _genreController = TextEditingController();
   TextEditingController _familleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   Widget _buildName() {
     return TextFormField(
       controller: _nameController,

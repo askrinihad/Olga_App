@@ -36,7 +36,9 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
                 style: styleblack,
               ),
               Text(
-                widget.item["Nom français"],
+                widget.item["Nom français"] == null
+                    ? widget.item["Nom scientifique"]
+                    : widget.item["Nom français"],
                 textAlign: TextAlign.center,
                 style: stylegrey,
               ),
@@ -47,7 +49,7 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
                 style: styleblack,
               ),
               Text(
-                widget.item["genre"],
+                widget.item["Genre"],
                 textAlign: TextAlign.center,
                 style: stylegrey,
               ),
@@ -58,7 +60,7 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
                 style: styleblack,
               ),
               Text(
-                widget.item["famille"],
+                widget.item["Famille"],
                 textAlign: TextAlign.center,
                 style: stylegrey,
               ),
@@ -73,7 +75,9 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
               ),
               SizedBox(height: 10),
               Text(
-                widget.item["description"],
+                widget.item["description"] == null
+                    ? ""
+                    : widget.item["description"],
                 textAlign: TextAlign.center,
                 style: stylegrey,
               ),

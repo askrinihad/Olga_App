@@ -1250,7 +1250,7 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
             });
             //final File resScore = result['predicted_image_path'];
 
-            if (confidence != null && class_name != null) {
+            if (confidence != "" && class_name != "") {
               print("Image uploaded successfully");
               print("class name :$class_name");
               print("confidence :$confidence");

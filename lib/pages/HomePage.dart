@@ -16,8 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // _key is a GlobalKey used for the FormState.
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   // _initializeFirebase is an asynchronous function that initializes Firebase and returns a FirebaseApp.
   Future<FirebaseApp> _initializeFirebase() async {

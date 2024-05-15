@@ -120,8 +120,7 @@ class _BirdRecognitionState extends State<BirdRecognition> {
               child: Text(
                 " $class_name, Confidence: $confidence",
                 style: StyleText.getBody(
-                  color: Color.fromARGB(255, 104, 102, 102)
-                ),
+                    color: Color.fromARGB(255, 104, 102, 102)),
               ),
             ),
           ),
@@ -185,7 +184,7 @@ class _BirdRecognitionState extends State<BirdRecognition> {
             });
             //final File resScore = result['predicted_image_path'];
 
-            if (confidence != null && class_name != null) {
+            if (confidence != "" && class_name != "") {
               print("Image uploaded successfully");
               print("class name :$class_name");
               print("confidence :$confidence");
