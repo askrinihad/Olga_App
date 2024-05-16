@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:test_app/SpeciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/menu/NavBackbar.dart';
+import 'package:test_app/menu/ProfileScreen.dart';
+import 'package:test_app/menu/drawer/DrawerSections.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class Library extends StatefulWidget {
@@ -24,17 +26,60 @@ class _LibraryState extends State<Library> {
   bool isLoaded = false;
   late CollectionReference<Map<String, dynamic>> collection;
 
-  _incrementCounter() async {
-    List<Map<String, dynamic>> templist = [];
-    var data = await collection.get();
-    data.docs.forEach((element) {
-      templist.add(element.data());
-    });
-    print(templist);
-    setState(() {
-      items = templist;
-      isLoaded = true;
-    });
+  Loader() {
+    return FutureBuilder(
+        future: collection.get(),
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.hasData) {
+            List<Map<String, dynamic>> list = [];
+            snapshot.data!.docs.forEach((element) {
+              list.add(element.data());
+            });
+            return list.length < 1
+                ? Text(AppLocalizations.of(context)!.aucunEspece)
+                : ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigate to a new page when the ListTile is tapped
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SpeciesInfo(item: list[index]),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(width: 2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            title: Row(
+                              children: [
+                                Text(
+                                  list[index]["Nom français"] == null
+                                      ? list[index]["Nom scientifique"]
+                                      : list[index]["Nom français"],
+                                  style: StyleText.getBody(),
+                                ),
+                                SizedBox(width: 10),
+                              ],
+                            ),
+                            trailing: Icon(Icons.more_vert),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
   }
 
   @override
@@ -52,53 +97,18 @@ class _LibraryState extends State<Library> {
         children: [
           Expanded(
             child: Container(
-              child: Center(
-                child: isLoaded
-                    ? ListView.builder(
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                // Navigate to a new page when the ListTile is tapped
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        SpeciesInfo(item: items[index]),
-                                  ),
-                                );
-                              },
-                              child: ListTile(
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(width: 2),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                title: Row(
-                                  children: [
-                                    Text(
-                                      items[index]["Nom français"] == null
-                                          ? items[index]["Nom scientifique"]
-                                          : items[index]["Nom français"],
-                                      style: StyleText.getBody(),
-                                    ),
-                                    SizedBox(width: 10),
-                                  ],
-                                ),
-                                trailing: Icon(Icons.more_vert),
-                              ),
-                            ),
-                          );
-                        },
-                      )
-                    : Text(AppLocalizations.of(context)!.aucunEspece),
-              ),
+              child: Center(child: Loader()),
             ),
           ),
           FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ProfileScreen(
+                      email: widget.email,
+                      aeroport: widget.aeroport,
+                      currentPage: DrawerSections.NouvelleEspece)));
+            },
+            tooltip: 'Add Specie',
             child: Icon(Icons.add),
           ),
           SizedBox(

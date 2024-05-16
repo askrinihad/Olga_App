@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/menu/NavBackbar.dart';
@@ -7,7 +8,8 @@ import 'package:test_app/style/StyleText.dart';
 class ObservationList extends StatefulWidget {
   final String typeObs;
   final String aeroport;
-  const ObservationList({required this.typeObs, required this.aeroport, super.key});
+  const ObservationList(
+      {required this.typeObs, required this.aeroport, super.key});
 
   @override
   State<ObservationList> createState() => _ObservationListState();
@@ -18,42 +20,19 @@ class _ObservationListState extends State<ObservationList> {
   bool isLoaded = false;
   bool found = false;
 
-  _incrementCounter() async {
-    var collections = select_collection_airport_typeobs(widget.aeroport, widget.typeObs);
-    List<Map<String, dynamic>> templist = [];
-    var data = await collections[0].get();
-    data.docs.forEach((element) {
-      templist.add(element.data());
-    });
-    if (collections.length > 1) {
-      var data2 = await collections[1].get();
-      var data3 = await collections[2].get();
-      data2.docs.forEach((element) {
-        templist.add(element.data());
-      });
-      data3.docs.forEach((element) {
-        templist.add(element.data());
-      });
-    }
-    setState(() {
-      listObs = templist;
-      found = listObs.isNotEmpty;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _incrementCounter();
-
-    return NavBackbar(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Container(
-              child: Center(
-                child: found
-                    ? ListView.builder(
+  Loader() {
+    return FutureBuilder(
+        future: select_collection_airport_typeobs(
+                widget.aeroport, widget.typeObs)[0]
+            .get(),
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.hasData) {
+            List<Map<String, dynamic>> listObs = [];
+            snapshot.data!.docs.forEach((element) {
+              listObs.add(element.data());
+            });
+            return listObs.length < 1 ? Text("Aucune observation") : ListView.builder(
                         itemCount: listObs.length,
                         itemBuilder: (context, index) {
                           return Padding(
@@ -79,8 +58,8 @@ class _ObservationListState extends State<ObservationList> {
                                     Text(
                                       listObs[index]["date"],
                                       style: StyleText.getBody(
-                                        color: Color.fromARGB(255, 25, 25, 28)
-                                      ),
+                                          color:
+                                              Color.fromARGB(255, 25, 25, 28)),
                                     ),
                                     SizedBox(width: 10),
                                   ],
@@ -90,8 +69,24 @@ class _ObservationListState extends State<ObservationList> {
                             ),
                           );
                         },
-                      )
-                    : Text("Aucune observation"),
+                      );
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return NavBackbar(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              child: Center(
+                child: Loader()
               ),
             ),
           ),
