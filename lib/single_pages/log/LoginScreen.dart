@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/menu/ProfileScreen.dart';
+import 'package:test_app/navbar/NavDrawerbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/navbar/drawer/DrawerSections.dart';
 import 'package:test_app/style/StyleText.dart';
 
 const List<String> aeroportList = <String>[
@@ -210,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (user != null) {
                       print('Navigating to AccueilPage');
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => ProfileScreen(
+                          builder: (context) => NavDrawerbar(
                               email: _emailController.text,
                               aeroport: aeroportValue,
                               currentPage: DrawerSections.Accueil)));

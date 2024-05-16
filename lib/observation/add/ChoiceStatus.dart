@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/choice/PhotoChoice_Flora.dart';
-import 'package:test_app/choice/PhotoChoice_Insect.dart';
-import 'package:test_app/choice/PhotoChoice_Fauna.dart';
-import 'package:test_app/choice/PhotoChoice_Unknown.dart';
-import 'package:test_app/choice/specie_unknow_faune.dart';
-import 'package:test_app/menu/NavBackbar.dart';
+import 'package:test_app/observation/add/PhotoChoice_Flora.dart';
+import 'package:test_app/observation/add/PhotoChoice_Insect.dart';
+import 'package:test_app/observation/add/PhotoChoice_Fauna.dart';
+import 'package:test_app/observation/add/PhotoChoice_Unknown.dart';
+import 'package:test_app/observation/add/specie_unknow_faune.dart';
+import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/style/StyleText.dart';
 
-class ChoiceSpecie extends StatefulWidget {
+class ChoiceStatus extends StatefulWidget {
   //const ChoixEspece({super.key}); modified
   final String argumentReceived;
   final String email;
   final String aeroport;
 
-  const ChoiceSpecie({
+  const ChoiceStatus({
     Key? key,
     required this.argumentReceived,
     required this.email,
@@ -22,10 +22,10 @@ class ChoiceSpecie extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ChoiceSpecie> createState() => _ChoiceSpecieState();
+  State<ChoiceStatus> createState() => _ChoiceStatusState();
 }
-
-class _ChoiceSpecieState extends State<ChoiceSpecie> {
+ 
+class _ChoiceStatusState extends State<ChoiceStatus> {
   @override
   Widget build(BuildContext context) {
     return NavBackbar(

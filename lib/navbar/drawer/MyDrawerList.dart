@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/menu/drawer/DrawerSections.dart';
-import 'package:test_app/menu/drawer/MenuItemWidget.dart';
+import 'package:test_app/navbar/drawer/DrawerSections.dart';
+import 'package:test_app/navbar/drawer/MenuItemWidget.dart';
 
 // sert à afficher le titre et l'icone pour les items du menu
 class MyDrawerList extends StatelessWidget {

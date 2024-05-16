@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/BDD/bdd_function.dart';
-import 'package:test_app/menu/NavBackbar.dart';
-import 'package:test_app/observation/ObservationInfo.dart';
+import 'package:test_app/bdd/bdd_function.dart';
+import 'package:test_app/navbar/NavBackbar.dart';
+import 'package:test_app/observation/history/ObservationInfo.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class ObservationList extends StatefulWidget {

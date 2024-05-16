@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/navbar/drawer/DrawerSections.dart';
 import 'package:test_app/style/StyleText.dart';
 
 // sert à définir les items du menu de navigation

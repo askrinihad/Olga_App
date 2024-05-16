@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/menu/ProfileScreen.dart';
+import 'package:test_app/navbar/NavDrawerbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/menu/drawer/DrawerSections.dart';
+import 'package:test_app/navbar/drawer/DrawerSections.dart';
 
-import 'package:test_app/pages/HomePage.dart';
+import 'package:test_app/single_pages/HomePage.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class LogOut extends StatefulWidget {
@@ -46,7 +46,7 @@ class _LogOutState extends State<LogOut> {
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       // Navigate to ProfileScreen
-                      builder: (context) => ProfileScreen(
+                      builder: (context) => NavDrawerbar(
                           email: widget.email,
                           aeroport: widget.aeroport,
                           currentPage: DrawerSections.Accueil)));

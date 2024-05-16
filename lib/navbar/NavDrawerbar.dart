@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/history/History.dart';
-import 'package:test_app/add/AddSpecie.dart';
-import 'package:test_app/add/AddInventory.dart';
-import 'package:test_app/library/LibrarySelectType.dart';
-import 'package:test_app/recognition/BirdRecognition.dart';
-import 'package:test_app/log/LogOut.dart';
-import 'package:test_app/observation/Observation.dart';
-import 'package:test_app/pages/AccueilPage.dart';
-import 'package:test_app/pages/SettingsPage.dart';
-import 'package:test_app/menu/drawer/DrawerSections.dart';
-import 'package:test_app/menu/drawer/HeaderDrawer.dart';
-import 'package:test_app/menu/drawer/MyDrawerList.dart';
+import 'package:test_app/observation/history/History.dart';
+import 'package:test_app/Specie/AddSpecie.dart';
+import 'package:test_app/inventory/AddInventory.dart';
+import 'package:test_app/Specie/LibrarySelectType.dart';
+import 'package:test_app/single_pages/BirdRecognition.dart';
+import 'package:test_app/single_pages/log/LogOut.dart';
+import 'package:test_app/observation/add/ObservationSelectType.dart';
+import 'package:test_app/single_pages/AccueilPage.dart';
+import 'package:test_app/single_pages/SettingsPage.dart';
+import 'package:test_app/navbar/drawer/DrawerSections.dart';
+import 'package:test_app/navbar/drawer/HeaderDrawer.dart';
+import 'package:test_app/navbar/drawer/MyDrawerList.dart';
 
+// TODO: Refactor like NavBackBar, doesn't take a DrawerSections but a Widget
 // sert a afficher le menu de navigation et créer les redirections
-class ProfileScreen extends StatefulWidget {
+class NavDrawerbar extends StatefulWidget {
   final String email;
   final String aeroport;
   final DrawerSections currentPage;
-  const ProfileScreen(
+  const NavDrawerbar(
       {required this.email,
       required this.aeroport,
       super.key,
       required this.currentPage});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState(currentPage);
+  State<NavDrawerbar> createState() => _NavDrawerbarState(currentPage);
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _NavDrawerbarState extends State<NavDrawerbar> {
   // currentPage keeps track of the currently selected menu item.
   DrawerSections currentPage;
 
-  _ProfileScreenState(DrawerSections this.currentPage);
+  _NavDrawerbarState(DrawerSections this.currentPage);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget getContainer(DrawerSections currentPage) {
     switch (currentPage) {
       case DrawerSections.NouvelleObservation:
-        return Observation(email: widget.email, aeroport: widget.aeroport);
+        return ObservationSelectType(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.NouvelleEspece:
         return AddSpecie();
       case DrawerSections.NouveauInventaire:

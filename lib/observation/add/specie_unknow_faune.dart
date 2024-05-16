@@ -10,9 +10,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:test_app/MapApp.dart';
+import 'package:test_app/observation/add/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/menu/NavBackbar.dart';
+import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/style/StyleText.dart';
 
 const List<String> phaseList = <String>[

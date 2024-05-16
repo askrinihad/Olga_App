@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:test_app/BDD/bdd_function.dart';
+import 'package:test_app/bdd/bdd_function.dart';
 
 /**
  * Displays the Map of observation history. (Button localiser)

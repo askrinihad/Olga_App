@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/choice/ChoiceSpecie.dart';
+import 'package:test_app/observation/add/ChoiceStatus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/style/StyleText.dart';
 
-class Observation extends StatefulWidget {
+class ObservationSelectType extends StatefulWidget {
   final String email;
   final String aeroport;
-  const Observation({required this.email, required this.aeroport, super.key});
+  const ObservationSelectType({required this.email, required this.aeroport, super.key});
 
   @override
-  State<Observation> createState() => _ObservationState();
+  State<ObservationSelectType> createState() => _ObservationSelectTypeState();
 }
 
-class _ObservationState extends State<Observation> {
+class _ObservationSelectTypeState extends State<ObservationSelectType> {
   final floreController = TextEditingController();
   final fauneController = TextEditingController();
   final insecteController = TextEditingController();
@@ -40,7 +40,7 @@ class _ObservationState extends State<Observation> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ChoiceSpecie(
+                        builder: (context) => ChoiceStatus(
                             argumentReceived: "faune",
                             email: widget.email,
                             aeroport: widget.aeroport),
@@ -68,7 +68,7 @@ class _ObservationState extends State<Observation> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ChoiceSpecie(
+                        builder: (context) => ChoiceStatus(
                             argumentReceived: "flore",
                             email: widget.email,
                             aeroport: widget.aeroport),
@@ -98,7 +98,7 @@ class _ObservationState extends State<Observation> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ChoiceSpecie(
+                        builder: (context) => ChoiceStatus(
                             argumentReceived: "insectes",
                             email: widget.email,
                             aeroport: widget.aeroport),

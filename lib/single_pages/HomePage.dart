@@ -4,7 +4,7 @@ import 'package:test_app/language/Language.dart';
 import 'package:test_app/language/language_constants.dart';
 
 import 'package:test_app/main.dart';
-import 'package:test_app/log/LoginScreen.dart';
+import 'package:test_app/single_pages/log/LoginScreen.dart';
 import 'package:test_app/style/StyleText.dart';
 
 // HomePage is a StatefulWidget that initializes Firebase and displays the LoginScreen.

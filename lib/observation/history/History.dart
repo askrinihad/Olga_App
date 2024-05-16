@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/history/HistoryMap.dart';
-import 'package:test_app/observation/ObservationList.dart';
+import 'package:test_app/observation/history/HistoryMap.dart';
+import 'package:test_app/observation/history/ObservationList.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/style/StyleText.dart';
 
