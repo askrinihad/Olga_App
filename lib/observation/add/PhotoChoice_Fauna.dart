@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,18 +14,9 @@ import 'package:test_app/observation/add/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/style/StyleText.dart';
-
-const List<String> phaseList = <String>[
-  'Germination',
-  'Developement',
-  ' Pollination',
-  'Fructification'
-];
-const List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const List<String> etatList = <String>['In development', 'State 1', ' State 2'];
+import 'package:test_app/observation/add/Forms/FormDropdownButton.dart';
 
 class PhotoChoice_Fauna extends StatefulWidget {
-  //const ChoixPhoto({super.key}); modified
   final String argumentReceived;
   final String email;
   final String aeroport;
@@ -42,9 +32,7 @@ class PhotoChoice_Fauna extends StatefulWidget {
 }
 
 class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
-  String etatValue = etatList.first;
-  String actionValue = actionList.first;
-  String phaseValue = phaseList.first;
+  FormDropdownButton dropdown = FormDropdownButton();
   int selectedNumber = 1;
   String class_name = "";
   String confidence = "0.0";
@@ -62,123 +50,16 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
   String savedCode = "";
   String selectedCode = "aucun";
   String species = "";
-  final FirebaseStorage _storage = FirebaseStorage.instance;
   //late GoogleMapController mapController;
   //final Set<Marker> _markers = {};
   TextEditingController _dateController = TextEditingController();
-  TextEditingController _phaseController = TextEditingController();
-  TextEditingController _nbController = TextEditingController();
-  TextEditingController _etatController = TextEditingController();
-  TextEditingController _actionController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   File? _selectedImage;
   File? _imageName;
-  String? _imageUrl;
   String nomFrancais = "";
 
   late Stream<QuerySnapshot> streamVar;
   late Stream<QuerySnapshot> CodeStream;
-  //////////////////////////////////////////////////////////////
-
-  Widget _buildEtat() {
-    return DropdownButton<String>(
-      value: etatValue,
-      isExpanded: false,
-      underline: Container(
-        height: 0, // Set the height to 0 to hide the underline
-        color: Colors.transparent, // Set the underline color to transparent
-      ),
-      icon: Padding(
-        padding: EdgeInsets.only(left: 84.0), // Adjust the right padding
-        child: Icon(Icons.arrow_drop_down),
-      ),
-      elevation: 16,
-      style: StyleText.getHintForm(),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          etatValue = value!;
-        });
-      },
-      items: etatList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5.0),
-            child: Text(value),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  /////////////////////////////////////////////
-  Widget _buildPhase() {
-    return DropdownButton<String>(
-      value: phaseValue,
-      isExpanded: false,
-      underline: Container(
-        height: 0, // Set the height to 0 to hide the underline
-        color: Colors.transparent, // Set the underline color to transparent
-      ),
-      icon: Padding(
-        padding: EdgeInsets.only(left: 103.0), // Adjust the right padding
-        child: Icon(Icons.arrow_drop_down),
-      ),
-      elevation: 16,
-      style: StyleText.getHintForm(),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          phaseValue = value!;
-        });
-      },
-      items: phaseList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5.0),
-            child: Text(value),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  /////////////////////////////////////////////////////////////::
-  Widget _buildAction() {
-    return DropdownButton<String>(
-      value: actionValue,
-      isExpanded: false,
-      underline: Container(
-        height: 0, // Set the height to 0 to hide the underline
-        color: Colors.transparent, // Set the underline color to transparent
-      ),
-      icon: Padding(
-        padding: EdgeInsets.only(left: 150.0), // Adjust the right padding
-        child: Icon(Icons.arrow_drop_down),
-      ),
-      elevation: 16,
-      style: StyleText.getHintForm(),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          actionValue = value!;
-        });
-      },
-      items: actionList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5.0),
-            child: Text(value),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  /////////////////////////////
   void initState() {
     super.initState();
     // Set the initial value to the current date
@@ -188,7 +69,8 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
 
   @override
   Widget build(BuildContext context) {
-    CodeStream = getCollection_CodeInventaire_Greaterthan_Endate(widget.aeroport, DateTime.now());
+    CodeStream = getCollection_CodeInventaire_Greaterthan_Endate(
+        widget.aeroport, DateTime.now());
 
     _fetchLocation();
     List<String> arguments = widget.argumentReceived.split(' ');
@@ -403,7 +285,7 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                 child: Center(
                   child: Text(
                     " $class_name, Confidence: $confidence",
-                    style:  StyleText.getBody(
+                    style: StyleText.getBody(
                       color: Color.fromARGB(255, 104, 102, 102),
                     ),
                   ),
@@ -442,8 +324,7 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                             padding: EdgeInsets.only(left: 5.0),
                             child: Text(
                               AppLocalizations.of(context)!.choisirEspece,
-                              style:
-                                  StyleText.getHintForm(),
+                              style: StyleText.getHintForm(),
                             ),
                           ),
                         ));
@@ -541,7 +422,8 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                               child: Text(
                                   AppLocalizations.of(context)!
                                       .selectionnerCode,
-                                  style: StyleText.getHintForm() // Access the last element in the list
+                                  style: StyleText
+                                      .getHintForm() // Access the last element in the list
                                   ),
                             ),
                           ));
@@ -554,7 +436,7 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                                 child: Text(
                                     AppLocalizations.of(context)!
                                         .creerInventaire,
-                                    style:  StyleText.getBody(
+                                    style: StyleText.getBody(
                                       color: Color.fromARGB(255, 255, 0, 0),
                                       size: 12,
                                       weight: FontWeight.bold,
@@ -666,7 +548,7 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                     ),
                   ],
                 ),
-                child: _buildPhase(),
+                child: dropdown.buildPhase(),
               ),
               const SizedBox(height: 5),
               Container(
@@ -735,7 +617,7 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                     ),
                   ],
                 ),
-                child: _buildEtat(),
+                child: dropdown.buildEtat(),
               ),
               const SizedBox(height: 5),
               Container(
@@ -754,7 +636,7 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                     ),
                   ],
                 ),
-                child: _buildAction(),
+                child: dropdown.buildAction(),
               ),
 
               const SizedBox(height: 5),
@@ -866,10 +748,10 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                                 predictedEspece: class_name,
                                 score: score,
                                 especeType: receivedArgument,
-                                action: actionValue,
+                                action: dropdown.actionValue,
                                 date: _dateController.text,
-                                etat: etatValue,
-                                phase: phaseValue,
+                                etat: dropdown.etatValue,
+                                phase: dropdown.phaseValue,
                                 nombre: selectedNumber,
                                 statut: additionalArgument,
                                 description: _descriptionController
@@ -921,11 +803,11 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                           }
                           print(savedEspece);
                           collRef.add({
-                            'action': actionValue,
+                            'action': dropdown.actionValue,
                             'email': widget.email,
                             'date': _dateController.text,
-                            'etat': etatValue,
-                            'phase': phaseValue,
+                            'etat': dropdown.etatValue,
+                            'phase': dropdown.phaseValue,
                             'codeInventaire': savedCode,
                             'nombre': selectedNumber,
                             'statut': additionalArgument,

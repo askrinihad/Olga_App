@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,25 +10,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:test_app/bdd/bdd_function.dart';
+import 'package:test_app/observation/add/Forms/FormDropdownButton.dart';
 import 'package:test_app/observation/add/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/style/StyleText.dart';
 
-const List<String> phaseList = <String>[
-  'Germination',
-  'Développement',
-  ' Pollinisation',
-  'Fructification'
-];
-const List<String> actionList = <String>['Action 1', 'Action 2', ' Action 3'];
-const List<String> etatList = <String>['En développement', 'Etat 1', ' Etat 2'];
-
-//TODO: Check if you can delete this file
-
-/*********************
- * I think it's useless because it seems to be an older version than PhotoChoice_Unknown
- */
 class EspeceInconnu_faune extends StatefulWidget {
   //const ChoixPhoto({super.key}); modified
   final String argumentReceived;
@@ -47,9 +33,7 @@ class EspeceInconnu_faune extends StatefulWidget {
 }
 
 class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
-  String etatValue = etatList.first;
-  String actionValue = actionList.first;
-  String phaseValue = phaseList.first;
+  FormDropdownButton dropdown = FormDropdownButton();
   int selectedNumber = 1;
   String class_name = "";
   String confidence = "0.0";
@@ -61,122 +45,16 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
   String selectedEspece = "aucun";
   String selectedCode = "aucun";
 
-  final FirebaseStorage _storage = FirebaseStorage.instance;
   //late GoogleMapController mapController;
   //final Set<Marker> _markers = {};
   TextEditingController _dateController = TextEditingController();
-  TextEditingController _especeController = TextEditingController();
-  TextEditingController _phaseController = TextEditingController();
-  TextEditingController _nbController = TextEditingController();
-  TextEditingController _etatController = TextEditingController();
-  TextEditingController _actionController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   File? _selectedImage;
   String message = '';
   File? _imageName;
-  String? _imageUrl;
   late Stream<QuerySnapshot> streamVar;
   late Stream<QuerySnapshot> CodeStream;
 
-  Widget _buildEtat() {
-    return DropdownButton<String>(
-      value: etatValue,
-      isExpanded: false,
-      underline: Container(
-        height: 0, // Set the height to 0 to hide the underline
-        color: Colors.transparent, // Set the underline color to transparent
-      ),
-      icon: Padding(
-        padding: EdgeInsets.only(left: 84.0), // Adjust the right padding
-        child: Icon(Icons.arrow_drop_down),
-      ),
-      elevation: 16,
-      style: StyleText.getHintForm(),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          etatValue = value!;
-        });
-      },
-      items: etatList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5.0),
-            child: Text(value),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  /////////////////////////////////////////////
-  Widget _buildPhase() {
-    return DropdownButton<String>(
-      value: phaseValue,
-      isExpanded: false,
-      underline: Container(
-        height: 0, // Set the height to 0 to hide the underline
-        color: Colors.transparent, // Set the underline color to transparent
-      ),
-      icon: Padding(
-        padding: EdgeInsets.only(left: 103.0), // Adjust the right padding
-        child: Icon(Icons.arrow_drop_down),
-      ),
-      elevation: 16,
-      style: StyleText.getHintForm(),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          phaseValue = value!;
-        });
-      },
-      items: phaseList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5.0),
-            child: Text(value),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  /////////////////////////////////////////////////////////////::
-  Widget _buildAction() {
-    return DropdownButton<String>(
-      value: actionValue,
-      isExpanded: false,
-      underline: Container(
-        height: 0, // Set the height to 0 to hide the underline
-        color: Colors.transparent, // Set the underline color to transparent
-      ),
-      icon: Padding(
-        padding: EdgeInsets.only(left: 150.0), // Adjust the right padding
-        child: Icon(Icons.arrow_drop_down),
-      ),
-      elevation: 16,
-      style: StyleText.getHintForm(),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          actionValue = value!;
-        });
-      },
-      items: actionList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5.0),
-            child: Text(value),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  /////////////////////////////
   void initState() {
     super.initState();
     // Set the initial value to the current date
@@ -539,7 +417,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                     ),
                   ],
                 ),
-                child: _buildPhase(),
+                child: dropdown.buildPhase(),
               ),
               const SizedBox(height: 5),
               Container(
@@ -605,7 +483,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                     ),
                   ],
                 ),
-                child: _buildEtat(),
+                child: dropdown.buildEtat(),
               ),
               const SizedBox(height: 5),
               Container(
@@ -624,7 +502,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                     ),
                   ],
                 ),
-                child: _buildAction(),
+                child: dropdown.buildAction(),
               ),
 
               const SizedBox(height: 5),
@@ -723,12 +601,12 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                                 email: widget.email,
                                 especeType: receivedArgument,
                                 codeInventaire: selectedCode,
-                                action: actionValue,
+                                action: dropdown.actionValue,
                                 date: _dateController.text,
-                                etat: etatValue,
+                                etat: dropdown.etatValue,
                                 score: double.parse(confidence),
                                 predictedEspece: class_name,
-                                phase: phaseValue,
+                                phase: dropdown.phaseValue,
                                 nombre: selectedNumber,
                                 nomEspece: "none",
                                 statut: additionalArgument,
@@ -787,11 +665,11 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                             'email': widget.email,
                             'nom espece': "none",
                             'codeInventaire': selectedCode,
-                            'action': actionValue,
+                            'action': dropdown.actionValue,
                             'date': _dateController.text,
-                            'etat': etatValue,
+                            'etat': dropdown.etatValue,
                             'score': confidence,
-                            'phase': phaseValue,
+                            'phase': dropdown.phaseValue,
                             'nombre': selectedNumber,
                             'statut': additionalArgument,
                             'latitude': point.latitude,
