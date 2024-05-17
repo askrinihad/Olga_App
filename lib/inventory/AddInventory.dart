@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/style/StyleForms.dart';
 import 'package:test_app/style/StyleText.dart';
 import 'package:test_app/bdd/bdd_function.dart';
 
@@ -98,23 +99,8 @@ class _AddInventoryState extends State<AddInventory> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: 245.0,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Color(0xffF6F6F6),
-                        borderRadius: BorderRadius.circular(8.0),
-                        border:
-                            Border.all(color: Colors.black.withOpacity(0.1)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 5.0,
-                            spreadRadius: 2.0,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
+                    StyleForms.getContainer(
+                      width: 240,
                       child: _buildCode(),
                     ),
                   ],
@@ -137,23 +123,8 @@ class _AddInventoryState extends State<AddInventory> {
                     onTap: () {
                       _showDateDebutTimePicker(context);
                     },
-                    child: Container(
-                      width: 245.0,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Color(0xffF6F6F6),
-                        borderRadius: BorderRadius.circular(8.0),
-                        border:
-                            Border.all(color: Colors.black.withOpacity(0.1)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 5.0,
-                            spreadRadius: 2.0,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
+                    child: StyleForms.getContainer(
+                      width: 240,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -188,23 +159,8 @@ class _AddInventoryState extends State<AddInventory> {
                     onTap: () {
                       _showDateFinTimePicker(context);
                     },
-                    child: Container(
-                      width: 245.0,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Color(0xffF6F6F6),
-                        borderRadius: BorderRadius.circular(8.0),
-                        border:
-                            Border.all(color: Colors.black.withOpacity(0.1)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 5.0,
-                            spreadRadius: 2.0,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
+                    child: StyleForms.getContainer(
+                      width: 240,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(

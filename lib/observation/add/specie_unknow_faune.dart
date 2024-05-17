@@ -14,6 +14,7 @@ import 'package:test_app/observation/add/Forms/FormDropdownButton.dart';
 import 'package:test_app/observation/add/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
+import 'package:test_app/style/StyleForms.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class EspeceInconnu_faune extends StatefulWidget {
@@ -64,7 +65,8 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
 
   @override
   Widget build(BuildContext context) {
-    CodeStream = getCollection_CodeInventaire_Greaterthan_Endate(widget.aeroport, DateTime.now());
+    CodeStream = getCollection_CodeInventaire_Greaterthan_Endate(
+        widget.aeroport, DateTime.now());
     _fetchLocation();
     List<String> arguments = widget.argumentReceived.split(' ');
     String receivedArgument = arguments[0];
@@ -86,15 +88,12 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
       streamVar =
           FirebaseFirestore.instance.collection("espece_insectes").snapshots();
     }
-    // print("Received Argument 1111: $receivedArgument");
-    //print("Additional Argument 22222: $additionalArgument");
     return NavBackbar(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 50.0), // Adjust top padding as needed
           child: Column(
             children: [
-              //const SizedBox(height: 30),
               Center(
                 child: Text(
                   AppLocalizations.of(context)!.nouvelleObservation +
@@ -251,22 +250,8 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                 ),
               ),
               const SizedBox(height: 15),
-              Container(
-                width: 270.0,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
+              StyleForms.getContainer(
+                width: 270,
                 child: Center(
                   child: Text(
                     " $class_name, Confidence: $confidence",
@@ -278,22 +263,8 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
               ),
 
               const SizedBox(height: 10),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: StreamBuilder<QuerySnapshot>(
                     stream: CodeStream,
                     builder: (context, snapshot) {
@@ -309,7 +280,8 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 5.0),
                               child: Text(codes[codes.length - 1]["code"],
-                                  style: StyleText.getHintForm() // Access the last element in the list
+                                  style: StyleText
+                                      .getHintForm() // Access the last element in the list
                                   ),
                             ),
                           ));
@@ -332,8 +304,7 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                               padding: EdgeInsets.only(left: 5.0),
                               child: Text(
                                 data['code'],
-                                style:
-                                    StyleText.getHintForm(),
+                                style: StyleText.getHintForm(),
                               ),
                             ),
                           ));
@@ -401,41 +372,13 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                 ),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: dropdown.buildPhase(),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: DropdownButton<int>(
                   value: selectedNumber,
                   isExpanded: false,
@@ -467,62 +410,20 @@ class _EspeceInconnu_fauneState extends State<EspeceInconnu_faune> {
                 ),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: dropdown.buildEtat(),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: dropdown.buildAction(),
               ),
 
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height:
-                    200, // Adjust the height as needed for a larger TextField
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
+                height: 200,
                 child: TextFormField(
                   controller: _descriptionController,
                   keyboardType: TextInputType.multiline,

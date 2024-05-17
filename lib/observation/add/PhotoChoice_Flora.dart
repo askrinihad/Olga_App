@@ -14,6 +14,7 @@ import 'package:test_app/observation/add/Forms/FormDropdownButton.dart';
 import 'package:test_app/observation/add/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
+import 'package:test_app/style/StyleForms.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class PhotoChoice_Flora extends StatefulWidget {
@@ -150,6 +151,7 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
       );
     }
   }
+
   void initState() {
     super.initState();
     // Set the initial value to the current date
@@ -159,7 +161,8 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
 
   @override
   Widget build(BuildContext context) {
-   CodeStream = getCollection_CodeInventaire_Greaterthan_Endate(widget.aeroport, DateTime.now());
+    CodeStream = getCollection_CodeInventaire_Greaterthan_Endate(
+        widget.aeroport, DateTime.now());
 
     _fetchLocation();
     List<String> arguments = widget.argumentReceived.split(' ');
@@ -381,31 +384,16 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
                 child: Center(
                   child: Text(
                     "$scientificName, score: $score",
-                    style:  StyleText.getBody(
-                      color: Color.fromARGB(255, 104, 102, 102)
-                    ),
+                    style: StyleText.getBody(
+                        color: Color.fromARGB(255, 104, 102, 102)),
                   ),
                 ),
               ),
               const SizedBox(height: 10),
               myStreamBuilder(),
               const SizedBox(height: 10),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: StreamBuilder<QuerySnapshot>(
                     stream: streamVar,
                     builder: (context, snapshot) {
@@ -486,22 +474,8 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
               ),
 
               const SizedBox(height: 10),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: StreamBuilder<QuerySnapshot>(
                     stream: CodeStream,
                     builder: (context, snapshot) {
@@ -519,7 +493,8 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
                               child: Text(
                                   AppLocalizations.of(context)!
                                       .selectionnerCode,
-                                  style: StyleText.getHintForm() // Access the last element in the list
+                                  style: StyleText
+                                      .getHintForm() // Access the last element in the list
                                   ),
                             ),
                           ));
@@ -550,8 +525,7 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
                               padding: EdgeInsets.only(left: 5.0),
                               child: Text(
                                 data['code'],
-                                style:
-                                    StyleText.getHintForm(),
+                                style: StyleText.getHintForm(),
                               ),
                             ),
                           ));
@@ -629,41 +603,13 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
                 ),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: dropdown.buildPhase(),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: DropdownButton<int>(
                   value: selectedNumber,
                   isExpanded: false,
@@ -698,62 +644,15 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
                 ),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: dropdown.buildEtat(),
-              ),
-              const SizedBox(height: 5),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: dropdown.buildAction(),
               ),
 
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height:
-                    200, // Adjust the height as needed for a larger TextField
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
+                height: 200,
                 child: TextFormField(
                   controller: _descriptionController,
                   keyboardType: TextInputType.multiline,
@@ -1120,6 +1019,4 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
       print("Error uploading image: $error");
     }
   }
-
-////////////////////////////////////////////////////
 }

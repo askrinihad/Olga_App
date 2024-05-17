@@ -13,6 +13,7 @@ import 'package:test_app/bdd/bdd_function.dart';
 import 'package:test_app/observation/add/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
+import 'package:test_app/style/StyleForms.dart';
 import 'package:test_app/style/StyleText.dart';
 import 'package:test_app/observation/add/Forms/FormDropdownButton.dart';
 
@@ -101,15 +102,12 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
       streamVar =
           FirebaseFirestore.instance.collection("espece_insectes").snapshots();
     }
-    // print("Received Argument 1111: $receivedArgument");
-    //print("Additional Argument 22222: $additionalArgument");
     return NavBackbar(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 50.0), // Adjust top padding as needed
           child: Column(
             children: [
-              //const SizedBox(height: 30),
               Center(
                 child: Text(
                   AppLocalizations.of(context)!.nouvelleObservation +
@@ -293,22 +291,8 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
               ),
 
               const SizedBox(height: 10),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: StreamBuilder<QuerySnapshot>(
                     stream: streamVar,
                     builder: (context, snapshot) {
@@ -389,22 +373,8 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
               ),
 
               const SizedBox(height: 10),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: StreamBuilder<QuerySnapshot>(
                     stream: CodeStream,
                     builder: (context, snapshot) {
@@ -500,22 +470,8 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                 onTap: () {
                   _showDateTimePicker(context);
                 },
-                child: Container(
+                child: StyleForms.getContainer(
                   width: MediaQuery.of(context).size.width * 0.71,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color(0xffF6F6F6),
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: Colors.black.withOpacity(0.1)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 5.0,
-                        spreadRadius: 2.0,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -532,41 +488,13 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                 ),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: dropdown.buildPhase(),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: DropdownButton<int>(
                   value: selectedNumber,
                   isExpanded: false,
@@ -601,62 +529,20 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
                 ),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: dropdown.buildEtat(),
               ),
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
                 child: dropdown.buildAction(),
               ),
 
               const SizedBox(height: 5),
-              Container(
+              StyleForms.getContainer(
                 width: MediaQuery.of(context).size.width * 0.71,
-                height:
-                    200, // Adjust the height as needed for a larger TextField
-                decoration: BoxDecoration(
-                  color: Color(0xffF6F6F6),
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      spreadRadius: 2.0,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
+                height: 200,
                 child: TextFormField(
                   controller: _descriptionController,
                   keyboardType: TextInputType.multiline,
@@ -1094,5 +980,4 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
       print("Error uploading image: $error");
     }
   }
-////////////////////////////////////////////////////
 }
