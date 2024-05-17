@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/style/StyleText.dart';
+import 'package:test_app/bdd/bdd_function.dart';
 
 class AddInventory extends StatefulWidget {
   // The email and airport are required parameters for this widget.
@@ -61,22 +62,13 @@ class _AddInventoryState extends State<AddInventory> {
         DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now());
     _dateFinController.text =
         DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now());
+    this.selectedUsers = List<bool>.filled(users.length, false);
     getUsersFromFirebase();
   }
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference collRef;
-    if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-      collRef = FirebaseFirestore.instance.collection('codes_inventaire_CDG');
-    } else if (widget.aeroport == "Zagreb Airport") {
-      collRef =
-          FirebaseFirestore.instance.collection('codes_inventaire_zagreb');
-    } else if (widget.aeroport == "Milan Airport") {
-      collRef = FirebaseFirestore.instance.collection('codes_inventaire_milan');
-    } else {
-      collRef = FirebaseFirestore.instance.collection('codes_inventaire_cluj');
-    }
+    CollectionReference collRef = getCollection_CodeInventaire(widget.aeroport);
     return SingleChildScrollView(
         child: Container(
       margin: EdgeInsets.only(top: 10.0),

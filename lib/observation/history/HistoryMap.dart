@@ -82,8 +82,7 @@ class _HistoryMapState extends State<HistoryMap> {
   }
 
   _incrementCounter() async {
-
-    var collections = select_collection_airport_typeobs(widget.aeroport, widget.typeObs);
+    var collections = getCollectionsAll(widget.aeroport, widget.typeObs);
 
     List<Map<String, dynamic>> templist = [];
     var data = await collections[0].get();

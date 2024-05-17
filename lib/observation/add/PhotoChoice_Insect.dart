@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:test_app/bdd/bdd_function.dart';
 import 'package:test_app/observation/add/MapApp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
@@ -185,27 +186,7 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-      CodeStream = FirebaseFirestore.instance
-          .collection("codes_inventaire_CDG")
-          .where("date_fin", isGreaterThan: DateTime.now().toString())
-          .snapshots();
-    } else if (widget.aeroport == "Zagreb Airport") {
-      CodeStream = FirebaseFirestore.instance
-          .collection("codes_inventaire_zagreb")
-          .where("date_fin", isGreaterThan: DateTime.now().toString())
-          .snapshots();
-    } else if (widget.aeroport == "Milan Airport") {
-      CodeStream = FirebaseFirestore.instance
-          .collection("codes_inventaire_milan")
-          .where("date_fin", isGreaterThan: DateTime.now().toString())
-          .snapshots();
-    } else {
-      CodeStream = FirebaseFirestore.instance
-          .collection("codes_inventaire_cluj")
-          .where("date_fin", isGreaterThan: DateTime.now().toString())
-          .snapshots();
-    }
+    CodeStream = getCollection_CodeInventaire_Greaterthan_Endate(widget.aeroport, DateTime.now());
 
     _fetchLocation();
     List<String> arguments = widget.argumentReceived.split(' ');
@@ -1023,33 +1004,6 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
       // return returnedImage.readAsBytes();
     } else
       return;
-  }
-
-////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-  Future uploadFile(File filePath, File fileName) async {
-    File file = filePath;
-    try {
-      await FirebaseStorage.instance
-          .ref('observationImage/$fileName')
-          .putFile(file);
-    } on FirebaseException catch (e) {
-      print(e);
-    }
-  }
-
-//////////////////////////////////////////////////////////////////////:
-  Future<String?> DownloadUrl(File fileName) async {
-    try {
-      String downloadURL = await FirebaseStorage.instance
-          .ref('observationImage/$fileName')
-          .getDownloadURL();
-      print("Image URL: $downloadURL");
-      return downloadURL;
-    } on FirebaseException catch (e) {
-      print(e);
-      return null;
-    }
   }
 
 ///////////////////////////

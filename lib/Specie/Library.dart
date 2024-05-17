@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app/Specie/SpeciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/bdd/bdd_function.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/navbar/NavDrawerbar.dart';
 import 'package:test_app/navbar/drawer/DrawerSections.dart';
@@ -84,13 +85,7 @@ class _LibraryState extends State<Library> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.typeEspece == 'flore') {
-      collection = FirebaseFirestore.instance.collection("especes_flore");
-    } else if (widget.typeEspece == 'faune') {
-      collection = FirebaseFirestore.instance.collection("especes_faune");
-    } else {
-      collection = FirebaseFirestore.instance.collection("espece_insectes");
-    }
+    collection = getSpeciesCollection_Type(widget.aeroport, widget.typeEspece);
     return NavBackbar(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

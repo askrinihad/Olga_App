@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:test_app/bdd/bdd_function.dart';
 import 'package:test_app/language/Language.dart';
 import 'package:test_app/language/language_constants.dart';
 
@@ -16,12 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  // _initializeFirebase is an asynchronous function that initializes Firebase and returns a FirebaseApp.
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-    return firebaseApp;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         ),
         // The FutureBuilder waits for Firebase to initialize. Once Firebase is initialized, the LoginScreen is displayed.
         body: FutureBuilder(
-          future: _initializeFirebase(),
+          future: initializeFirebase(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return LoginScreen();

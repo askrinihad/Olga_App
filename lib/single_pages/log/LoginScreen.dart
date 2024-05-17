@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/bdd/bdd_function.dart';
 import 'package:test_app/navbar/NavDrawerbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,28 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String aeroportValue = aeroportList.first;
-
-  /// Create a function to log in using email and password
-  /// Take the email and password as parameters
-  static Future<User?> loginUsingEmailPassword(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
-    // Create an instance of FirebaseAuth
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-    try {
-      // Try to sign in using the email and password
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        print(" no user found for that email");
-      }
-    }
-    return user;
-  }
 
   ///////////////////////////////////////////
   /// Widget to build the dropdown button for Aeroport List selection
@@ -202,8 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     print('in on press');
                     User? user = await loginUsingEmailPassword(
                         email: _emailController.text,
-                        password: _passwordController.text,
-                        context: context);
+                        password: _passwordController.text);
                     print(user);
 
                     // If the user is not null, navigate to the AccueilPage

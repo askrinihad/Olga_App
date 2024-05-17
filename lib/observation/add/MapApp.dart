@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import the geocoding package
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/bdd/bdd_function.dart'; // Import the geocoding package
 
 class MapApp extends StatefulWidget {
   final String action;
@@ -136,50 +136,7 @@ class _MapAppState extends State<MapApp> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  CollectionReference collRef;
-                  if (widget.especeType == "flore") {
-                    if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationFlore_CDG');
-                    } else if (widget.aeroport == "Zagreb Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationFlore_zagreb');
-                    } else if (widget.aeroport == "Milan Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationFlore_milan');
-                    } else {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationFlore_cluj');
-                    }
-                  } else if (widget.especeType == "faune") {
-                    if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationFaune_CDG');
-                    } else if (widget.aeroport == "Zagreb Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationFaune_zagreb');
-                    } else if (widget.aeroport == "Milan Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationFaune_milan');
-                    } else {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationFaune_cluj');
-                    }
-                  } else {
-                    if (widget.aeroport == "Paris-Charles de Gaulle Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationInsectes_CDG');
-                    } else if (widget.aeroport == "Zagreb Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationInsectes_zagreb');
-                    } else if (widget.aeroport == "Milan Airport") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationInsectes_milan');
-                    } else {
-                      collRef = FirebaseFirestore.instance
-                          .collection('observationInsectes_cluj');
-                    }
-                  }
+                  CollectionReference collRef = select_collection_airport_type(widget.aeroport, widget.especeType);
 
                   collRef.add({
                     'action': widget.action,
@@ -264,19 +221,4 @@ class _MapAppState extends State<MapApp> {
       print("Error fetching location: $e");
     }
   }
-
-  ////////////////////////////////::
-  Future<String?> DownloadUrl(File fileName) async {
-    try {
-      String downloadURL = await FirebaseStorage.instance
-          .ref('observationImage/$fileName')
-          .getDownloadURL();
-      print("Image URL: $downloadURL");
-      return downloadURL;
-    } on FirebaseException catch (e) {
-      print(e);
-      return null;
-    }
-  }
-/////////////////
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/bdd/bdd_function.dart';
 import 'package:test_app/style/StyleText.dart';
 
 const List<String> list = <String>['Plant life', 'Wildlife', 'Insects'];
@@ -337,17 +338,7 @@ class _AddSpecieState extends State<AddSpecie> {
                     fixedSize: Size(150, 50),
                   ),
                   onPressed: () {
-                    CollectionReference collRef;
-                    if (dropdownValue == "Plant life") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('especes_flore');
-                    } else if (dropdownValue == "Wildlife") {
-                      collRef = FirebaseFirestore.instance
-                          .collection('especes_faune');
-                    } else {
-                      collRef = FirebaseFirestore.instance
-                          .collection('espece_insectes');
-                    }
+                    CollectionReference collRef = getSpeciesCollection_Type("", dropdownValue);
                     collRef.add({
                       'nom': _nameController.text,
                       'ordre': _ordreController.text,
