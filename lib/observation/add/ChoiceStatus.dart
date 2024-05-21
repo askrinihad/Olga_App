@@ -3,6 +3,7 @@ import 'package:test_app/observation/add/PhotoChoice_Flora.dart';
 import 'package:test_app/observation/add/PhotoChoice_Insect.dart';
 import 'package:test_app/observation/add/PhotoChoice_Fauna.dart';
 import 'package:test_app/observation/add/PhotoChoice_Unknown.dart';
+import 'package:test_app/observation/add/addObservation.dart';
 import 'package:test_app/observation/add/specie_unknow_faune.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,7 +25,7 @@ class ChoiceStatus extends StatefulWidget {
   @override
   State<ChoiceStatus> createState() => _ChoiceStatusState();
 }
- 
+
 class _ChoiceStatusState extends State<ChoiceStatus> {
   @override
   Widget build(BuildContext context) {
@@ -231,6 +232,27 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
                       }
                     },
                     child: Text(AppLocalizations.of(context)!.especeInconnue,
+                        style: StyleText.getButton()),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10.0),
+              child: Center(
+                child: SizedBox(
+                  width: 200, // Set width as needed
+                  child: RawMaterialButton(
+                    fillColor: const Color(0xFF006766),
+                    elevation: 0.0,
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddObservation(email: widget.email, aeroport: widget.aeroport, json: 'assets/formJson/faune_protected.json')));
+                    },
+                    child: Text("GO TO TEST",
                         style: StyleText.getButton()),
                   ),
                 ),

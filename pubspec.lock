@@ -177,6 +177,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  date_field:
+    dependency: "direct main"
+    description:
+      name: date_field
+      sha256: "5ccb3ed3a498a2e221128a03d652c7019979901c54408708e2636407615624ab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.1"
   dio:
     dependency: transitive
     description:
@@ -185,6 +193,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.3+1"
+  email_validator:
+    dependency: "direct main"
+    description:
+      name: email_validator
+      sha256: e9a90f27ab2b915a27d7f9c2a7ddda5dd752d6942616ee83529b686fc086221b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.17"
   exif:
     dependency: "direct main"
     description:
@@ -431,7 +447,7 @@ packages:
     source: hosted
     version: "0.1.4+1"
   flutter_launcher_icons:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_launcher_icons
       sha256: "526faf84284b86a4cb36d20a5e45147747b7563d921373d4ee0559c54fcdbcea"
@@ -837,6 +853,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  multi_select_flutter:
+    dependency: "direct main"
+    description:
+      name: multi_select_flutter
+      sha256: "503857b415d390d29159df8a9d92d83c6aac17aaf1c307fb7bcfc77d097d20ed"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.3"
   path:
     dependency: transitive
     description:

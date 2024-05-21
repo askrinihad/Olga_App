@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_app/builder/checkbox_builder.dart';
-import 'package:test_app/builder/date_picker_builder.dart';
-import 'package:test_app/builder/dropdown_button_form_field_builder.dart';
-import 'package:test_app/builder/text_form_field_builder.dart';
-import 'package:test_app/builder/picture_builder.dart';
-import 'package:test_app/builder/time_pikcer_builder.dart';
-import 'package:test_app/builder/date_time_picker_builder.dart';
-import 'package:test_app/builder/notice_builder.dart';
+import 'package:test_app/form/builder/checkbox_builder.dart';
+import 'package:test_app/form/builder/date_picker_builder.dart';
+import 'package:test_app/form/builder/dropdown_button_form_field_builder.dart';
+import 'package:test_app/form/builder/text_form_field_builder.dart';
+import 'package:test_app/form/builder/picture_builder.dart';
+import 'package:test_app/form/builder/time_pikcer_builder.dart';
+import 'package:test_app/form/builder/date_time_picker_builder.dart';
+import 'package:test_app/form/builder/notice_builder.dart';
 
 Future<List<Widget>> buildFormFromJson(
   BuildContext context, String pathToJson) async {
