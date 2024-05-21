@@ -6,7 +6,8 @@ import 'package:test_app/style/StyleText.dart';
 class ObservationSelectType extends StatefulWidget {
   final String email;
   final String aeroport;
-  const ObservationSelectType({required this.email, required this.aeroport, super.key});
+  const ObservationSelectType(
+      {required this.email, required this.aeroport, super.key});
 
   @override
   State<ObservationSelectType> createState() => _ObservationSelectTypeState();
@@ -30,12 +31,14 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
             child: Center(
               child: SizedBox(
                 width: 200, // Set width as needed
-                child: RawMaterialButton(
-                  fillColor: const Color(0xFF006766),
-                  elevation: 0.0,
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
                   ),
                   onPressed: () {
                     Navigator.of(context).push(
@@ -58,12 +61,14 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
             child: Center(
               child: SizedBox(
                 width: 200, // Set width as needed
-                child: RawMaterialButton(
-                  fillColor: const Color(0xFF006766),
-                  elevation: 0.0,
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
                   ),
                   onPressed: () {
                     Navigator.of(context).push(
@@ -88,12 +93,14 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
             child: Center(
               child: SizedBox(
                 width: 200, // Set width as needed
-                child: RawMaterialButton(
-                  fillColor: const Color(0xFF006766),
-                  elevation: 0.0,
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
                   ),
                   onPressed: () {
                     Navigator.of(context).push(

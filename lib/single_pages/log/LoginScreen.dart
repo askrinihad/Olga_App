@@ -171,12 +171,15 @@ class _LoginScreenState extends State<LoginScreen> {
               // Button for the login
               Container(
                 width: double.infinity,
-                child: RawMaterialButton(
-                  fillColor: const Color(0xFF006766),
-                  elevation: 0.0,
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0)),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
+                  ),
                   onPressed: () async {
                     print('in on press');
                     User? user = await loginUsingEmailPassword(

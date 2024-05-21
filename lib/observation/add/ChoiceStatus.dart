@@ -39,12 +39,14 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
               child: Center(
                 child: SizedBox(
                   width: 200, // Set width as needed
-                  child: RawMaterialButton(
-                    fillColor: const Color(0xFF006766),
-                    elevation: 0.0,
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      backgroundColor: Color(0xFF006766),
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      elevation: 0.0,
                     ),
                     onPressed: () {
                       if (widget.argumentReceived == 'flore') {
@@ -93,12 +95,14 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
               child: Center(
                 child: SizedBox(
                   width: 200, // Set width as needed
-                  child: RawMaterialButton(
-                    fillColor: const Color(0xFF006766),
-                    elevation: 0.0,
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      backgroundColor: Color(0xFF006766),
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      elevation: 0.0,
                     ),
                     onPressed: () {
                       if (widget.argumentReceived == 'flore') {
@@ -147,13 +151,15 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
               child: Center(
                 child: SizedBox(
                   width: 200, // Set width as needed
-                  child: RawMaterialButton(
-                    fillColor: const Color(0xFF006766),
-                    elevation: 0.0,
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
+                  ),
                     onPressed: () {
                       if (widget.argumentReceived == 'flore') {
                         String combinedArgument =
@@ -201,13 +207,15 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
               child: Center(
                 child: SizedBox(
                   width: 200, // Set width as needed
-                  child: RawMaterialButton(
-                    fillColor: const Color(0xFF006766),
-                    elevation: 0.0,
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
+                  ),
                     onPressed: () {
                       String combinedArgument =
                           "${widget.argumentReceived} inconnue";
@@ -242,13 +250,15 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
               child: Center(
                 child: SizedBox(
                   width: 200, // Set width as needed
-                  child: RawMaterialButton(
-                    fillColor: const Color(0xFF006766),
-                    elevation: 0.0,
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
+                  ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => AddObservation(

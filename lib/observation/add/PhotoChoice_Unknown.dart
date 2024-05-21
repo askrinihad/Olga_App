@@ -112,12 +112,14 @@ class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
                 child: Center(
                   child: SizedBox(
                     width: 220, // Set width as needed
-                    child: RawMaterialButton(
-                      fillColor: const Color(0xFF006766),
-                      elevation: 0.0,
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        backgroundColor: Color(0xFF006766),
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        elevation: 0.0,
                       ),
                       onPressed: () {},
                       child: Row(
@@ -145,12 +147,14 @@ class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
                 child: Center(
                   child: SizedBox(
                     width: 220, // Set width as needed
-                    child: RawMaterialButton(
-                      fillColor: const Color(0xFF006766),
-                      elevation: 0.0,
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        backgroundColor: Color(0xFF006766),
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        elevation: 0.0,
                       ),
                       onPressed: () {
                         _PickImageFromCamera();
@@ -180,12 +184,14 @@ class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
                 child: Center(
                   child: SizedBox(
                     width: 220, // Set width as needed
-                    child: RawMaterialButton(
-                      fillColor: const Color(0xFF006766),
-                      elevation: 0.0,
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        backgroundColor: Color(0xFF006766),
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        elevation: 0.0,
                       ),
                       onPressed: () {
                         _PickImageFromGallery();
@@ -237,12 +243,14 @@ class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
                 child: Center(
                   child: SizedBox(
                     width: 210, // Set width as needed
-                    child: RawMaterialButton(
-                      fillColor: const Color(0xFF006766),
-                      elevation: 0.0,
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        backgroundColor: Color(0xFF006766),
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        elevation: 0.0,
                       ),
                       onPressed: uploadImage,
                       child: Text(AppLocalizations.of(context)!.reconnaissance,
@@ -469,12 +477,14 @@ class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
                   children: [
                     Container(
                       width: 100,
-                      child: RawMaterialButton(
-                        fillColor: const Color(0xFF006766),
-                        elevation: 0.0,
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          backgroundColor: Color(0xFF006766),
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          elevation: 0.0,
                         ),
                         onPressed: () async {
                           if (_selectedImage != null && _imageName != null) {

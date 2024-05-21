@@ -37,12 +37,14 @@ class _BirdRecognitionState extends State<BirdRecognition> {
             child: Center(
               child: SizedBox(
                 width: 220, // Set width as needed
-                child: RawMaterialButton(
-                  fillColor: const Color(0xFF006766),
-                  elevation: 0.0,
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
                   ),
                   onPressed: () {
                     _PickImageFromGallery();
@@ -85,12 +87,14 @@ class _BirdRecognitionState extends State<BirdRecognition> {
             child: Center(
               child: SizedBox(
                 width: 210, // Set width as needed
-                child: RawMaterialButton(
-                  fillColor: const Color(0xFF006766),
-                  elevation: 0.0,
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    backgroundColor: Color(0xFF006766),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    elevation: 0.0,
                   ),
                   onPressed: uploadBird,
                   child: Text(AppLocalizations.of(context)!.reconnaissance,
