@@ -47,7 +47,7 @@ Widget buildFormPage(BuildContext context, String jsonPath) {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   backgroundColor: Color(0xFF006766),
-                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
                   elevation: 0.0,
                 ),
               ),

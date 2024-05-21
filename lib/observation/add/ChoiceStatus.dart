@@ -250,10 +250,16 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddObservation(email: widget.email, aeroport: widget.aeroport, json: 'assets/formJson/faune_protected.json')));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AddObservation(
+                                email: widget.email,
+                                aeroport: widget.aeroport,
+                                json: 'assets/formJson/faune_protected.json',
+                                SpecieStatus: 'courante',
+                                SpecieType: 'faune',
+                              )));
                     },
-                    child: Text("GO TO TEST",
-                        style: StyleText.getButton()),
+                    child: Text("GO TO TEST", style: StyleText.getButton()),
                   ),
                 ),
               ),

@@ -4,12 +4,6 @@
     "form_version": "0.1.0",
     "form": [
       {
-        "field_type": "notice",
-        "field_label": "Nouvelle Observation : Espèces protégées",
-        "field_size?": "",
-        "field_color?": ""
-      },
-      {
         "field_type": "picturepicker",
         "field_label": "selectionner une photo",
         "field_required": true

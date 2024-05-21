@@ -70,7 +70,7 @@ class _NavDrawerbarState extends State<NavDrawerbar> {
       case DrawerSections.NouvelleObservation:
         return ObservationSelectType(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.NouvelleEspece:
-        return AddSpecie();
+        return AddSpecie(email: widget.email, aeroport: widget.aeroport,);
       case DrawerSections.NouveauInventaire:
         return AddInventory(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Bibliotheque:
