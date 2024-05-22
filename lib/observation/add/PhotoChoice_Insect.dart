@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -808,69 +806,6 @@ class _PhotoChoice_InsectState extends State<PhotoChoice_Insect> {
       });
     } catch (e) {
       print("Error fetching location: $e");
-    }
-  }
-
-/////////////////////////////////////////////////////////////////:
-  Future<void> uploadImage() async {
-    final Uri uri = Uri.parse(
-        "http://192.168.137.126:4000/upload"); // Update with your server's URL
-    final request = http.MultipartRequest("POST", uri);
-    final headers = {"Content-type": "multipart/form-data"};
-
-    request.files.add(
-      await http.MultipartFile.fromPath(
-        'image',
-        _selectedImage!.path,
-      ),
-    );
-
-    request.headers.addAll(headers);
-
-    try {
-      final http.Response response =
-          await http.Response.fromStream(await request.send());
-      if (response.statusCode == 200) {
-        final Map<String, dynamic>? responseData =
-            jsonDecode(response.body) as Map<String, dynamic>?;
-
-        if (responseData != null) {
-          //print("Response body: $responseData");
-
-          final List<dynamic>? results = responseData['results'];
-          print(results);
-
-          if (results != null && results.isNotEmpty) {
-            final Map<String, dynamic> firstResult = results.first;
-            final dynamic resultScientificName = firstResult['scientific_name'];
-            final dynamic resScore = firstResult['score'];
-
-            if (resultScientificName != null && resScore != null) {
-              setState(() {
-                scientificName = resultScientificName.toString();
-                selectedEspece = resultScientificName.toString();
-                score = resScore;
-                // _especeController.text= resultScientificName.toString();
-              });
-              print("Image uploaded successfully");
-              print("scientific name :$scientificName");
-              print("score : $score");
-            } else {
-              print("Failed to parse scientific_name or score from response");
-            }
-          } else {
-            print("No results found in the response");
-          }
-        } else {
-          print("Failed to decode response body");
-        }
-      } else {
-        // Handle other status codes
-        print("Failed to upload image. Status code: ${response.statusCode}");
-      }
-    } catch (error) {
-      // Handle errors
-      print("Error uploading image: $error");
     }
   }
 }
