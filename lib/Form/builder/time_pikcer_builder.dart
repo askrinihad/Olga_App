@@ -12,42 +12,60 @@ class TimeWidget extends StatefulWidget {
 }
 
 class _TimeWidgetState extends State<TimeWidget> {
-  TimeOfDay? selectedTime;
   final controller = TextEditingController();
+  final timeNotifier = ValueNotifier<TimeOfDay?>(null);
+
+  @override
+  void initState() {
+    super.initState();
+    timeNotifier.addListener(() {
+      if (timeNotifier.value != null) {
+        controller.text = "${timeNotifier.value!.hour}:${timeNotifier.value!.minute}";
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    timeNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: widget.label,
-        hintText: widget.hint,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      onTap: () async {
-        FocusScope.of(context).requestFocus(new FocusNode());
-        final TimeOfDay? timeOfDay = await showTimePicker(
-          context: context,
-          initialTime: selectedTime ?? TimeOfDay.now(),
-          initialEntryMode: TimePickerEntryMode.dial,
-        );
-        if (timeOfDay != null) {
-          setState(() {
-            selectedTime = timeOfDay;
-            controller.text = "${selectedTime!.hour}:${selectedTime!.minute}";
-          });
-        }
-      },
-      validator: widget.isRequired
-          ? (value) {
-              if (value == null || value.isEmpty) {
-                return 'Ce champ est obligatoire';
-              }
-              return null;
+    return ValueListenableBuilder<TimeOfDay?>(
+      valueListenable: timeNotifier,
+      builder: (context, time, child) {
+        return TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          onTap: () async {
+            FocusScope.of(context).requestFocus(new FocusNode());
+            final TimeOfDay? timeOfDay = await showTimePicker(
+              context: context,
+              initialTime: timeNotifier.value ?? TimeOfDay.now(),
+              initialEntryMode: TimePickerEntryMode.dial,
+            );
+            if (timeOfDay != null) {
+              timeNotifier.value = timeOfDay;
             }
-          : null,
+          },
+          validator: widget.isRequired
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ce champ est obligatoire';
+                  }
+                  return null;
+                }
+              : null,
+        );
+      },
     );
   }
 }
