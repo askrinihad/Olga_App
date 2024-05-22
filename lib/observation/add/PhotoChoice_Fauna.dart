@@ -865,69 +865,6 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
     }
   }
 
-/////////////////////////////////////////////////////////////////:
-  Future<void> uploadImage() async {
-    final Uri uri = Uri.parse(
-        "http://192.168.137.126:4000/upload"); // Update with your server's URL
-    final request = http.MultipartRequest("POST", uri);
-    final headers = {"Content-type": "multipart/form-data"};
-
-    request.files.add(
-      await http.MultipartFile.fromPath(
-        'image',
-        _selectedImage!.path,
-      ),
-    );
-
-    request.headers.addAll(headers);
-
-    try {
-      final http.Response response =
-          await http.Response.fromStream(await request.send());
-      if (response.statusCode == 200) {
-        final Map<String, dynamic>? responseData =
-            jsonDecode(response.body) as Map<String, dynamic>?;
-
-        if (responseData != null) {
-          //print("Response body: $responseData");
-
-          final List<dynamic>? results = responseData['results'];
-          print(results);
-
-          if (results != null && results.isNotEmpty) {
-            final Map<String, dynamic> firstResult = results.first;
-            final dynamic resultScientificName = firstResult['scientific_name'];
-            final dynamic resScore = firstResult['score'];
-
-            if (resultScientificName != null && resScore != null) {
-              setState(() {
-                scientificName = resultScientificName.toString();
-                selectedEspece = resultScientificName.toString();
-                score = resScore;
-                // _especeController.text= resultScientificName.toString();
-              });
-              print("Image uploaded successfully");
-              print("scientific name :$scientificName");
-              print("score : $score");
-            } else {
-              print("Failed to parse scientific_name or score from response");
-            }
-          } else {
-            print("No results found in the response");
-          }
-        } else {
-          print("Failed to decode response body");
-        }
-      } else {
-        // Handle other status codes
-        print("Failed to upload image. Status code: ${response.statusCode}");
-      }
-    } catch (error) {
-      // Handle errors
-      print("Error uploading image: $error");
-    }
-  }
-
 //////////////////////////////////////////////
   Future<void> uploadBird() async {
     final Uri uri = Uri.parse(
@@ -952,12 +889,9 @@ class _PhotoChoice_FaunaState extends State<PhotoChoice_Fauna> {
             jsonDecode(response.body) as Map<String, dynamic>?;
 
         if (responseData != null) {
-          //print("Response body: $responseData");
-          //print(responseData['results']);
 
           if (responseData['results'] != null) {
             final Map<String, dynamic> result = responseData['results'];
-            // print(result);
 
             final dynamic conf = result['confidence'];
             final dynamic classN = result['class_name'];

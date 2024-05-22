@@ -992,7 +992,6 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
             jsonDecode(response.body) as Map<String, dynamic>?;
 
         if (responseData != null) {
-          //print("Response body: $responseData");
 
           final List<dynamic>? results = responseData['results'];
 
@@ -1005,7 +1004,6 @@ class _PhotoChoice_FloraState extends State<PhotoChoice_Flora> {
               setState(() {
                 scientificName = resultScientificName.toString();
                 score = resScore;
-                // _especeController.text= resultScientificName.toString();
               });
 
               print("Image uploaded successfully");

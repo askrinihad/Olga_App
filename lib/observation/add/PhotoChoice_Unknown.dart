@@ -749,10 +749,8 @@ class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
             jsonDecode(response.body) as Map<String, dynamic>?;
 
         if (responseData != null) {
-          //print("Response body: $responseData");
 
           final List<dynamic>? results = responseData['results'];
-          print(results);
 
           if (results != null && results.isNotEmpty) {
             final Map<String, dynamic> firstResult = results.first;
@@ -763,7 +761,6 @@ class _PhotoChoice_UnknownState extends State<PhotoChoice_Unknown> {
               setState(() {
                 scientificName = resultScientificName.toString();
                 score = resScore;
-                // _especeController.text= resultScientificName.toString();
               });
               print("Image uploaded successfully");
               print("scientific name :$scientificName");
