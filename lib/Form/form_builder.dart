@@ -6,7 +6,7 @@ import 'package:test_app/form/builder/date_picker_builder.dart';
 import 'package:test_app/form/builder/dropdown_button_form_field_builder.dart';
 import 'package:test_app/form/builder/text_form_field_builder.dart';
 import 'package:test_app/form/builder/picture_builder.dart';
-import 'package:test_app/form/builder/time_pikcer_builder.dart';
+import 'package:test_app/form/builder/time_picker_builder.dart';
 import 'package:test_app/form/builder/date_time_picker_builder.dart';
 import 'package:test_app/form/builder/notice_builder.dart';
 
