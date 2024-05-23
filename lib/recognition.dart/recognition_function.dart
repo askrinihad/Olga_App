@@ -50,7 +50,7 @@ Future<Map<String, dynamic>> uploadFlore(File? image) async {
     final List<dynamic>? results = responseData['results'];
 
     if (results == null || results.isEmpty) {
-      throw new Exception("Failed to decode response body");
+      throw new Exception("Failed to decode response body, or specie isn't recognized");
     }
 
     final Map<String, dynamic> firstResult = results.first;
