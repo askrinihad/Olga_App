@@ -10,49 +10,39 @@ Widget buildFormPage(BuildContext context, String jsonPath) {
     future: buildFormFromJson(context, jsonPath),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        return Column(
-          children: [
-            Expanded(
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(45.0),
-                  child: ListView.separated(
-                    itemCount: (snapshot.data as List<Widget>).length,
-                    itemBuilder: (context, index) {
-                      return (snapshot.data as List<Widget>)[index];
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(height: 13.5);
-                    },
+        return Scaffold(
+          body: Column(
+            children: [
+              Expanded(
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(45.0),
+                    child: ListView.separated(
+                      itemCount: (snapshot.data as List<Widget>).length,
+                      itemBuilder: (context, index) {
+                        return (snapshot.data as List<Widget>)[index];
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 13.5);
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    print('Form submitted');
-                  }
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.renregistrer,
-                  style: StyleText.getButton(),
-                ),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  backgroundColor: Color(0xFF006766),
-                  padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-                  elevation: 0.0,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                print('Form submitted');
+              }
+            },
+            child: Text('submit'),
+            backgroundColor: Color(0xFF006766),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         );
       } else if (snapshot.hasError) {
         return Text('Error: ${snapshot.error}');
