@@ -89,6 +89,27 @@ Widget buildTextFormField(
           }
         : null,
   );
+
+  case 'notes':
+      return TextFormField(
+        maxLines: 8, 
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: hint,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        validator: isRequired
+            ? (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Ce champ est obligatoire';
+                }
+                return null;
+              }
+            : null,
+      );
+      
     default:
       throw Exception('Unsupported keyboardType: $keyboardType');
   }

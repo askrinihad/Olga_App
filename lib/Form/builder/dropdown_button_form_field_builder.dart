@@ -7,7 +7,7 @@ Widget buildDropdownButtonFormField(String key, String hint, bool isRequired,
     case true:
       return MultiSelectDialogField(
         items: options.map((e) => MultiSelectItem(e, e)).toList(),
-        title: Text(key),
+        title: Text(hint),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black87),
           borderRadius: BorderRadius.circular(10.0),
