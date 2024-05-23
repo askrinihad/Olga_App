@@ -39,7 +39,10 @@ Widget buildFormPage(BuildContext context, String jsonPath) {
                 print('Form submitted');
               }
             },
-            child: Text('submit'),
+            child: Text(
+                  AppLocalizations.of(context)!.renregistrer,
+                  style: StyleText.getButton(),
+                ),
             backgroundColor: Color(0xFF006766),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
