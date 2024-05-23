@@ -10,17 +10,20 @@ class MyCheckbox extends StatefulWidget {
 }
 
 class _MyCheckboxState extends State<MyCheckbox> {
-  bool _value = false;
+  final valueNotifier = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-      title: Text(widget.label),
-      value: _value,
-      onChanged: (bool? value) {
-        setState(() {
-          _value = value ?? false;
-        });
+    return ValueListenableBuilder<bool>(
+      valueListenable: valueNotifier,
+      builder: (context, value, child) {
+        return CheckboxListTile(
+          title: Text(widget.label),
+          value: value,
+          onChanged: (bool? newValue) {
+            valueNotifier.value = newValue ?? false;
+          },
+        );
       },
     );
   }

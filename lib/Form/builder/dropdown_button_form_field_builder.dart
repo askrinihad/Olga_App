@@ -7,23 +7,12 @@ Widget buildDropdownButtonFormField(String key, String hint, bool isRequired,
     case true:
       return MultiSelectDialogField(
         items: options.map((e) => MultiSelectItem(e, e)).toList(),
-        title: Text(key),
-        selectedColor: Colors.blue,
+        title: Text(hint),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black87),
           borderRadius: BorderRadius.circular(10.0),
-          color: Colors.white,
         ),
-        buttonIcon: const Icon(
-          Icons.arrow_drop_down, 
-          color: Colors.black87,
-        ),
-        buttonText: Text(
-          key,
-          style: const TextStyle(
-            color: Colors.black87,
-          ),
-        ),
+        buttonIcon: const Icon(Icons.arrow_drop_down),
         onConfirm: (values) {},
         validator: isRequired
             ? (values) {
@@ -38,7 +27,7 @@ Widget buildDropdownButtonFormField(String key, String hint, bool isRequired,
     case false:
       return DropdownButtonFormField<String>(
         decoration: InputDecoration(
-          labelText: key,
+            labelText: key,
           hintText: hint,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),

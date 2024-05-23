@@ -1,39 +1,41 @@
 import 'package:flutter/material.dart';
 
-class DatePickerWidget extends StatefulWidget {
+class TimeWidget extends StatefulWidget {
   final String label;
   final String hint;
   final bool isRequired;
 
-  DatePickerWidget({required this.label, required this.hint, this.isRequired = false});
+  const TimeWidget({required this.label, this.isRequired = false, required this.hint, Key? key}) : super(key: key);
 
   @override
-  _DatePickerWidgetState createState() => _DatePickerWidgetState();
+  _TimeWidgetState createState() => _TimeWidgetState();
 }
 
-class _DatePickerWidgetState extends State<DatePickerWidget> {
+class _TimeWidgetState extends State<TimeWidget> {
   final controller = TextEditingController();
-  final dateNotifier = ValueNotifier<String>("");
+  final timeNotifier = ValueNotifier<TimeOfDay?>(null);
 
   @override
   void initState() {
     super.initState();
-    dateNotifier.addListener(() {
-      controller.text = dateNotifier.value;
+    timeNotifier.addListener(() {
+      if (timeNotifier.value != null) {
+        controller.text = "${timeNotifier.value!.hour}:${timeNotifier.value!.minute}";
+      }
     });
   }
 
   @override
   void dispose() {
-    dateNotifier.dispose();
+    timeNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<String>(
-      valueListenable: dateNotifier,
-      builder: (context, date, child) {
+    return ValueListenableBuilder<TimeOfDay?>(
+      valueListenable: timeNotifier,
+      builder: (context, time, child) {
         return TextFormField(
           controller: controller,
           decoration: InputDecoration(
@@ -45,14 +47,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           ),
           onTap: () async {
             FocusScope.of(context).requestFocus(new FocusNode());
-            final DateTime? pickedDate = await showDatePicker(
+            final TimeOfDay? timeOfDay = await showTimePicker(
               context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2100),
+              initialTime: timeNotifier.value ?? TimeOfDay.now(),
+              initialEntryMode: TimePickerEntryMode.dial,
             );
-            if (pickedDate != null) {
-              dateNotifier.value = "${pickedDate.toLocal()}".split(' ')[0];
+            if (timeOfDay != null) {
+              timeNotifier.value = timeOfDay;
             }
           },
           validator: widget.isRequired

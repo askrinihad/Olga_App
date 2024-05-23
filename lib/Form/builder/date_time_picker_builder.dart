@@ -16,53 +16,71 @@ class DateTimeWidget extends StatefulWidget {
 class _DateTimeWidgetState extends State<DateTimeWidget> {
   final controller = TextEditingController();
   DateTime dateTime = DateTime.now();
+  final dateTimeNotifier = ValueNotifier<DateTime>(DateTime.now());
+
+  @override
+  void initState() {
+    super.initState();
+    dateTimeNotifier.addListener(() {
+      controller.text = DateFormat('yyyy-MM-dd – kk:mm').format(dateTimeNotifier.value.toLocal());
+    });
+  } 
+
+  @override
+  void dispose() {
+    dateTimeNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: widget.label,
-        hintText: widget.hint,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      onTap: () async {
-        FocusScope.of(context).requestFocus(new FocusNode());
-        final DateTime? pickedDate = await showDatePicker(
-          context: context,
-          initialDate: dateTime,
-          firstDate: DateTime(1900),
-          lastDate: DateTime(2100),
-        );
-        if (pickedDate != null) {
-          final TimeOfDay? pickedTime = await showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.fromDateTime(dateTime),
-          );
-          if (pickedTime != null) {
-            dateTime = DateTime(
-              pickedDate.year,
-              pickedDate.month,
-              pickedDate.day,
-              pickedTime.hour,
-              pickedTime.minute,
+    return ValueListenableBuilder<DateTime>(
+      valueListenable: dateTimeNotifier,
+      builder: (context, date, child) {
+        return TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          onTap: () async {
+            FocusScope.of(context).requestFocus(new FocusNode());
+            final DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: dateTime,
+              firstDate: DateTime(1900),
+              lastDate: DateTime(2100),
             );
-            setState(() {
-              controller.text = DateFormat('yyyy-MM-dd – kk:mm').format(dateTime.toLocal());
-            });
-          }
-        }
-      },
-      validator: widget.isRequired
-          ? (value) {
-              if (value == null || value.isEmpty) {
-                return 'Ce champ est obligatoire';
+            if (pickedDate != null) {
+              final TimeOfDay? pickedTime = await showTimePicker(
+                context: context,
+                initialTime: TimeOfDay.fromDateTime(dateTime),
+              );
+              if (pickedTime != null) {
+                dateTime = DateTime(
+                  pickedDate.year,
+                  pickedDate.month,
+                  pickedDate.day,
+                  pickedTime.hour,
+                  pickedTime.minute,
+                );
+                dateTimeNotifier.value = dateTime;
               }
-              return null;
             }
-          : null,
+          },
+          validator: widget.isRequired
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ce champ est obligatoire';
+                  }
+                  return null;
+                }
+              : null,
+        );
+      },
     );
   }
 }
