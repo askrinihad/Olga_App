@@ -36,9 +36,42 @@ class _RecognitionButtonState extends State<RecognitionButton> {
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             elevation: 0.0,
           ),
-          //TODO : Alerte the users if it doesn't import a frame.
+          //TODO : Alert the users if it doesn't import a frame.
           onPressed: () {
-            print(recognition(File(picture.file!.path), widget.type));
+            try {
+              if (picture.file != null) {
+                print(recognition(File(picture.file!.path), widget.type));
+              }
+            } catch (e, s) {
+              // Check if picture is not initialized, if not Alerte the users to import a frame
+              // Yes is very a bullshit ugly code but LateInitializationError isn't a objet that can be catch and we cannot initialize with null because Stateless require final attribut not var.
+              //
+              // BUT IT WORK (For the user)
+              if (e.toString() ==
+                  "LateInitializationError: Field 'file' has not been initialized.") {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(AppLocalizations.of(context)!.importerPhoto),
+                      content: Text(
+                          "Please select a picture before pressing that button"),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("OK"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                print('Exception : $e');
+                print('Stack trace: $s');
+              }
+            }
           },
           child: Text(AppLocalizations.of(context)!.reconnaissance,
               style: StyleText.getButton()),
