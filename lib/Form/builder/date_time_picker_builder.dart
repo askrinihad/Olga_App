@@ -5,9 +5,15 @@ class DateTimeWidget extends StatefulWidget {
   final String label;
   final String hint;
   final bool isRequired;
+  final Map<String, dynamic> data;
+  final String datakey;
 
   DateTimeWidget(
-      {required this.label, required this.hint, this.isRequired = false});
+      {required this.label,
+      required this.hint,
+      this.isRequired = false,
+      required this.data,
+      required this.datakey});
 
   @override
   _DateTimeWidgetState createState() => _DateTimeWidgetState();
@@ -22,9 +28,10 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
   void initState() {
     super.initState();
     dateTimeNotifier.addListener(() {
-      controller.text = DateFormat('yyyy-MM-dd – kk:mm').format(dateTimeNotifier.value.toLocal());
+      controller.text = DateFormat('yyyy-MM-dd – kk:mm')
+          .format(dateTimeNotifier.value.toLocal());
     });
-  } 
+  }
 
   @override
   void dispose() {
@@ -67,6 +74,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
                   pickedTime.hour,
                   pickedTime.minute,
                 );
+                widget.data[widget.datakey] = dateTime;
                 dateTimeNotifier.value = dateTime;
               }
             }

@@ -5,9 +5,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget buildFormPage(BuildContext context, String jsonPath) {
   final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> values = new Map<String, dynamic>(); // Récupération des valeurs.
 
   return FutureBuilder(
-    future: buildFormFromJson(context, jsonPath),
+    future: buildFormFromJson(context, jsonPath, values),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Scaffold(
@@ -37,6 +38,7 @@ Widget buildFormPage(BuildContext context, String jsonPath) {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 print('Form submitted');
+                print(values);
               }
             },
             child: Text(

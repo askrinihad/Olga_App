@@ -4,8 +4,15 @@ class DatePickerWidget extends StatefulWidget {
   final String label;
   final String hint;
   final bool isRequired;
+  final Map<String, dynamic> data;
+  final String datakey;
 
-  DatePickerWidget({required this.label, required this.hint, this.isRequired = false});
+  DatePickerWidget(
+      {required this.label,
+      required this.hint,
+      this.isRequired = false,
+      required this.data,
+      required this.datakey});
 
   @override
   _DatePickerWidgetState createState() => _DatePickerWidgetState();
@@ -52,6 +59,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
               lastDate: DateTime(2100),
             );
             if (pickedDate != null) {
+              widget.data[widget.datakey] =
+                  "${pickedDate.toLocal()}".split(' ')[0];
               dateNotifier.value = "${pickedDate.toLocal()}".split(' ')[0];
             }
           },

@@ -4,8 +4,17 @@ class TimeWidget extends StatefulWidget {
   final String label;
   final String hint;
   final bool isRequired;
+  final Map<String, dynamic> data;
+  final String datakey;
 
-  const TimeWidget({required this.label, this.isRequired = false, required this.hint, Key? key}) : super(key: key);
+  const TimeWidget(
+      {required this.label,
+      this.isRequired = false,
+      required this.hint,
+      Key? key,
+      required this.data,
+      required this.datakey})
+      : super(key: key);
 
   @override
   _TimeWidgetState createState() => _TimeWidgetState();
@@ -20,7 +29,8 @@ class _TimeWidgetState extends State<TimeWidget> {
     super.initState();
     timeNotifier.addListener(() {
       if (timeNotifier.value != null) {
-        controller.text = "${timeNotifier.value!.hour}:${timeNotifier.value!.minute}";
+        controller.text =
+            "${timeNotifier.value!.hour}:${timeNotifier.value!.minute}";
       }
     });
   }
@@ -53,6 +63,7 @@ class _TimeWidgetState extends State<TimeWidget> {
               initialEntryMode: TimePickerEntryMode.dial,
             );
             if (timeOfDay != null) {
+              widget.data[widget.datakey] = timeOfDay;
               timeNotifier.value = timeOfDay;
             }
           },

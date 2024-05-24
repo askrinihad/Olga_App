@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 Widget buildDropdownButtonFormField(String key, String hint, bool isRequired,
-    List<String> options, bool multi) {
+    List<String> options, bool multi, Map data, String datakey) {
   switch (multi) {
     case true:
       return MultiSelectDialogField(
+        onSaved: (value){ data[datakey] = value;},
         items: options.map((e) => MultiSelectItem(e, e)).toList(),
         title: Text(hint),
         decoration: BoxDecoration(
@@ -26,8 +27,9 @@ Widget buildDropdownButtonFormField(String key, String hint, bool isRequired,
 
     case false:
       return DropdownButtonFormField<String>(
+        onSaved: (value){ data[datakey] = value;},
         decoration: InputDecoration(
-            labelText: key,
+          labelText: key,
           hintText: hint,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
