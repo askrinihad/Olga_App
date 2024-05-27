@@ -1,84 +1,84 @@
 {
-    "form_id": "example_form_1",
-    "form_label": "Example Form 1",
-    "form_version": "0.1.0",
-    "form": [
+  "form_id": "example_form_1",
+  "form_label": "Example Form 1",
+  "form_version": "0.1.0",
+  "form": [
+    {
+      "field_type": "select",
+      "field_label": "Choisissez une catégorie",
+      "field_required": true,
+      "input_multi": false,
+      "field_key": "type",
+      "select_options": [
         {
-            "field_type": "select",
-            "field_label": "Choisissez une catégorie",
-            "field_required": true,
-            "input_multi" : false,
-            "field_key": "type",
-            "select_options": [
-                {
-                    "id": 1,
-                    "label": "Plant Life"
-                },
-                {
-                    "id": 2,
-                    "label": "Wild Life"
-                },
-                {
-                  "id": 3,
-                  "label" : "Insects"
-                }
-            ]
-          },
-          {
-            "field_type": "input",
-            "field_label": "Nom scientifique",
-            "field_hint": "Entrez le nom scientifique de l'animal",
-            "field_required": true,
-            "input_type": "text",
-            "field_key": "Nom scientifique"
-          },
-          {
-            "field_type": "input",
-            "field_label": "Nom vernaculaire",
-            "field_hint": "Entrez le nom vernaculaire de l'animal",
-            "field_required": true,
-            "input_type": "text",
-            "field_key": "Nom français"
-          },
-          {
-            "field_type": "input",
-            "field_label": "Embranchement",
-            "field_hint": "Entrez l'embranchement de l'animal",
-            "field_required": true,
-            "input_type": "text",
-            "field_key": "embranchement"
-          },
-          {
-            "field_type": "input",
-            "field_label": "Classe",
-            "field_hint": "Entrez la classe de l'animal",
-            "field_required": true,
-            "input_type": "text",
-            "field_key": "classe"
-          },
-          {
-            "field_type": "input",
-            "field_label": "Ordre",
-            "field_hint": "Entrez l'ordre de l'animal",
-            "field_required": true,
-            "input_type": "text",
-            "field_key": "ordre"
-          },
-          {
-            "field_type": "input",
-            "field_label": "Famille",
-            "field_hint": "Entrez la famille de l'animal",
-            "field_required": true,
-            "input_type": "text",
-            "field_key": "famille"
-          },
-          {
-            "field_type": "input",
-            "field_label": "Description",
-            "field_hint": "Entrez la description",
-            "field_required": true,
-            "input_type": "text",
-            "field_key": "description"
-          }
-    ]
-   }
+          "id": 1,
+          "label": "Plant Life"
+        },
+        {
+          "id": 2,
+          "label": "Wild Life"
+        },
+        {
+          "id": 3,
+          "label": "Insects"
+        }
+      ]
+    },
+    {
+      "field_type": "input",
+      "field_label": "Nom scientifique",
+      "field_hint": "Entrez le nom scientifique de l'animal",
+      "field_required": true,
+      "input_type": "text",
+      "field_key": "Nom scientifique"
+    },
+    {
+      "field_type": "input",
+      "field_label": "Nom vernaculaire",
+      "field_hint": "Entrez le nom vernaculaire de l'animal",
+      "field_required": true,
+      "input_type": "text",
+      "field_key": "Nom français"
+    },
+    {
+      "field_type": "input",
+      "field_label": "Embranchement",
+      "field_hint": "Entrez l'embranchement de l'animal",
+      "field_required": true,
+      "input_type": "text",
+      "field_key": "embranchement"
+    },
+    {
+      "field_type": "input",
+      "field_label": "Classe",
+      "field_hint": "Entrez la classe de l'animal",
+      "field_required": true,
+      "input_type": "text",
+      "field_key": "classe"
+    },
+    {
+      "field_type": "input",
+      "field_label": "Ordre",
+      "field_hint": "Entrez l'ordre de l'animal",
+      "field_required": true,
+      "input_type": "text",
+      "field_key": "ordre"
+    },
+    {
+      "field_type": "input",
+      "field_label": "Famille",
+      "field_hint": "Entrez la famille de l'animal",
+      "field_required": true,
+      "input_type": "text",
+      "field_key": "famille"
+    },
+    {
+      "field_type": "input",
+      "field_label": "Description",
+      "field_hint": "Entrez la description",
+      "field_required": true,
+      "input_type": "text",
+      "field_key": "description"
+    }
+  ]
+}

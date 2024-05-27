@@ -6,7 +6,6 @@ import 'package:test_app/form/form_page.dart';
 import 'package:test_app/style/StyleText.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 //TODO: When specie exist in specieBDD, check specie exist in collection and add it. If specie doesn't exist in BDD, add in specieBDD and collection
 class AddSpecie extends StatefulWidget {
   final String json = 'assets/formJson/add_specie.json';
@@ -29,41 +28,44 @@ class AddSpecieState extends State<AddSpecie> {
             style: StyleText.getTitle(),
           )),
       Expanded(
-          child: buildFormPage(context, widget.json, (value) {
-            if(!value.containsKey('type')){
-              throw Exception("Not field type");
-            }
-        CollectionReference collRef =
-            getSpeciesCollection_Type("", value['type']);
-        collRef.add(value).then((value) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text(AppLocalizations.of(context)!.succes),
-                content: Text(AppLocalizations.of(context)!.especeAjoute),
-                actions: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close the dialog
+          child: FormPage(
+              jsonPath: widget.json,
+              onSaved: (value) {
+                if (!value.containsKey('type')) {
+                  throw Exception("Not field type");
+                }
+                CollectionReference collRef =
+                    getSpeciesCollection_Type("", value['type']);
+                collRef.add(value).then((value) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(AppLocalizations.of(context)!.succes),
+                        content:
+                            Text(AppLocalizations.of(context)!.especeAjoute),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text("OK"),
+                          ),
+                        ],
+                      );
                     },
-                    child: Text("OK"),
-                  ),
-                ],
-              );
-            },
-          );
-        }).catchError((error, stackTrace) {
-          Get.snackbar(
-            "Error",
-            "Échec d'ajout d'espèce : $error", // Add a message to display in the snackbar
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.redAccent.withOpacity(0.1),
-            colorText: Colors.red, // Fix the property name
-          );
-          print(error.toString());
-        });
-      }))
+                  );
+                }).catchError((error, stackTrace) {
+                  Get.snackbar(
+                    "Error",
+                    "Échec d'ajout d'espèce : $error", // Add a message to display in the snackbar
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.redAccent.withOpacity(0.1),
+                    colorText: Colors.red, // Fix the property name
+                  );
+                  print(error.toString());
+                });
+              }))
     ]);
   }
 }

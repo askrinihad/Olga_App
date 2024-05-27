@@ -20,7 +20,7 @@ class TimeWidget extends StatefulWidget {
   _TimeWidgetState createState() => _TimeWidgetState();
 }
 
-class _TimeWidgetState extends State<TimeWidget> {
+class _TimeWidgetState extends State<TimeWidget> with AutomaticKeepAliveClientMixin{
   final controller = TextEditingController();
   final timeNotifier = ValueNotifier<TimeOfDay?>(null);
 
@@ -43,6 +43,7 @@ class _TimeWidgetState extends State<TimeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ValueListenableBuilder<TimeOfDay?>(
       valueListenable: timeNotifier,
       builder: (context, time, child) {
@@ -79,4 +80,7 @@ class _TimeWidgetState extends State<TimeWidget> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -2,130 +2,170 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
 
-Widget buildTextFormField(String label, String hint, bool isRequired,
-    String keyboardType, Map data, String datakey) {
-  switch (keyboardType) {
-    case 'text':
-      return TextFormField(
-        onSaved: (value) {
-          data[datakey] = value;
-        },
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        validator: isRequired
-            ? (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Ce champ est obligatoire';
-                }
-                return null;
-              }
-            : null,
-      );
-    case 'decimal':
-      return TextFormField(
-        onSaved: (value) {
-          data[datakey] = value;
-        },
-        keyboardType: TextInputType.number,
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*([.,]\d*)?$')),
-        ],
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        validator: isRequired
-            ? (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Ce champ est obligatoire';
-                }
-                return null;
-              }
-            : null,
-      );
-    case 'integer':
-      return TextFormField(
-        onSaved: (value) {
-          data[datakey] = value;
-        },
-        keyboardType: TextInputType.number,
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*$')),
-        ],
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        validator: isRequired
-            ? (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Ce champ est obligatoire';
-                }
-                return null;
-              }
-            : null,
-      );
-    case 'email':
-      return TextFormField(
-        onSaved: (value) {
-          data[datakey] = value;
-        },
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        validator: isRequired
-            ? (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Ce champ est obligatoire';
-                }
-                if (!EmailValidator.validate(value)) {
-                  return 'Veuillez entrer un email valide';
-                }
-                return null;
-              }
-            : null,
-      );
+class TextFormFieldBuilder extends StatefulWidget {
+  final String label;
+  final String hint;
+  final bool isRequired;
+  final String keyboardType;
+  final Map data;
+  final String dataKey;
 
-    case 'notes':
-      return TextFormField(
-        onSaved: (value) {
-          data[datakey] = value;
-        },
-        maxLines: 8,
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        validator: isRequired
-            ? (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Ce champ est obligatoire';
-                }
-                return null;
-              }
-            : null,
-      );
+  TextFormFieldBuilder({
+    required this.label,
+    required this.hint,
+    required this.isRequired,
+    required this.keyboardType,
+    required this.data,
+    required this.dataKey,
+  });
 
-    default:
-      throw Exception('Unsupported keyboardType: $keyboardType');
+  @override
+  _TextFormFieldBuilderState createState() => _TextFormFieldBuilderState();
+}
+
+class _TextFormFieldBuilderState extends State<TextFormFieldBuilder> with AutomaticKeepAliveClientMixin {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    switch (widget.keyboardType) {
+      case 'text':
+        return TextFormField(
+          controller: _controller,
+          onSaved: (value) {
+            widget.data[widget.dataKey] = value;
+          },
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          validator: widget.isRequired
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ce champ est obligatoire';
+                  }
+                  return null;
+                }
+              : null,
+        );
+      case 'decimal':
+        return TextFormField(
+          controller: _controller,
+          onSaved: (value) {
+            widget.data[widget.dataKey] = value;
+          },
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'^\d*([.,]\d*)?$')),
+          ],
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          validator: widget.isRequired
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ce champ est obligatoire';
+                  }
+                  return null;
+                }
+              : null,
+        );
+      case 'integer':
+        return TextFormField(
+          controller: _controller,
+          onSaved: (value) {
+            widget.data[widget.dataKey] = value;
+          },
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'^\d*$')),
+          ],
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          validator: widget.isRequired
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ce champ est obligatoire';
+                  }
+                  return null;
+                }
+              : null,
+        );
+      case 'email':
+        return TextFormField(
+          controller: _controller,
+          onSaved: (value) {
+            widget.data[widget.dataKey] = value;
+          },
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          validator: widget.isRequired
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ce champ est obligatoire';
+                  }
+                  if (!EmailValidator.validate(value)) {
+                    return 'Veuillez entrer un email valide';
+                  }
+                  return null;
+                }
+              : null,
+        );
+
+      case 'notes':
+        return TextFormField(
+          controller: _controller,
+          onSaved: (value) {
+            widget.data[widget.dataKey] = value;
+          },
+          maxLines: 8,
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          validator: widget.isRequired
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ce champ est obligatoire';
+                  }
+                  return null;
+                }
+              : null,
+        );
+
+      default:
+        throw Exception('Unsupported keyboardType: ${widget.keyboardType}');
+    }
+  }
+  
+  @override
+  bool get wantKeepAlive => true;
 }

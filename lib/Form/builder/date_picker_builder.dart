@@ -18,7 +18,8 @@ class DatePickerWidget extends StatefulWidget {
   _DatePickerWidgetState createState() => _DatePickerWidgetState();
 }
 
-class _DatePickerWidgetState extends State<DatePickerWidget> {
+class _DatePickerWidgetState extends State<DatePickerWidget>
+    with AutomaticKeepAliveClientMixin {
   final controller = TextEditingController();
   final dateNotifier = ValueNotifier<String>("");
 
@@ -38,6 +39,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ValueListenableBuilder<String>(
       valueListenable: dateNotifier,
       builder: (context, date, child) {
@@ -76,4 +78,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

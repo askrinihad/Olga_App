@@ -4,19 +4,25 @@ class MyCheckbox extends StatefulWidget {
   final String label;
   final Map<String, dynamic> data;
   final String datakey;
-  
 
-  const MyCheckbox({required this.label, Key? key, required this.data, required this.datakey}) : super(key: key);
+  const MyCheckbox(
+      {required this.label,
+      Key? key,
+      required this.data,
+      required this.datakey})
+      : super(key: key);
 
   @override
   _MyCheckboxState createState() => _MyCheckboxState();
 }
 
-class _MyCheckboxState extends State<MyCheckbox> {
+class _MyCheckboxState extends State<MyCheckbox>
+    with AutomaticKeepAliveClientMixin {
   final valueNotifier = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ValueListenableBuilder<bool>(
       valueListenable: valueNotifier,
       builder: (context, value, child) {
@@ -31,4 +37,7 @@ class _MyCheckboxState extends State<MyCheckbox> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

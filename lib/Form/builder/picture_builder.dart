@@ -5,11 +5,20 @@ import 'dart:io';
 import 'package:test_app/style/StyleText.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PictureWidget extends StatelessWidget {
+class PictureWidget extends StatefulWidget {
   final Map<String, dynamic> data;
   final String datakey;
 
   const PictureWidget({super.key, required this.data, required this.datakey});
+  
+  @override
+  State<StatefulWidget> createState() {
+    return _PictureWidgetState();
+  }
+
+}
+
+class _PictureWidgetState extends State<PictureWidget>{
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +51,7 @@ class PictureWidget extends StatelessWidget {
       if (source != null) {
         final image = await ImagePicker().pickImage(source: source);
         imageNotifier.value = image;
-        data[datakey] = File(image!.path);
+        widget.data[widget.datakey] = File(image!.path);
       }
     }
 

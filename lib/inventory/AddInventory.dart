@@ -27,10 +27,9 @@ class AddInventoryState extends State<AddInventory> {
             style: StyleText.getTitle(),
           )),
       Expanded(
-          child: buildFormPage(
-        context,
-        widget.json,
-        (value) {
+          child: FormPage(
+        jsonPath: widget.json,
+        onSaved: (value) {
           CollectionReference<Map<String, dynamic>> collRef =
               getCollection_CodeInventaire(widget.aeroport);
           collRef.add(value).then((value) {

@@ -9,11 +9,15 @@ class NoticeWidget extends StatefulWidget {
   _NoticeWidgetState createState() => _NoticeWidgetState();
 }
 
-class _NoticeWidgetState extends State<NoticeWidget> {
+class _NoticeWidgetState extends State<NoticeWidget> with AutomaticKeepAliveClientMixin {
   final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Text(widget.label);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

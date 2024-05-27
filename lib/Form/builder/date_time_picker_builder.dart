@@ -19,7 +19,8 @@ class DateTimeWidget extends StatefulWidget {
   _DateTimeWidgetState createState() => _DateTimeWidgetState();
 }
 
-class _DateTimeWidgetState extends State<DateTimeWidget> {
+class _DateTimeWidgetState extends State<DateTimeWidget>
+    with AutomaticKeepAliveClientMixin {
   final controller = TextEditingController();
   DateTime dateTime = DateTime.now();
   final dateTimeNotifier = ValueNotifier<DateTime>(DateTime.now());
@@ -41,6 +42,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ValueListenableBuilder<DateTime>(
       valueListenable: dateTimeNotifier,
       builder: (context, date, child) {
@@ -91,4 +93,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

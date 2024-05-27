@@ -55,10 +55,9 @@ class AddObservationState extends State<AddObservation> {
             style: StyleText.getTitle(),
           )),
       Expanded(
-          child: buildFormPage(
-        context,
-        widget.json,
-        (value) async {
+          child: FormPage(
+        jsonPath: widget.json,
+        onSaved: (value) async {
           if (value.containsKey('image')) {
             await uploadFile(value['image'], value['image']);
             value['image'] = DownloadUrl(value['image']);
