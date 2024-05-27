@@ -29,7 +29,7 @@ Future<List<Widget>> buildFormFromJson(
     String widgetKeyboardType = field['input_type'] ?? '';
     bool dropDownMulti = field['max_choices'] ?? false;
     String specietype = field['specie_type'] ?? '';
-    String keyvalue = field[''] ?? idgen.toString(); // Key attribut for the data / To store in BDD (Need to be implement in JSON)
+    String keyvalue = field['field_key'] ?? idgen.toString(); // Key attribut for the data / To store in BDD (Need to be implement in JSON)
 
     // incremente the idgen
     idgen++;

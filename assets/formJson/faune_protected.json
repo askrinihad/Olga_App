@@ -17,13 +17,15 @@
       "field_label": ", Confidence 0.0",
       "field_hint": ", Confidence 0.0",
       "field_required": true,
-      "input_type": "text"
+      "input_type": "text",
+      "field_key": "score"
     },
     {
       "field_type": "select",
       "field_label": "choisir une espèce",
       "field_required": true,
       "input_multi": false,
+      "field_key": "nom espece",
       "select_options": []
     },
     {
@@ -31,6 +33,7 @@
       "field_label": "choisir un inventaire",
       "field_required": true,
       "input_multi": false,
+      "field_key": "codeInventaire",
       "select_options": [
         {
           "id": 1,
@@ -50,13 +53,15 @@
       "field_type": "datetimepicker",
       "field_label": "Date et Heure de l'observation",
       "field_hint": "Entrer la date et l'heure de l'observation",
-      "field_required": true
+      "field_required": true,
+      "field_key": "date"
     },
     {
       "field_type": "select",
       "field_label": "Choisir un stade",
       "field_required": true,
       "input_multi": false,
+      "field_key": "phase",
       "select_options": [
         {
           "id": 1,
@@ -81,13 +86,15 @@
       "field_label": "Individus observés",
       "field_hint": "Entrer le nombre d'individus observés",
       "field_required": true,
-      "input_type": "integer"
+      "input_type": "integer",
+      "field_key": "nombre"
     },
     {
       "field_type": "select",
       "field_label": "choisir un stade du développement",
       "field_required": true,
       "input_multi": false,
+      "field_key": "etat",
       "select_options": [
         {
           "id": 1,
@@ -108,6 +115,7 @@
       "field_label": "choisir une action",
       "field_required": true,
       "input_multi": false,
+      "field_key": "action",
       "select_options": [
         {
           "id": 1,
@@ -128,7 +136,8 @@
       "field_label": "Commentaires",
       "field_hint": "Description ...",
       "field_required": true,
-      "input_type": "text"
+      "input_type": "text",
+      "field_key": "description"
     }
   ]
 }

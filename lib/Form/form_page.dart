@@ -3,7 +3,7 @@ import 'package:test_app/form/form_builder.dart';
 import 'package:test_app/style/StyleText.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Widget buildFormPage(BuildContext context, String jsonPath) {
+Widget buildFormPage(BuildContext context, String jsonPath, final void Function(Map<String, dynamic> values) onSaved) {
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> values = new Map<String, dynamic>(); // Récupération des valeurs.
 
@@ -37,6 +37,7 @@ Widget buildFormPage(BuildContext context, String jsonPath) {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
+                onSaved(values);
                 print('Form submitted');
                 print(values);
               }

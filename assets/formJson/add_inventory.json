@@ -8,25 +8,29 @@
             "field_label": "Code Inventaire",
             "field_hint": "Entrer un code d'inventaire",
             "field_required": true,
-            "input_type": "text"
+            "input_type": "text",
+            "field_key": "code"
         },
         {
             "field_type": "datepicker",
             "field_label": "Entrer la date de début",
             "field_hint": "Entrer la date de début",
-            "field_required": true
+            "field_required": true,
+            "field_key": "date_début"
         },
         {
             "field_type": "datepicker",
             "field_label": "Entrer la date d'expiration",
             "field_hint": "Entrer la date d'expiration'",
-            "field_required": true
+            "field_required": true,
+            "field_key": "date_fin"
         },
         {
             "field_type": "select",
             "field_label": "Membre de l'équipe",
             "field_required": true,
             "max_choices": true,
+            "field_key": "membres",
             "select_options": [
                 {
                     "id": 1,

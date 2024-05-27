@@ -42,7 +42,7 @@ void main() {
     final File file = File('test.json');
     await file.writeAsString(json);
 
-    final List<Widget> widgets = await buildFormFromJson(context, 'test.json');
+    final List<Widget> widgets = await buildFormFromJson(context, 'test.json', {});
 
     expect(widgets.length, 3);
   });

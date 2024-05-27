@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/form/form_page.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/style/StyleText.dart';
@@ -51,7 +54,48 @@ class AddObservationState extends State<AddObservation> {
                 AppLocalizations.of(context)!.espece,
             style: StyleText.getTitle(),
           )),
-      Expanded(child: buildFormPage(context, widget.json))
+      Expanded(
+          child: buildFormPage(
+        context,
+        widget.json,
+        (value) async {
+          if (value.containsKey('image')) {
+            await uploadFile(value['image'], value['image']);
+            value['image'] = DownloadUrl(value['image']);
+          }
+          CollectionReference collRef = select_collection_airport_type(
+              widget.aeroport, widget.SpecieType);
+          collRef.add(value).then((value) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(AppLocalizations.of(context)!.succes),
+                  content:
+                      Text(AppLocalizations.of(context)!.observationAjoute),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+          }).catchError((error, stackTrace) {
+            Get.snackbar(
+              "Error",
+              "Failed to add observation : $error",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.redAccent.withOpacity(0.1),
+              colorText: Colors.red,
+            );
+            print(error.toString());
+          });
+        },
+      ))
     ]));
   }
 }
