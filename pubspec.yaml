@@ -33,6 +33,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   #image_picker: ^1.0.7
+  #####---added packages for hive
+  hive : ^2.2.3 
+  hive_flutter : ^1.1.0
+  path_provider : ^2.1.3
+  flutter_secure_storage : ^9.1.1
+  ###############################
+  ###----added package for mongodb:
+  mongo_dart : ^0.10.0
+  ###############################
   image_picker: ^0.8.4+3
   image: ^4.1.7
   #exif : ^3.3.0 
@@ -75,6 +84,7 @@ dependencies:
   geocoding: ^2.0.3
   http: ^1.2.0
   shared_preferences : ^2.2.2
+  csv: ^6.0.0
 
 
 
@@ -82,6 +92,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  build_runner: ^2.4.9
+  hive_generator : ^2.0.1
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -94,6 +106,7 @@ flutter_launcher_icons:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+ 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

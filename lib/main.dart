@@ -4,16 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:test_app/Accueil.dart';
 import 'package:test_app/Bibliotheque.dart';
 import 'package:test_app/Historique.dart';
+import 'package:test_app/csvRead.dart';
+import 'package:test_app/hive_test.dart';
+import 'package:test_app/model/especes_faune.dart';
 import 'package:test_app/profile_screen.dart';
 import 'package:test_app/mymap_page.dart';
 import 'package:test_app/language.dart';
 import 'package:test_app/language_constants.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 const  List<String> aeroportList = <String>['Paris-Charles de Gaulle Airport', 'Zagreb Airport ', 'Milan Airport', 'Avram Iancu Cluj Airport'];
 
 
-void main() {
+void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    final dir= await getApplicationDocumentsDirectory();
+    Hive.init(dir.path);
+    Hive.initFlutter('hive_db');
+
+    Hive.registerAdapter<especes_faune>(especesfauneAdapter());
+    await Hive.openBox<especes_faune>('faune_species');
   runApp(const MyApp());
 }
 
@@ -49,9 +63,9 @@ class _MyAppState extends State<MyApp> {
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale:_locale,
-      home: HomePage(),
-      //home: ImageMetadata(),
-      //home: MapApp(),
+      //home: HomePage(),
+      home: HiveTest(),
+      //home: csvRead(),
     
        
     );
