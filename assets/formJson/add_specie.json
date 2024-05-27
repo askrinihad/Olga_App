@@ -12,11 +12,11 @@
       "select_options": [
         {
           "id": 1,
-          "label": "Plant Life"
+          "label": "Plant life"
         },
         {
           "id": 2,
-          "label": "Wild Life"
+          "label": "Wildlife"
         },
         {
           "id": 3,
