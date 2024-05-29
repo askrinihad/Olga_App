@@ -2,7 +2,7 @@
   "form_id": "Specie_Protected",
   "form_label": "Form for protected species",
   "form_version": "0.1.0",
-  "form_airport": "Paris-Charles de Gaulle Airport",
+
   "form": [
     {
       "field_type": "picturepicker",
@@ -15,8 +15,8 @@
     },
     {
       "field_type": "input",
-      "field_label": ", Confidence 0.0",
-      "field_hint": ", Confidence 0.0",
+      "field_label": "Confidence 0.0",
+      "field_hint": "Confidence 0.0",
       "field_required": true,
       "input_type": "text",
       "field_key": "score"
@@ -27,11 +27,13 @@
       "field_required": true,
       "input_multi": false,
       "field_key": "nom espece",
-      "select_preset" : "espece_type"
+      "select_preset" : "specie_type",    
+      "specie_type": "faune"
     },
     {
       "field_type": "select",
       "field_label": "choisir un inventaire",
+      "select_preset" : "code_inventory", 
       "field_required": true,
       "input_multi": false,
       "field_key": "codeInventaire",

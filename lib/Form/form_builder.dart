@@ -13,12 +13,11 @@ import 'package:test_app/form/builder/date_time_picker_builder.dart';
 import 'package:test_app/form/builder/notice_builder.dart';
 
 Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
-    Map<String, dynamic> values) async {
+    Map<String, dynamic> values, String airport) async {
   String jsonData = await rootBundle.loadString(pathToJson);
   Map<String, dynamic> formData = jsonDecode(jsonData);
 
   List<Widget> formWidgets = [];
-  String aeroport = formData['form_airport'] ?? 'Paris-Charles de Gaulle Airport'; // DEFINE IN JSON
 
   List<dynamic> formFields = formData['form'];
   int idgen = 0;
@@ -53,7 +52,19 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
       case 'select':
         switch (preset) {
           case "specie_type":
-            List<String> stringList = await getSpecie(aeroport, specietype);
+          print(airport);
+            List<String> stringList = await getSpecie(airport, specietype);
+            formWidgets.add(DropdownButtonFormFieldBuilder(
+                label: widgetLabel,
+                hint: widgetHint,
+                isRequired: isRequired,
+                options: stringList,
+                multi: dropDownMulti,
+                data: values,
+                datakey: keyvalue));
+            break;
+          case "code_inventory":
+            List<String> stringList = await getInventoryCode(airport);
             formWidgets.add(DropdownButtonFormFieldBuilder(
                 label: widgetLabel,
                 hint: widgetHint,
@@ -64,7 +75,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
                 datakey: keyvalue));
             break;
           default:
-            List<dynamic> options = field['select_options'];
+            List<dynamic> options = field['select_options'] ?? [];
             List<String> stringList =
                 options.map((option) => option['label'].toString()).toList();
             formWidgets.add(DropdownButtonFormFieldBuilder(

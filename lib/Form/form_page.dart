@@ -5,9 +5,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FormPage extends StatefulWidget {
   final String jsonPath;
+  final String airport;
   final void Function(Map<String, dynamic> values) onSaved;
 
-  FormPage({required this.jsonPath, required this.onSaved});
+  FormPage({required this.jsonPath, required this.onSaved, required this.airport});
 
   @override
   _FormPageState createState() => _FormPageState();
@@ -20,7 +21,7 @@ class _FormPageState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: buildFormFromJson(context, widget.jsonPath, _values),
+      future: buildFormFromJson(context, widget.jsonPath, _values, widget.airport),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(

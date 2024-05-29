@@ -61,7 +61,7 @@ class AddInventoryState extends State<AddInventory> {
             );
             print(error.toString());
           });
-        },
+        }, airport: widget.aeroport
       ))
     ]);
   }
