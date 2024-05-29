@@ -67,7 +67,7 @@ CollectionReference<Map<String, dynamic>> select_collection_airport_type(
 }
 
 CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
-    String airport, String type) {
+    String airport, String? type) {
   final types = {
     "Plant life": "especes_flore",
     "Wildlife": "especes_faune",
@@ -152,7 +152,7 @@ Future uploadFile(File filePath, File fileName) async {
   }
 }
 
-Future<List<String>> getSpecie(String airport, String type) async {
+Future<List<String>> getSpecie(String airport, String? type) async {
   QuerySnapshot<Map<String, dynamic>> snap =
       await getSpeciesCollection_Type(airport, type).get();
   return snap.docs

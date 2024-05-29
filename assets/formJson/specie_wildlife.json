@@ -1,6 +1,6 @@
 {
-  "form_id": "Specie_Protected",
-  "form_label": "Form for protected species",
+  "form_id": "specie_wildlife",
+  "form_label": "Form for wildlife species",
   "form_version": "0.1.0",
 
   "form": [
@@ -27,13 +27,12 @@
       "field_required": true,
       "input_multi": false,
       "field_key": "nom espece",
-      "select_preset" : "specie_type",    
-      "specie_type": "faune"
+      "select_source" : "species"
     },
     {
       "field_type": "select",
       "field_label": "choisir un inventaire",
-      "select_preset" : "code_inventory", 
+      "select_source" : "code_inventory", 
       "field_required": true,
       "input_multi": false,
       "field_key": "codeInventaire",

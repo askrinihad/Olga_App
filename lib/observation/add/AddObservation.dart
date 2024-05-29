@@ -31,7 +31,7 @@ class AddObservationState extends State<AddObservation> {
     String status;
 
     switch (widget.SpecieStatus) {
-      case 'protègé':
+      case 'protégé':
         status = AppLocalizations.of(context)!.protege;
         break;
       case 'indésirable':
@@ -56,6 +56,7 @@ class AddObservationState extends State<AddObservation> {
           )),
       Expanded(
           child: FormPage(
+              specie_type: widget.SpecieType,
               jsonPath: widget.json,
               onSaved: (value) async {
                 if (value.containsKey('image')) {

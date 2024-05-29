@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-Future<Map<String, dynamic>> recognition(File? image, String type) async {
+Future<Map<String, dynamic>> recognition(File? image, String? type) async {
   try {
     switch (type) {
       case "flore":

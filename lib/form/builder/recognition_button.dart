@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 //
 // If you try to refactor by split correctly  it but you didn't succed after a fucking headache, increment this counter : 3
 class RecognitionButton extends StatefulWidget {
-  final String type;
+  final String? type;
   final Map data;
   final String datakey;
 

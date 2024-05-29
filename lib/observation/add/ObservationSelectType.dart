@@ -44,7 +44,7 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ChoiceStatus(
-                            argumentReceived: "faune",
+                            specie_type: "faune",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),
@@ -74,7 +74,7 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ChoiceStatus(
-                            argumentReceived: "flore",
+                            specie_type: "flore",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),
@@ -106,7 +106,7 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ChoiceStatus(
-                            argumentReceived: "insectes",
+                            specie_type: "insectes",
                             email: widget.email,
                             aeroport: widget.aeroport),
                       ),

@@ -13,7 +13,8 @@ import 'package:test_app/form/builder/date_time_picker_builder.dart';
 import 'package:test_app/form/builder/notice_builder.dart';
 
 Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
-    Map<String, dynamic> values, String airport) async {
+    Map<String, dynamic> values, String airport,
+    {String? specie_type}) async {
   String jsonData = await rootBundle.loadString(pathToJson);
   Map<String, dynamic> formData = jsonDecode(jsonData);
 
@@ -29,8 +30,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
     bool isRequired = field['field_required'] ?? false;
     String widgetKeyboardType = field['input_type'] ?? '';
     bool dropDownMulti = field['max_choices'] ?? false;
-    String specietype = field['specie_type'] ?? '';
-    String preset = field['select_preset'] ?? '';
+    String source = field['select_source'] ?? '';
     String keyvalue = field['field_key'] ??
         idgen
             .toString(); // Key attribut for the data / To store in BDD (Need to be implement in JSON)
@@ -50,43 +50,28 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
             dataKey: keyvalue));
         break;
       case 'select':
-        switch (preset) {
-          case "specie_type":
-          print(airport);
-            List<String> stringList = await getSpecie(airport, specietype);
-            formWidgets.add(DropdownButtonFormFieldBuilder(
-                label: widgetLabel,
-                hint: widgetHint,
-                isRequired: isRequired,
-                options: stringList,
-                multi: dropDownMulti,
-                data: values,
-                datakey: keyvalue));
+        List<String> stringList = [];
+        print(specie_type);
+        switch (source) {
+          case "species":
+            stringList = await getSpecie(airport, specie_type);
             break;
           case "code_inventory":
-            List<String> stringList = await getInventoryCode(airport);
-            formWidgets.add(DropdownButtonFormFieldBuilder(
-                label: widgetLabel,
-                hint: widgetHint,
-                isRequired: isRequired,
-                options: stringList,
-                multi: dropDownMulti,
-                data: values,
-                datakey: keyvalue));
+            stringList = await getInventoryCode(airport);
             break;
           default:
             List<dynamic> options = field['select_options'] ?? [];
-            List<String> stringList =
+            stringList =
                 options.map((option) => option['label'].toString()).toList();
-            formWidgets.add(DropdownButtonFormFieldBuilder(
-                label: widgetLabel,
-                hint: widgetHint,
-                isRequired: isRequired,
-                options: stringList,
-                multi: dropDownMulti,
-                data: values,
-                datakey: keyvalue));
         }
+        formWidgets.add(DropdownButtonFormFieldBuilder(
+            label: widgetLabel,
+            hint: widgetHint,
+            isRequired: isRequired,
+            options: stringList,
+            multi: dropDownMulti,
+            data: values,
+            datakey: keyvalue));
         ;
         break;
       case 'checkbox':
@@ -134,9 +119,8 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
         formWidgets.add(NoticeWidget(label: widgetLabel));
         break;
       case 'recognition':
-        //TODO: Make the possibility Required Only for the picture (Recognition is a feature)
         formWidgets.add(RecognitionButton(
-          type: specietype,
+          type: specie_type,
           datakey: keyvalue,
           data: values,
         ));
