@@ -266,7 +266,7 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
                                 aeroport: widget.aeroport,
                                 json: 'assets/formJson/faune_protected.json',
                                 SpecieStatus: 'courante',
-                                SpecieType: 'faune',
+                                SpecieType: widget.argumentReceived,
                               )));
                     },
                     child: Text("GO TO TEST", style: StyleText.getButton()),

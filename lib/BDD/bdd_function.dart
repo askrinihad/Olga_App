@@ -157,3 +157,11 @@ Future uploadFile(File filePath, File fileName) async {
     print(e);
   }
 }
+
+Future<List<String>> getSpecie(String airport, String type) async {
+  QuerySnapshot<Map<String, dynamic>> snap =
+                await getSpeciesCollection_Type(airport, type).get();
+            return snap.docs
+                .map((doc) => doc.get('Nom scientifique').toString())
+                .toList();
+}

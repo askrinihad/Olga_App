@@ -2,6 +2,7 @@
   "form_id": "Specie_Protected",
   "form_label": "Form for protected species",
   "form_version": "0.1.0",
+  "form_airport": "Paris-Charles de Gaulle Airport",
   "form": [
     {
       "field_type": "picturepicker",
@@ -26,7 +27,7 @@
       "field_required": true,
       "input_multi": false,
       "field_key": "nom espece",
-      "select_options": []
+      "select_preset" : "espece_type"
     },
     {
       "field_type": "select",

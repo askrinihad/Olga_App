@@ -67,6 +67,8 @@ class _LibraryState extends State<Library> {
                                       ? list[index]["Nom scientifique"]
                                       : list[index]["Nom français"],
                                   style: StyleText.getBody(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
                                 ),
                                 SizedBox(width: 10),
                               ],

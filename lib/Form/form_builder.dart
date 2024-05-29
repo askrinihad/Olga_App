@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/Form/builder/dropdown_button_form_field_builder.dart';
 import 'package:test_app/Form/builder/text_form_field_builder.dart';
 import 'package:test_app/form/builder/checkbox_builder.dart';
@@ -17,6 +18,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
   Map<String, dynamic> formData = jsonDecode(jsonData);
 
   List<Widget> formWidgets = [];
+  String aeroport = formData['form_airport'] ?? 'Paris-Charles de Gaulle Airport'; // DEFINE IN JSON
 
   List<dynamic> formFields = formData['form'];
   int idgen = 0;
@@ -29,6 +31,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
     String widgetKeyboardType = field['input_type'] ?? '';
     bool dropDownMulti = field['max_choices'] ?? false;
     String specietype = field['specie_type'] ?? '';
+    String preset = field['select_preset'] ?? '';
     String keyvalue = field['field_key'] ??
         idgen
             .toString(); // Key attribut for the data / To store in BDD (Need to be implement in JSON)
@@ -48,11 +51,32 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
             dataKey: keyvalue));
         break;
       case 'select':
-        List<dynamic> options = field['select_options'];
-        List<String> stringList =
-            options.map((option) => option['label'].toString()).toList();
-        formWidgets.add(DropdownButtonFormFieldBuilder(label: widgetLabel, hint: widgetHint,
-            isRequired: isRequired, options: stringList, multi: dropDownMulti, data: values, datakey: keyvalue));
+        switch (preset) {
+          case "specie_type":
+            List<String> stringList = await getSpecie(aeroport, specietype);
+            formWidgets.add(DropdownButtonFormFieldBuilder(
+                label: widgetLabel,
+                hint: widgetHint,
+                isRequired: isRequired,
+                options: stringList,
+                multi: dropDownMulti,
+                data: values,
+                datakey: keyvalue));
+            break;
+          default:
+            List<dynamic> options = field['select_options'];
+            List<String> stringList =
+                options.map((option) => option['label'].toString()).toList();
+            formWidgets.add(DropdownButtonFormFieldBuilder(
+                label: widgetLabel,
+                hint: widgetHint,
+                isRequired: isRequired,
+                options: stringList,
+                multi: dropDownMulti,
+                data: values,
+                datakey: keyvalue));
+        }
+        ;
         break;
       case 'checkbox':
         //TODO: Make the possibility Required

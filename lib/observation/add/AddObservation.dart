@@ -60,7 +60,7 @@ class AddObservationState extends State<AddObservation> {
         onSaved: (value) async {
           if (value.containsKey('image')) {
             await uploadFile(value['image'], value['image']);
-            value['image'] = DownloadUrl(value['image']);
+            value['image'] = await DownloadUrl(value['image']);
           }
           CollectionReference collRef = select_collection_airport_type(
               widget.aeroport, widget.SpecieType);

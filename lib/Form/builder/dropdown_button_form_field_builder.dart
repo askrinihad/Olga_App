@@ -26,7 +26,8 @@ class DropdownButtonFormFieldBuilder extends StatefulWidget {
 }
 
 class _DropdownButtonFormFieldBuilderState
-    extends State<DropdownButtonFormFieldBuilder> with AutomaticKeepAliveClientMixin {
+    extends State<DropdownButtonFormFieldBuilder>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -66,10 +67,15 @@ class _DropdownButtonFormFieldBuilderState
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
+          isExpanded: true,
           items: widget.options.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(
+                value,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
             );
           }).toList(),
           validator: widget.isRequired
@@ -87,7 +93,7 @@ class _DropdownButtonFormFieldBuilderState
         throw Exception('Unsupported dropdown type');
     }
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }
