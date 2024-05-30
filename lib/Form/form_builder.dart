@@ -119,10 +119,16 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
         formWidgets.add(NoticeWidget(label: widgetLabel));
         break;
       case 'recognition':
+        bool saveScore = field['saveScore'] ?? false;
+        bool showScore = field['showScore'] ?? false;
+
         formWidgets.add(RecognitionButton(
           type: specie_type,
-          datakey: keyvalue,
           data: values,
+          datakey: keyvalue,
+          datakeyScore: 'score',
+          saveScore: saveScore,
+          showScore: showScore,
         ));
       default:
         throw Exception('Unsupported widget type: $widgetType');

@@ -3,27 +3,46 @@ import 'package:test_app/recognition.dart/recognition_function.dart';
 import 'package:test_app/style/StyleText.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// This module is a copy&paste of picture_builder but add a button for recognition.
-// I do it that way because it's hard to get the image of a State of a Widget
-//
-// If you try to refactor by split correctly  it but you didn't succed after a fucking headache, increment this counter : 3
+/**
+ * Button for recognition.
+ * > NEED PictureWidget
+ * 
+ */
 class RecognitionButton extends StatefulWidget {
   final String? type;
   final Map data;
   final String datakey;
+  final String datakeyScore;
+  final bool saveScore;
+  final bool showScore;
 
   const RecognitionButton(
-      {Key? key, required this.type, required this.data, required this.datakey})
+      {Key? key,
+      required this.type,
+      required this.data,
+      required this.datakey,
+      this.saveScore = false,
+      this.showScore = false,
+      required this.datakeyScore})
       : super(key: key);
 
   @override
   _RecognitionButtonState createState() => _RecognitionButtonState();
 }
 
-class _RecognitionButtonState extends State<RecognitionButton> {
+class _RecognitionButtonState extends State<RecognitionButton> with AutomaticKeepAliveClientMixin{
+  late Text _text;
+  String _response = '';
+  late ElevatedButton _button;
+
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    super.build(context);
+    _text = Text(
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2,
+        '$_response');
+    _button = ElevatedButton(
       // Button for recognition
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
@@ -36,8 +55,17 @@ class _RecognitionButtonState extends State<RecognitionButton> {
       onPressed: () {
         try {
           if (widget.data.containsKey('image')) {
-            widget.data[widget.datakey] =
-                recognition(widget.data['image'], widget.type);
+            recognition(widget.data['image'], widget.type).then((value) {
+              widget.data[widget.datakey] =
+                  value["class_name"]; // Save the classname
+              if (widget.saveScore) {
+                widget.data[widget.datakeyScore] =
+                    value["score"]; // Save the score
+              }
+              setState(() {
+                _response = '${widget.data[widget.datakey].toString()} ${widget.data[widget.datakeyScore]}'; //UPDATE UI
+              });
+            });
           } else {
             // Check if picture is not initialized, if not, Alerte the users to import a frame
             showDialog(
@@ -67,5 +95,14 @@ class _RecognitionButtonState extends State<RecognitionButton> {
       child: Text(AppLocalizations.of(context)!.reconnaissance,
           style: StyleText.getButton()),
     );
+
+    if (widget.showScore) {
+      return Column(children: [_button, _text]);
+    } else {
+      return _button;
+    }
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }

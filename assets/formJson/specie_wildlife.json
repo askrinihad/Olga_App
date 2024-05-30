@@ -2,7 +2,6 @@
   "form_id": "specie_wildlife",
   "form_label": "Form for wildlife species",
   "form_version": "0.1.0",
-
   "form": [
     {
       "field_type": "picturepicker",
@@ -11,15 +10,8 @@
     },
     {
       "field_type": "recognition",
-      "specie_type": "faune"
-    },
-    {
-      "field_type": "input",
-      "field_label": "Confidence 0.0",
-      "field_hint": "Confidence 0.0",
-      "field_required": true,
-      "input_type": "text",
-      "field_key": "score"
+      "saveScore": true,
+      "showScore": true
     },
     {
       "field_type": "select",
@@ -27,12 +19,12 @@
       "field_required": true,
       "input_multi": false,
       "field_key": "nom espece",
-      "select_source" : "species"
+      "select_source": "species"
     },
     {
       "field_type": "select",
       "field_label": "choisir un inventaire",
-      "select_source" : "code_inventory", 
+      "select_source": "code_inventory",
       "field_required": true,
       "input_multi": false,
       "field_key": "codeInventaire",

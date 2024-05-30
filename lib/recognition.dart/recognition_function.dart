@@ -2,6 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
+/// Function that make resquet to IA API, take a image an try to recognize specie in it.
+/// Return a specific map
+/// > {"class_name" : string, "score" : int}
+///
+/// Because API uses serveral AI models for each type of species such as plants or birds, there is one query per [type].
+/// this function can be refactor.
 Future<Map<String, dynamic>> recognition(File? image, String? type) async {
   try {
     switch (type) {
@@ -50,7 +56,8 @@ Future<Map<String, dynamic>> uploadFlore(File? image) async {
     final List<dynamic>? results = responseData['results'];
 
     if (results == null || results.isEmpty) {
-      throw new Exception("Failed to decode response body, or specie isn't recognized");
+      throw new Exception(
+          "Failed to decode response body, or specie isn't recognized");
     }
 
     final Map<String, dynamic> firstResult = results.first;
@@ -61,20 +68,18 @@ Future<Map<String, dynamic>> uploadFlore(File? image) async {
       throw new Exception(
           "Failed to parse scientific_name or score from response");
     }
-    return {
-      "scientificName": resultScientificName.toString(),
-      "score": resScore
-    };
+    return {"class_name": resultScientificName.toString(), "score": resScore};
   } catch (error) {
     // Handle errors
     print("Error uploading image: $error");
     return {};
   }
 }
+
 Future<Map<String, dynamic>> uploadBird(File? image) async {
   try {
     var request;
-    final Uri uri = Uri.parse("http://olga1.mercier.pro:9999/upload");
+    final Uri uri = Uri.parse("http://olga1.mercier.pro:9999/bird_recognition");
     request = http.MultipartRequest("POST", uri);
     final headers = {"Content-type": "multipart/form-data"};
 
@@ -85,7 +90,7 @@ Future<Map<String, dynamic>> uploadBird(File? image) async {
       ),
     );
     request.headers.addAll(headers);
-    
+
     final http.Response response =
         await http.Response.fromStream(await request.send());
 
@@ -100,9 +105,7 @@ Future<Map<String, dynamic>> uploadBird(File? image) async {
       throw new Exception("No results found in the response");
     }
 
-    final List<dynamic>? results = responseData['results'];
-
-    if (results == null || results.isEmpty) {
+    if (responseData['results'] == null || responseData['results'].isEmpty) {
       throw new Exception("Failed to decode response body");
     }
 
@@ -110,14 +113,11 @@ Future<Map<String, dynamic>> uploadBird(File? image) async {
     final dynamic confidence = result['confidence'].toStringAsFixed(2);
     final dynamic class_name = result['class_name'];
 
-    if (confidence != "" && class_name != "") {
+    if (confidence == "" && class_name == "") {
       throw new Exception(
           "Failed to parse scientific_name or score from response");
     }
-    return {
-      "class_name": class_name,
-      "confidence": confidence
-    };
+    return {"class_name": class_name, "score": confidence};
   } catch (error) {
     // Handle errors
     print("Error uploading image: $error");

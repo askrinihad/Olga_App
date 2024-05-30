@@ -18,10 +18,11 @@ class PictureWidget extends StatefulWidget {
 
 }
 
-class _PictureWidgetState extends State<PictureWidget>{
+class _PictureWidgetState extends State<PictureWidget> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final imageNotifier = ValueNotifier<XFile?>(null);
 
     Future askImage() async {
@@ -98,4 +99,7 @@ class _PictureWidgetState extends State<PictureWidget>{
       },
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
