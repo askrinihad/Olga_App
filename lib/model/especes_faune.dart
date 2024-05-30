@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'especes_faune.g.dart';
 
-@HiveType(typeId:0)
+@HiveType(typeId:3)
 class especes_faune extends HiveObject{
   @HiveField(0, defaultValue: 0)
   final int  id;
