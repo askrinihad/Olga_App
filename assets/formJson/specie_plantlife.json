@@ -10,8 +10,8 @@
     },
     {
       "field_type": "recognition",
-      "saveScore": true,
-      "showScore": true
+      "field_saveScore": true,
+      "field_showScore": true
     },
     {
       "field_type": "select",

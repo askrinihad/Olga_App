@@ -62,8 +62,12 @@ class _RecognitionButtonState extends State<RecognitionButton> with AutomaticKee
                 widget.data[widget.datakeyScore] =
                     value["score"]; // Save the score
               }
-              setState(() {
-                _response = '${widget.data[widget.datakey].toString()} ${widget.data[widget.datakeyScore]}'; //UPDATE UI
+              setState(() { // Update UI
+                if(widget.showScore){
+                  _response = '${widget.data[widget.datakey].toString()} ${widget.data[widget.datakeyScore]}';
+                } else{
+                  _response = '${widget.data[widget.datakey].toString()}';
+                }
               });
             });
           } else {

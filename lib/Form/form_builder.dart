@@ -119,8 +119,8 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
         formWidgets.add(NoticeWidget(label: widgetLabel));
         break;
       case 'recognition':
-        bool saveScore = field['saveScore'] ?? false;
-        bool showScore = field['showScore'] ?? false;
+        bool saveScore = field['field_saveScore'] ?? false;
+        bool showScore = field['field_showScore'] ?? false;
 
         formWidgets.add(RecognitionButton(
           type: specie_type,
