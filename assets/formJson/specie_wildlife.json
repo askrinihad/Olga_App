@@ -9,6 +9,11 @@
       "field_required": true
     },
     {
+      "field_type": "location",
+      "field_label": "Location",
+      "field_key": "geoPoint"
+    },
+    {
       "field_type": "recognition",
       "field_saveScore": true,
       "field_showScore": false

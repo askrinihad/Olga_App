@@ -10,6 +10,11 @@
         "field_required": true
       },
       {
+        "field_type": "location",
+        "field_label": "Location",
+        "field_key": "geoPoint"
+      },
+      {
         "field_type": "select",
         "field_label": "choisir une espèce",
         "field_required": true,
