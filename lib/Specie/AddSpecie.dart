@@ -65,7 +65,7 @@ class AddSpecieState extends State<AddSpecie> {
                   );
                   print(error.toString());
                 });
-              }))
+              }, airport: widget.aeroport))
     ]);
   }
 }

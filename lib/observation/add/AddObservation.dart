@@ -31,7 +31,7 @@ class AddObservationState extends State<AddObservation> {
     String status;
 
     switch (widget.SpecieStatus) {
-      case 'protègé':
+      case 'protégé':
         status = AppLocalizations.of(context)!.protege;
         break;
       case 'indésirable':
@@ -56,45 +56,46 @@ class AddObservationState extends State<AddObservation> {
           )),
       Expanded(
           child: FormPage(
-        jsonPath: widget.json,
-        onSaved: (value) async {
-          if (value.containsKey('image')) {
-            await uploadFile(value['image'], value['image']);
-            value['image'] = DownloadUrl(value['image']);
-          }
-          CollectionReference collRef = select_collection_airport_type(
-              widget.aeroport, widget.SpecieType);
-          collRef.add(value).then((value) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(AppLocalizations.of(context)!.succes),
-                  content:
-                      Text(AppLocalizations.of(context)!.observationAjoute),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text("OK"),
-                    ),
-                  ],
-                );
+              specie_type: widget.SpecieType,
+              jsonPath: widget.json,
+              onSaved: (value) async {
+                if (value.containsKey('image')) {
+                  await uploadFile(value['image'], value['image']);
+                  value['image'] = await DownloadUrl(value['image']);
+                }
+                CollectionReference collRef = select_collection_airport_type(
+                    widget.aeroport, widget.SpecieType);
+                collRef.add(value).then((value) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(AppLocalizations.of(context)!.succes),
+                        content: Text(
+                            AppLocalizations.of(context)!.observationAjoute),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("OK"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }).catchError((error, stackTrace) {
+                  Get.snackbar(
+                    "Error",
+                    "Failed to add observation : $error",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.redAccent.withOpacity(0.1),
+                    colorText: Colors.red,
+                  );
+                  print(error.toString());
+                });
               },
-            );
-          }).catchError((error, stackTrace) {
-            Get.snackbar(
-              "Error",
-              "Failed to add observation : $error",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.redAccent.withOpacity(0.1),
-              colorText: Colors.red,
-            );
-            print(error.toString());
-          });
-        },
-      ))
+              airport: widget.aeroport))
     ]));
   }
 }

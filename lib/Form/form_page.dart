@@ -5,9 +5,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FormPage extends StatefulWidget {
   final String jsonPath;
+  final String airport;
   final void Function(Map<String, dynamic> values) onSaved;
+  final String? specie_type;
 
-  FormPage({required this.jsonPath, required this.onSaved});
+  FormPage({required this.jsonPath, required this.onSaved, required this.airport, this.specie_type});
 
   @override
   _FormPageState createState() => _FormPageState();
@@ -20,7 +22,7 @@ class _FormPageState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: buildFormFromJson(context, widget.jsonPath, _values),
+      future: buildFormFromJson(context, widget.jsonPath, _values, widget.airport, specie_type: widget.specie_type),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
@@ -45,8 +47,6 @@ class _FormPageState extends State<FormPage> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   widget.onSaved(_values);
-                  print('Form submitted');
-                  print(_values);
                 }
               },
               child: Text(
