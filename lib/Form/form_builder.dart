@@ -10,6 +10,7 @@ import 'package:test_app/form/builder/picture_builder.dart';
 import 'package:test_app/form/builder/time_picker_builder.dart';
 import 'package:test_app/form/builder/date_time_picker_builder.dart';
 import 'package:test_app/form/builder/notice_builder.dart';
+import 'package:test_app/form/builder/geoloc_builder.dart';
 
 Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
     Map<String, dynamic> values) async {
@@ -51,8 +52,14 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
         List<dynamic> options = field['select_options'];
         List<String> stringList =
             options.map((option) => option['label'].toString()).toList();
-        formWidgets.add(DropdownButtonFormFieldBuilder(label: widgetLabel, hint: widgetHint,
-            isRequired: isRequired, options: stringList, multi: dropDownMulti, data: values, datakey: keyvalue));
+        formWidgets.add(DropdownButtonFormFieldBuilder(
+            label: widgetLabel,
+            hint: widgetHint,
+            isRequired: isRequired,
+            options: stringList,
+            multi: dropDownMulti,
+            data: values,
+            datakey: keyvalue));
         break;
       case 'checkbox':
         //TODO: Make the possibility Required
@@ -105,11 +112,17 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
           datakey: keyvalue,
           data: values,
         ));
+        break;
+      case 'location':
+        formWidgets.add(LocationWidget(
+          label: 'Location',
+          stopLocation: 0,
+        ));
+        break;
       default:
         throw Exception('Unsupported widget type: $widgetType');
     }
   }
-  ;
 
   return formWidgets;
 }
