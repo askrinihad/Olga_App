@@ -36,10 +36,12 @@ class _LocationWidgetState extends State<LocationWidget> with AutomaticKeepAlive
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
         // Permissions are denied, show a message to the user.
-        setState(() {
-          _latitude = null;
-          _longitude = null;
-        });
+        if (mounted) {
+          setState(() {
+            _latitude = null;
+            _longitude = null;
+          });
+        }
         return;
       }
     }
@@ -47,10 +49,12 @@ class _LocationWidgetState extends State<LocationWidget> with AutomaticKeepAlive
     bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!isLocationServiceEnabled) {
       // Location services are not enabled, show a message to the user.
-      setState(() {
-        _latitude = null;
-        _longitude = null;
-      });
+      if (mounted) {
+        setState(() {
+          _latitude = null;
+          _longitude = null;
+        });
+      }
       return;
     }
 
@@ -61,10 +65,12 @@ class _LocationWidgetState extends State<LocationWidget> with AutomaticKeepAlive
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) async {
       if (widget.stopLocation == 0) {
         Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-        setState(() {
-          _latitude = position.latitude;
-          _longitude = position.longitude;
-        });
+        if (mounted) {
+          setState(() {
+            _latitude = position.latitude;
+            _longitude = position.longitude;
+          });
+        }
       } else {
         timer.cancel();
       }
@@ -79,9 +85,23 @@ class _LocationWidgetState extends State<LocationWidget> with AutomaticKeepAlive
       children: [
         Text(widget.label),
         SizedBox(height: 10),
-        Text('Latitude: ${_latitude ?? 'Chargement...'}'),
-        SizedBox(height: 10),
-        Text('Longitude: ${_longitude ?? 'Chargement...'}'),
+        Row(
+          children: [
+            Flexible(
+              child: Text(
+                'Latitude: ${_latitude ?? 'Chargement...'}',
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            SizedBox(width: 10),
+            Flexible(
+              child: Text(
+                'Longitude: ${_longitude ?? 'Chargement...'}',
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
