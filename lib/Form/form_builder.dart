@@ -11,6 +11,7 @@ import 'package:test_app/form/builder/picture_builder.dart';
 import 'package:test_app/form/builder/time_picker_builder.dart';
 import 'package:test_app/form/builder/date_time_picker_builder.dart';
 import 'package:test_app/form/builder/notice_builder.dart';
+import 'package:test_app/form/builder/geoloc_builder.dart';
 
 Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
     Map<String, dynamic> values, String airport,
