@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/Form/builder/dropdown_button_form_field_builder.dart';
 import 'package:test_app/Form/builder/text_form_field_builder.dart';
 import 'package:test_app/form/builder/checkbox_builder.dart';
@@ -13,7 +14,8 @@ import 'package:test_app/form/builder/notice_builder.dart';
 import 'package:test_app/form/builder/geoloc_builder.dart';
 
 Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
-    Map<String, dynamic> values) async {
+    Map<String, dynamic> values, String airport,
+    {String? specie_type}) async {
   String jsonData = await rootBundle.loadString(pathToJson);
   Map<String, dynamic> formData = jsonDecode(jsonData);
 
@@ -29,7 +31,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
     bool isRequired = field['field_required'] ?? false;
     String widgetKeyboardType = field['input_type'] ?? '';
     bool dropDownMulti = field['max_choices'] ?? false;
-    String specietype = field['specie_type'] ?? '';
+    String source = field['select_source'] ?? '';
     String keyvalue = field['field_key'] ??
         idgen
             .toString(); // Key attribut for the data / To store in BDD (Need to be implement in JSON)
@@ -49,9 +51,20 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
             dataKey: keyvalue));
         break;
       case 'select':
-        List<dynamic> options = field['select_options'];
-        List<String> stringList =
-            options.map((option) => option['label'].toString()).toList();
+        List<String> stringList = [];
+        print(specie_type);
+        switch (source) {
+          case "species":
+            stringList = await getSpecie(airport, specie_type);
+            break;
+          case "code_inventory":
+            stringList = await getInventoryCode(airport);
+            break;
+          default:
+            List<dynamic> options = field['select_options'] ?? [];
+            stringList =
+                options.map((option) => option['label'].toString()).toList();
+        }
         formWidgets.add(DropdownButtonFormFieldBuilder(
             label: widgetLabel,
             hint: widgetHint,
@@ -60,6 +73,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
             multi: dropDownMulti,
             data: values,
             datakey: keyvalue));
+        ;
         break;
       case 'checkbox':
         //TODO: Make the possibility Required
@@ -106,19 +120,17 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
         formWidgets.add(NoticeWidget(label: widgetLabel));
         break;
       case 'recognition':
-        //TODO: Make the possibility Required Only for the picture (Recognition is a feature)
+        bool saveScore = field['field_saveScore'] ?? false;
+        bool showScore = field['field_showScore'] ?? false;
+
         formWidgets.add(RecognitionButton(
-          type: specietype,
-          datakey: keyvalue,
+          type: specie_type,
           data: values,
+          datakey: keyvalue,
+          datakeyScore: 'score',
+          saveScore: saveScore,
+          showScore: showScore,
         ));
-        break;
-      case 'location':
-        formWidgets.add(LocationWidget(
-          label: 'Location',
-          stopLocation: 0,
-        ));
-        break;
       default:
         throw Exception('Unsupported widget type: $widgetType');
     }

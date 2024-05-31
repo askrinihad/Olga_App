@@ -1,6 +1,6 @@
 {
-  "form_id": "Specie_Protected",
-  "form_label": "Form for protected species",
+  "form_id": "specie_wildlife",
+  "form_label": "Form for wildlife species",
   "form_version": "0.1.0",
   "form": [
     {
@@ -9,21 +9,9 @@
       "field_required": true
     },
     {
-      "field_type": "location",
-      "field_label": "Location",
-      "field_key": "geoPoint"
-    },
-    {
       "field_type": "recognition",
-      "specie_type": "faune"
-    },
-    {
-      "field_type": "input",
-      "field_label": ", Confidence 0.0",
-      "field_hint": ", Confidence 0.0",
-      "field_required": true,
-      "input_type": "text",
-      "field_key": "score"
+      "field_saveScore": true,
+      "field_showScore": false
     },
     {
       "field_type": "select",
@@ -31,11 +19,12 @@
       "field_required": true,
       "input_multi": false,
       "field_key": "nom espece",
-      "select_options": []
+      "select_source": "species"
     },
     {
       "field_type": "select",
       "field_label": "choisir un inventaire",
+      "select_source": "code_inventory",
       "field_required": true,
       "input_multi": false,
       "field_key": "codeInventaire",
