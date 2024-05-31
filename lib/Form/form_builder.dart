@@ -119,6 +119,12 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
       case 'notice':
         formWidgets.add(NoticeWidget(label: widgetLabel));
         break;
+      case 'location':
+        formWidgets.add(LocationWidget(
+          label: 'Location',
+          stopLocation: 0,
+        ));
+        break;
       case 'recognition':
         bool saveScore = field['field_saveScore'] ?? false;
         bool showScore = field['field_showScore'] ?? false;
