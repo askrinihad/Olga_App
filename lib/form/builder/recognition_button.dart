@@ -30,7 +30,8 @@ class RecognitionButton extends StatefulWidget {
   _RecognitionButtonState createState() => _RecognitionButtonState();
 }
 
-class _RecognitionButtonState extends State<RecognitionButton> with AutomaticKeepAliveClientMixin{
+class _RecognitionButtonState extends State<RecognitionButton>
+    with AutomaticKeepAliveClientMixin {
   late Text _text;
   String _response = '';
   late ElevatedButton _button;
@@ -38,75 +39,69 @@ class _RecognitionButtonState extends State<RecognitionButton> with AutomaticKee
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    _text = Text(
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2,
-        '$_response');
+    _text = Text(overflow: TextOverflow.ellipsis, maxLines: 2, '$_response');
     _button = ElevatedButton(
-      // Button for recognition
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+        // Button for recognition
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF006766),
+          elevation: 0.0,
+          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
         ),
-        backgroundColor: Color(0xFF006766),
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
-        elevation: 0.0,
-      ),
-      onPressed: () {
-        try {
-          if (widget.data.containsKey('image')) {
-            recognition(widget.data['image'], widget.type).then((value) {
-              widget.data[widget.datakey] =
-                  value["class_name"]; // Save the classname
-              if (widget.saveScore) {
-                widget.data[widget.datakeyScore] =
-                    value["score"]; // Save the score
-              }
-              setState(() { // Update UI
-                if(widget.showScore){
-                  _response = '${widget.data[widget.datakey].toString()} ${widget.data[widget.datakeyScore]}';
-                } else{
-                  _response = '${widget.data[widget.datakey].toString()}';
+        onPressed: () {
+          try {
+            if (widget.data.containsKey('image')) {
+              recognition(widget.data['image'], widget.type).then((value) {
+                widget.data[widget.datakey] =
+                    value["class_name"]; // Save the classname
+                if (widget.saveScore) {
+                  widget.data[widget.datakeyScore] =
+                      value["score"]; // Save the score
                 }
+                setState(() {
+                  // Update UI
+                  if (widget.showScore) {
+                    _response =
+                        '${widget.data[widget.datakey].toString()} ${widget.data[widget.datakeyScore]}';
+                  } else {
+                    _response = '${widget.data[widget.datakey].toString()}';
+                  }
+                });
               });
-            });
-          } else {
-            // Check if picture is not initialized, if not, Alerte the users to import a frame
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(AppLocalizations.of(context)!.importerPhoto),
-                  content: Text(
-                      "Please select a picture before pressing that button"),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text("OK"),
-                    ),
-                  ],
-                );
-              },
-            );
+            } else {
+              // Check if picture is not initialized, if not, Alerte the users to import a frame
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text(AppLocalizations.of(context)!.importerPhoto),
+                    content: Text(
+                        "Please select a picture before pressing that button"),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("OK"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          } catch (e, s) {
+            print('Exception : $e');
+            print('Stack trace: $s');
           }
-        } catch (e, s) {
-          print('Exception : $e');
-          print('Stack trace: $s');
-        }
-      },
-      child: Text(AppLocalizations.of(context)!.reconnaissance,
-          style: StyleText.getButton()),
-    );
-
-    if (widget.showScore) {
-      return Column(children: [_button, _text]);
-    } else {
-      return _button;
-    }
+        },
+        child: FractionallySizedBox(widthFactor: 1, child:  Center( child: Text(AppLocalizations.of(context)!.reconnaissance,
+              style: StyleText.getButton()),
+        )));
+    return Column(children: [_button, _text]);
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }

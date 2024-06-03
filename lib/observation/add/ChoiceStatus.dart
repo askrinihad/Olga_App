@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/observation/add/addObservation.dart';
+import 'package:test_app/observation/add/ChoiceForms.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class ChoiceStatus extends StatefulWidget {
-  //const ChoixEspece({super.key}); modified
   final String specie_type;
   final String email;
   final String aeroport;
@@ -29,18 +28,18 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
     super.initState();
      switch (widget.specie_type) {
       case "faune":
-        form_json = 'assets/formJson/specie_wildlife.json';
+        form_json = 'faune';
         break;
 
       case "flore":
-        form_json = 'assets/formJson/specie_plantlife.json';
+        form_json = 'flore';
         break;
       case "insectes":
-        form_json = 'assets/formJson/specie_insect.json';
+        form_json = 'insectes';
         break;
 
       default:
-        form_json = 'assets/formJson/specie_wildlife.json';
+        form_json = 'faune';
     }
   }
 
@@ -68,12 +67,11 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AddObservation(
+                          builder: (context) => ChoiceForms(
                                 email: widget.email,
                                 aeroport: widget.aeroport,
-                                json: form_json,
-                                SpecieStatus: 'protégé',
-                                SpecieType: widget.specie_type,
+                                specie_type: widget.specie_type,
+                                specie_status: 'protégé',
                               )));
                     },
                     child: Text(AppLocalizations.of(context)!.especeProtge,
@@ -98,12 +96,11 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AddObservation(
+                          builder: (context) => ChoiceForms(
                                 email: widget.email,
                                 aeroport: widget.aeroport,
-                                json: form_json,
-                                SpecieStatus: 'indésirable',
-                                SpecieType: widget.specie_type,
+                                specie_status: 'indésirable',
+                                specie_type: widget.specie_type,
                               )));
                     },
                     child: Text(AppLocalizations.of(context)!.especeInvasive,
@@ -128,12 +125,11 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AddObservation(
+                          builder: (context) => ChoiceForms(
                                 email: widget.email,
                                 aeroport: widget.aeroport,
-                                json: form_json,
-                                SpecieStatus: 'courante',
-                                SpecieType: widget.specie_type,
+                                specie_status: 'courante',
+                                specie_type: widget.specie_type,
                               )));
                     },
                     child: Text(AppLocalizations.of(context)!.especeCourante,
@@ -158,12 +154,11 @@ class _ChoiceStatusState extends State<ChoiceStatus> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AddObservation(
+                          builder: (context) => ChoiceForms(
                                 email: widget.email,
                                 aeroport: widget.aeroport,
-                                json: form_json,
-                                SpecieStatus: 'inconnue',
-                                SpecieType: widget.specie_type,
+                                specie_status: 'inconnue',
+                                specie_type: widget.specie_type,
                               )));
                     },
                     child: Text(AppLocalizations.of(context)!.especeInconnue,

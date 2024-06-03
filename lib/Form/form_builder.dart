@@ -66,13 +66,14 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
                 options.map((option) => option['label'].toString()).toList();
         }
         formWidgets.add(DropdownButtonFormFieldBuilder(
-            label: widgetLabel,
-            hint: widgetHint,
-            isRequired: isRequired,
-            options: stringList,
-            multi: dropDownMulti,
-            data: values,
-            datakey: keyvalue));
+          label: widgetLabel,
+          hint: widgetHint,
+          isRequired: isRequired,
+          options: stringList,
+          multi: dropDownMulti,
+          data: values,
+          datakey: keyvalue,
+        ));
         ;
         break;
       case 'checkbox':

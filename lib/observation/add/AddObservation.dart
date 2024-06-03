@@ -26,6 +26,7 @@ class AddObservation extends StatefulWidget {
 }
 
 class AddObservationState extends State<AddObservation> {
+
   @override
   Widget build(BuildContext context) {
     String status;
@@ -46,14 +47,15 @@ class AddObservationState extends State<AddObservation> {
         body: Column(children: [
       SizedBox(
           height: 100,
-          child: Text(
+          child: Center(
+              child: Text(
             AppLocalizations.of(context)!.nouvelleObservation +
                 " : " +
                 status +
                 " " +
                 AppLocalizations.of(context)!.espece,
-            style: StyleText.getTitle(),
-          )),
+            style: StyleText.getTitle(size: 23),
+          ))),
       Expanded(
           child: FormPage(
               specie_type: widget.SpecieType,

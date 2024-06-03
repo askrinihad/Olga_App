@@ -13,7 +13,7 @@
       "field_label": "Location",
       "field_key": "geoPoint"
     },
-    {
+    { 
       "field_type": "recognition",
       "field_saveScore": true,
       "field_showScore": false

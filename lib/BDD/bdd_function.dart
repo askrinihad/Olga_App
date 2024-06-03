@@ -165,3 +165,23 @@ Future<List<String>> getInventoryCode(String airport) async {
       await getCollection_CodeInventaire(airport).get();
   return snap.docs.map((doc) => doc.get('code').toString()).toList();
 }
+
+/// Function that return forms ID / or name to 
+List<String> getFormListObs(String? type) {
+  switch (type) {
+    case "faune":
+      return ["faune"];
+    case "flore":
+      return ["flore"];
+    case "insectes":
+      return ["insectes"];
+    default:
+      return ["faune", "flore", "insectes"];
+  }
+
+}
+
+String? getFormpath(String id) {
+  var paths = {'faune' : 'assets/formJson/specie_wildlife.json', 'flore' : 'assets/formJson/specie_plantlife.json', 'insectes' : 'assets/formJson/specie_insect.json',};
+  return paths[id];
+}
