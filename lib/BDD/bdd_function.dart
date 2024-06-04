@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+
 final airports = {
   "Paris-Charles de Gaulle Airport": "CDG",
   "Zagreb Airport": "zagreb",
@@ -184,4 +185,37 @@ List<String> getFormListObs(String? type) {
 String? getFormpath(String id) {
   var paths = {'faune' : 'assets/formJson/specie_wildlife.json', 'flore' : 'assets/formJson/specie_plantlife.json', 'insectes' : 'assets/formJson/specie_insect.json',};
   return paths[id];
+}
+
+//Dynamic Form Functions
+Future<List<String>> getFormIds() async {
+  CollectionReference forms = FirebaseFirestore.instance.collection('forms');
+  QuerySnapshot<Object?> snapshot = await forms.get();
+  return snapshot.docs.map((doc) => doc.id).toList();
+}
+
+Future<List<String>> getIdsByFormCategory(String category) async {
+  CollectionReference forms = FirebaseFirestore.instance.collection('forms');
+  QuerySnapshot<Object?> snapshot = await forms.where('form_category', isEqualTo: category).get();
+  return snapshot.docs.map((doc) => doc.id).toList();
+}
+
+Future<Map<String, dynamic>> getForm(String id) async {
+  CollectionReference forms = FirebaseFirestore.instance.collection('forms');
+  DocumentSnapshot<Object?> snapshot = await forms.doc(id).get();
+  return snapshot.data() as Map<String, dynamic>;
+}
+
+Future<Map<String, dynamic>> getFormFieldForm(String id) async {
+  CollectionReference forms = FirebaseFirestore.instance.collection('forms');
+  DocumentSnapshot<Object?> snapshot = await forms.doc(id).get();
+  Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+  return data['form'] as Map<String, dynamic>;
+}
+
+Future<Map<String, dynamic>> getFormFieldCategory(String id) async {
+  CollectionReference forms = FirebaseFirestore.instance.collection('forms');
+  DocumentSnapshot<Object?> snapshot = await forms.doc(id).get();
+  Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+  return data['form_category'] as Map<String, dynamic>;
 }
