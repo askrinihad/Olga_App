@@ -8,7 +8,7 @@ import 'package:test_app/style/StyleText.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddObservation extends StatefulWidget {
-  final String json;
+  final Map<String, dynamic> json;
   final String email;
   final String aeroport;
   final String SpecieStatus;
@@ -59,7 +59,7 @@ class AddObservationState extends State<AddObservation> {
       Expanded(
           child: FormPage(
               specie_type: widget.SpecieType,
-              jsonPath: widget.json,
+              json: widget.json,
               onSaved: (value) async {
                 if (value.containsKey('image')) {
                   await uploadFile(value['image'], value['image']);

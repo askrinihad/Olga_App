@@ -21,27 +21,6 @@ class ChoiceStatus extends StatefulWidget {
 }
 
 class _ChoiceStatusState extends State<ChoiceStatus> {
-  String form_json = '';
-  
-  @override
-  void initState() {
-    super.initState();
-     switch (widget.specie_type) {
-      case "faune":
-        form_json = 'faune';
-        break;
-
-      case "flore":
-        form_json = 'flore';
-        break;
-      case "insectes":
-        form_json = 'insectes';
-        break;
-
-      default:
-        form_json = 'faune';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/Form/builder/dropdown_button_form_field_builder.dart';
 import 'package:test_app/Form/builder/text_form_field_builder.dart';
@@ -13,12 +11,9 @@ import 'package:test_app/form/builder/date_time_picker_builder.dart';
 import 'package:test_app/form/builder/notice_builder.dart';
 import 'package:test_app/form/builder/geoloc_builder.dart';
 
-Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
-    Map<String, dynamic> values, String airport,
+Future<List<Widget>> buildFormFromJson(BuildContext context,
+    Map<String, dynamic> values, String airport, Map<String, dynamic> formData,
     {String? specie_type}) async {
-  String jsonData = await rootBundle.loadString(pathToJson);
-  Map<String, dynamic> formData = jsonDecode(jsonData);
-
   List<Widget> formWidgets = [];
 
   List<dynamic> formFields = formData['form'];
@@ -30,7 +25,6 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
     String widgetHint = field['field_hint'] ?? '';
     bool isRequired = field['field_required'] ?? false;
     String widgetKeyboardType = field['input_type'] ?? '';
-    bool dropDownMulti = field['max_choices'] ?? false;
     String source = field['select_source'] ?? '';
     String keyvalue = field['field_key'] ??
         idgen
@@ -65,6 +59,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context, String pathToJson,
             stringList =
                 options.map((option) => option['label'].toString()).toList();
         }
+        bool dropDownMulti = field['select_multi'] ?? false;
         formWidgets.add(DropdownButtonFormFieldBuilder(
           label: widgetLabel,
           hint: widgetHint,

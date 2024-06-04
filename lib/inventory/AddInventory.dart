@@ -27,42 +27,52 @@ class AddInventoryState extends State<AddInventory> {
             style: StyleText.getTitle(),
           )),
       Expanded(
-          child: FormPage(
-        jsonPath: widget.json,
-        onSaved: (value) {
-          CollectionReference<Map<String, dynamic>> collRef =
-              getCollection_CodeInventaire(widget.aeroport);
-          collRef.add(value).then((value) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(AppLocalizations.of(context)!.succes),
-                  content:
-                      Text(AppLocalizations.of(context)!.codeInventaireAjoute),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Close the dialog
+          child: FutureBuilder(
+              future: getForm('add_inventory'),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return FormPage(
+                      json: snapshot.data!,
+                      onSaved: (value) {
+                        CollectionReference<Map<String, dynamic>> collRef =
+                            getCollection_CodeInventaire(widget.aeroport);
+                        collRef.add(value).then((value) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title:
+                                    Text(AppLocalizations.of(context)!.succes),
+                                content: Text(AppLocalizations.of(context)!
+                                    .codeInventaireAjoute),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                    child: Text("OK"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }).catchError((error, stackTrace) {
+                          Get.snackbar(
+                            "Error",
+                            "Échec d'ajout de code : $error", // Add a message to display in the snackbar
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.redAccent.withOpacity(0.1),
+                            colorText: Colors.red, // Fix the property name
+                          );
+                          print(error.toString());
+                        });
                       },
-                      child: Text("OK"),
-                    ),
-                  ],
-                );
-              },
-            );
-          }).catchError((error, stackTrace) {
-            Get.snackbar(
-              "Error",
-              "Échec d'ajout de code : $error", // Add a message to display in the snackbar
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.redAccent.withOpacity(0.1),
-              colorText: Colors.red, // Fix the property name
-            );
-            print(error.toString());
-          });
-        }, airport: widget.aeroport
-      ))
+                      airport: widget.aeroport);
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }))
     ]);
   }
 }

@@ -28,44 +28,55 @@ class AddSpecieState extends State<AddSpecie> {
             style: StyleText.getTitle(),
           )),
       Expanded(
-          child: FormPage(
-              jsonPath: widget.json,
-              onSaved: (value) {
-                if (!value.containsKey('type')) {
-                  throw Exception("Not field type");
-                }
-                CollectionReference collRef =
-                    getSpeciesCollection_Type("", value['type']);
-                collRef.add(value).then((value) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.succes),
-                        content:
-                            Text(AppLocalizations.of(context)!.especeAjoute),
-                        actions: [
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
+          child: FutureBuilder(
+              future: getForm('add_specie'),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return FormPage(
+                      json: snapshot.data!,
+                      onSaved: (value) {
+                        if (!value.containsKey('type')) {
+                          throw Exception("Not field type");
+                        }
+                        CollectionReference collRef =
+                            getSpeciesCollection_Type("", value['type']);
+                        collRef.add(value).then((value) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title:
+                                    Text(AppLocalizations.of(context)!.succes),
+                                content: Text(
+                                    AppLocalizations.of(context)!.especeAjoute),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                    child: Text("OK"),
+                                  ),
+                                ],
+                              );
                             },
-                            child: Text("OK"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }).catchError((error, stackTrace) {
-                  Get.snackbar(
-                    "Error",
-                    "Échec d'ajout d'espèce : $error", // Add a message to display in the snackbar
-                    snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: Colors.redAccent.withOpacity(0.1),
-                    colorText: Colors.red, // Fix the property name
-                  );
-                  print(error.toString());
-                });
-              }, airport: widget.aeroport))
+                          );
+                        }).catchError((error, stackTrace) {
+                          Get.snackbar(
+                            "Error",
+                            "Échec d'ajout d'espèce : $error", // Add a message to display in the snackbar
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.redAccent.withOpacity(0.1),
+                            colorText: Colors.red, // Fix the property name
+                          );
+                          print(error.toString());
+                        });
+                      },
+                      airport: widget.aeroport);
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }))
     ]);
   }
 }

@@ -35,65 +35,77 @@ class _ChoiceFormsState extends State<ChoiceForms> {
                 EdgeInsets.only(top: 200.0), // Adjust top padding as needed
             child: Form(
                 key: _formkey,
-                child: Column(children: [
-                  DropdownButtonFormField(
-                      items: getFormListObs(widget.specie_type)
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? value) {
-                        _selectedvalue = value ?? '';
-                      }),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF006766),
-                          elevation: 0.0,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 20.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          )),
-                      onPressed: () {
-                        if (_selectedvalue.isEmpty) {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text("Value can't be null"),
-                                content: Text(
-                                    "Please select a form before pressing that button"),
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
+                child: FutureBuilder(
+                    future: getIdsByFormCategory(widget.specie_type),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(children: [
+                          DropdownButtonFormField(
+                              items: snapshot.data?.map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (String? value) {
+                                _selectedvalue = value ?? '';
+                              }),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF006766),
+                                  elevation: 0.0,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 20.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  )),
+                              onPressed: () {
+                                if (_selectedvalue.isEmpty) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Value can't be null"),
+                                        content: Text(
+                                            "Please select a form before pressing that button"),
+                                        actions: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("OK"),
+                                          ),
+                                        ],
+                                      );
                                     },
-                                    child: Text("OK"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AddObservation(
-                                    email: widget.email,
-                                    aeroport: widget.aeroport,
-                                    json: getFormpath(_selectedvalue)!,
-                                    SpecieStatus: widget.specie_status,
-                                    SpecieType: widget.specie_type,
-                                  )));
-                        }
-                      },
-                      child: Center(
-                          child: FractionallySizedBox(
-                              widthFactor: 1,
+                                  );
+                                } else {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => FutureBuilder(future: getForm(_selectedvalue), builder: (context, snapshot) {if(snapshot.hasData){
+                                        return AddObservation(
+                                            email: widget.email,
+                                            aeroport: widget.aeroport,
+                                            json: snapshot.data!,
+                                            SpecieStatus: widget.specie_status,
+                                            SpecieType: widget.specie_type,
+                                          );
+                                      }else {
+                                        return CircularProgressIndicator();
+                                      }}) ));
+                                }
+                              },
                               child: Center(
-                                  child: Text('Next',
-                                      style: StyleText.getButton())))))
-                ]))));
+                                  child: FractionallySizedBox(
+                                      widthFactor: 1,
+                                      child: Center(
+                                          child: Text('Next',
+                                              style: StyleText.getButton())))))
+                        ]);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    }))));
   }
 }

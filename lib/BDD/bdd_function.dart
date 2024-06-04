@@ -197,18 +197,18 @@ Future<List<String>> getFormIds() async {
 Future<List<String>> getIdsByFormCategory(String category) async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
   QuerySnapshot<Object?> snapshot = await forms.where('form_category', isEqualTo: category).get();
-  return snapshot.docs.map((doc) => doc.id).toList();
+  return snapshot.docs.map((doc) => doc.get('form_id').toString()).toList();
 }
 
 Future<Map<String, dynamic>> getForm(String id) async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
-  DocumentSnapshot<Object?> snapshot = await forms.doc(id).get();
+  DocumentSnapshot<Object?> snapshot = (await forms.where('form_id', isEqualTo: id).get()).docs.first;
   return snapshot.data() as Map<String, dynamic>;
 }
 
 Future<Map<String, dynamic>> getFormFieldForm(String id) async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
-  DocumentSnapshot<Object?> snapshot = await forms.doc(id).get();
+  DocumentSnapshot<Object?> snapshot = (await forms.where('form_id', isEqualTo: id).get()).docs.first;
   Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
   return data['form'] as Map<String, dynamic>;
 }

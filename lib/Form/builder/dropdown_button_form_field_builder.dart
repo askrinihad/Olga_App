@@ -38,12 +38,13 @@ class _DropdownButtonFormFieldBuilderState
             widget.data[widget.datakey] = value;
           },
           items: widget.options.map((e) => MultiSelectItem(e, e)).toList(),
-          title: Text(widget.hint),
+          title: Text(widget.label),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black87),
             borderRadius: BorderRadius.circular(10.0),
           ),
           buttonIcon: const Icon(Icons.arrow_drop_down),
+          buttonText: Text(widget.hint),
           onConfirm: (values) {},
           validator: widget.isRequired
               ? (values) {
