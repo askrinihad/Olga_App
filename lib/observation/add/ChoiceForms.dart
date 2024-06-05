@@ -3,6 +3,7 @@ import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/observation/add/AddObservation.dart';
 import 'package:test_app/style/StyleText.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChoiceForms extends StatefulWidget {
   final String specie_type;
@@ -32,7 +33,7 @@ class _ChoiceFormsState extends State<ChoiceForms> {
     return NavBackbar(
         body: Padding(
             padding:
-                EdgeInsets.only(top: 200.0), // Adjust top padding as needed
+                EdgeInsets.only(top: 100.0), // Adjust top padding as needed
             child: Form(
                 key: _formkey,
                 child: FutureBuilder(
@@ -40,22 +41,40 @@ class _ChoiceFormsState extends State<ChoiceForms> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Column(children: [
-                          DropdownButtonFormField(
-                              items: snapshot.data?.map<DropdownMenuItem<String>>(
+                        
+                          Center(
+                           child: Text(AppLocalizations.of(context)!.choixForm, style: StyleText.getTitle(size: 18),)
+                          ),
+                          SizedBox(height:20),
+                          Center(
+                                child: Container(
+                                  width: 200,
+                                  child: DropdownButtonFormField<String>(
+                                    items: snapshot.data?.map<DropdownMenuItem<String>>(
                                       (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                _selectedvalue = value ?? '';
-                              }),
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      },
+                                    ).toList(),
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        _selectedvalue = value ?? '';
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+
                           SizedBox(height: 20),
-                          ElevatedButton(
+                          Container(
+                            width: 150,
+                          child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF006766),
                                   elevation: 0.0,
+                                
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 20.0, horizontal: 20.0),
                                   shape: RoundedRectangleBorder(
@@ -101,7 +120,8 @@ class _ChoiceFormsState extends State<ChoiceForms> {
                                       widthFactor: 1,
                                       child: Center(
                                           child: Text('Next',
-                                              style: StyleText.getButton())))))
+                                              style: StyleText.getButton()))))
+                                              ))
                         ]);
                       } else {
                         return Center(child: CircularProgressIndicator());

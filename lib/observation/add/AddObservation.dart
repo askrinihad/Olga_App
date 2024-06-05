@@ -54,7 +54,7 @@ class AddObservationState extends State<AddObservation> {
                 status +
                 " " +
                 AppLocalizations.of(context)!.espece,
-            style: StyleText.getTitle(size: 23),
+            style: StyleText.getTitle(size: 18),
           ))),
       Expanded(
           child: FormPage(

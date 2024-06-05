@@ -75,5 +75,6 @@
      "etat1":"Etat 1",
      "etat2":"Etat 2",
      "bird_recognition":"Riconoscimento degli uccelli",
-     "selectionnerCode":"Seleziona un codice di inventario"
+     "selectionnerCode":"Seleziona un codice di inventario",
+     "choixForm":"Sélection de formulaire"
 }
