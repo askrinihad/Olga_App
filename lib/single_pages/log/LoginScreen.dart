@@ -25,6 +25,7 @@ class LoginScreen extends StatefulWidget {
 /// User can also reset their password
 class _LoginScreenState extends State<LoginScreen> {
   // Create a controller for each text field
+  String _errorMessage = '';
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String aeroportValue = aeroportList.first;
@@ -162,10 +163,19 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 16.0,
               ),
-              Text(appLocalizations.motdepasseOublie,
-                  style: StyleText.getBody(color: Color(0xff8E7F7F))),
+                   Text(
+                appLocalizations.motdepasseOublie,
+                style: TextStyle(color:  Color(0xff8E7F7F))),
+              
               SizedBox(
-                height: MediaQuery.of(context).size.width * 0.1,
+                height: MediaQuery.of(context).size.width * 0.06,
+              ),
+              Text(
+                _errorMessage,
+                style: TextStyle(color: Colors.red),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width * 0.08,
               ),
 
               // Button for the login
@@ -195,6 +205,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               email: _emailController.text,
                               aeroport: aeroportValue,
                               currentPage: DrawerSections.Accueil)));
+                    }
+                    else {
+                      setState(() {
+                        _errorMessage = 'Email or password is incorrect';
+                      });
                     }
                   },
                   child: Text(appLocalizations.connexion,

@@ -16,7 +16,7 @@ class _AccueilPageState extends State<AccueilPage> {
         Container(
       child: Center(
         child: Text(
-          "BioDivObserver",
+          "BiodiversIT Observer",
           style: StyleText.getTitle(size: 35),
         ),
       ),

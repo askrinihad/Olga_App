@@ -20,8 +20,9 @@ class AddInventoryState extends State<AddInventory> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      SizedBox(height:MediaQuery.of(context).size.height * 0.06),
       SizedBox(
-          height: 100,
+          height:MediaQuery.of(context).size.height * 0.06,
           child: Text(
             AppLocalizations.of(context)!.nouveauInventaire,
             style: StyleText.getTitle(),
