@@ -65,6 +65,9 @@ class AddObservationState extends State<AddObservation> {
                   await uploadFile(value['image'], value['image']);
                   value['image'] = await DownloadUrl(value['image']);
                 }
+                value['email'] = widget.email;
+                value['status'] = widget.SpecieStatus;
+                
                 CollectionReference collRef = select_collection_airport_type(
                     widget.aeroport, widget.SpecieType);
                 collRef.add(value).then((value) {

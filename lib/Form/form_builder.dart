@@ -25,7 +25,6 @@ Future<List<Widget>> buildFormFromJson(BuildContext context,
     String widgetHint = field['field_hint'] ?? '';
     bool isRequired = field['field_required'] ?? false;
     String widgetKeyboardType = field['input_type'] ?? '';
-    String source = field['select_source'] ?? '';
     String keyvalue = field['field_key'] ??
         idgen
             .toString(); // Key attribut for the data / To store in BDD (Need to be implement in JSON)
@@ -46,7 +45,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context,
         break;
       case 'select':
         List<String> stringList = [];
-        print(specie_type);
+        String source = field['select_source'] ?? '';
         switch (source) {
           case "species":
             stringList = await getSpecie(airport, specie_type);
@@ -122,16 +121,18 @@ Future<List<Widget>> buildFormFromJson(BuildContext context,
         ));
         break;
       case 'recognition':
-        bool saveScore = field['field_saveScore'] ?? false;
-        bool showScore = field['field_showScore'] ?? false;
+        bool saveScore = field['field_saveScore'] ?? true;
+        bool showScore = field['field_showScore'] ?? true;
+        bool saveSpecie = field['field_saveScore'] ?? true;
 
         formWidgets.add(RecognitionButton(
           type: specie_type,
           data: values,
-          datakey: keyvalue,
+          datakey: 'predicted_specie',
           datakeyScore: 'score',
           saveScore: saveScore,
           showScore: showScore,
+          saveSpecie : saveSpecie
         ));
       default:
         throw Exception('Unsupported widget type: $widgetType');

@@ -15,6 +15,7 @@ class RecognitionButton extends StatefulWidget {
   final String datakeyScore;
   final bool saveScore;
   final bool showScore;
+  final bool saveSpecie;
 
   const RecognitionButton(
       {Key? key,
@@ -23,7 +24,8 @@ class RecognitionButton extends StatefulWidget {
       required this.datakey,
       this.saveScore = false,
       this.showScore = false,
-      required this.datakeyScore})
+      required this.datakeyScore,
+      required this.saveSpecie})
       : super(key: key);
 
   @override
@@ -54,6 +56,9 @@ class _RecognitionButtonState extends State<RecognitionButton>
           try {
             if (widget.data.containsKey('image')) {
               recognition(widget.data['image'], widget.type).then((value) {
+                if(widget.saveScore){
+                  
+                }
                 widget.data[widget.datakey] =
                     value["class_name"]; // Save the classname
                 if (widget.saveScore) {
@@ -96,9 +101,12 @@ class _RecognitionButtonState extends State<RecognitionButton>
             print('Stack trace: $s');
           }
         },
-        child: FractionallySizedBox(widthFactor: 1, child:  Center( child: Text(AppLocalizations.of(context)!.reconnaissance,
-              style: StyleText.getButton()),
-        )));
+        child: FractionallySizedBox(
+            widthFactor: 1,
+            child: Center(
+              child: Text(AppLocalizations.of(context)!.reconnaissance,
+                  style: StyleText.getButton()),
+            )));
     return Column(children: [_button, _text]);
   }
 
