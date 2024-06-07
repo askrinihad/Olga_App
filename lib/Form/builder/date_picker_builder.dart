@@ -26,6 +26,11 @@ class _DatePickerWidgetState extends State<DatePickerWidget>
   @override
   void initState() {
     super.initState();
+    DateTime currentDate = DateTime.now();
+    String formattedDate = "${currentDate.toLocal()}".split(' ')[0];
+    dateNotifier.value = formattedDate;
+    widget.data[widget.datakey] = formattedDate;
+    controller.text = formattedDate;
     dateNotifier.addListener(() {
       controller.text = dateNotifier.value;
     });
@@ -54,7 +59,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget>
               labelText: widget.label,
               hintText: widget.hint,
               border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400), 
+                borderSide: BorderSide(color: Colors.grey.shade400),
                 borderRadius: BorderRadius.circular(10.0),
               ),
               enabledBorder: OutlineInputBorder(

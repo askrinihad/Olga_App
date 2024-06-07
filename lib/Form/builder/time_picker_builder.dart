@@ -20,9 +20,24 @@ class TimeWidget extends StatefulWidget {
   _TimeWidgetState createState() => _TimeWidgetState();
 }
 
-class _TimeWidgetState extends State<TimeWidget> with AutomaticKeepAliveClientMixin {
+class _TimeWidgetState extends State<TimeWidget>
+    with AutomaticKeepAliveClientMixin {
   final controller = TextEditingController();
   final timeNotifier = ValueNotifier<TimeOfDay?>(null);
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   TimeOfDay currentTime = TimeOfDay.now();
+  //   timeNotifier.value = currentTime;
+  //   widget.data[widget.datakey] = currentTime;
+  //   timeNotifier.addListener(() {
+  //     if (timeNotifier.value != null) {
+  //       controller.text =
+  //           "${timeNotifier.value!.hour}:${timeNotifier.value!.minute}";
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {

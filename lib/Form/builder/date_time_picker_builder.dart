@@ -25,14 +25,16 @@ class _DateTimeWidgetState extends State<DateTimeWidget>
   DateTime dateTime = DateTime.now();
   final dateTimeNotifier = ValueNotifier<DateTime>(DateTime.now());
 
-  @override
-  void initState() {
-    super.initState();
-    dateTimeNotifier.addListener(() {
-      controller.text = DateFormat('yyyy-MM-dd – kk:mm')
-          .format(dateTimeNotifier.value.toLocal());
-    });
-  }
+ @override
+void initState() {
+  super.initState();
+  dateTime = DateTime.now();
+  controller.text = DateFormat('yyyy-MM-dd – kk:mm').format(dateTime.toLocal());
+  widget.data[widget.datakey] = dateTime;
+  dateTimeNotifier.addListener(() {
+    controller.text = DateFormat('yyyy-MM-dd – kk:mm').format(dateTimeNotifier.value.toLocal());
+  });
+}
 
   @override
   void dispose() {
@@ -48,7 +50,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget>
       builder: (context, date, child) {
         return Container(
           decoration: BoxDecoration(
-            color: Color(0xFFF8F8F8), 
+            color: Color(0xFFF8F8F8),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: TextFormField(
@@ -61,7 +63,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget>
                 borderRadius: BorderRadius.circular(10.0),
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400), 
+                borderSide: BorderSide(color: Colors.grey.shade400),
                 borderRadius: BorderRadius.circular(10.0),
               ),
               focusedBorder: OutlineInputBorder(
