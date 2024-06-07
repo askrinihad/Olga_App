@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/bdd/bdd_function.dart';
+import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/observation/history/ObservationInfo.dart';
 import 'package:test_app/style/StyleText.dart';
@@ -22,14 +22,10 @@ class _ObservationListState extends State<ObservationList> {
 
   Loader() {
     return FutureBuilder(
-        future: getCollectionsAll(widget.aeroport, widget.typeObs)[0].get(),
-        builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+        future: getMapFromCollection(widget.aeroport, widget.typeObs),
+        builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<Map<String, dynamic>> listObs = [];
-            snapshot.data!.docs.forEach((element) {
-              listObs.add(element.data());
-            });
+            List<Map<String, dynamic>> listObs = snapshot.data!;
             return listObs.length < 1
                 ? Text("Aucune observation")
                 : ListView.builder(
@@ -56,9 +52,22 @@ class _ObservationListState extends State<ObservationList> {
                             title: Row(
                               children: [
                                 Text(
-                                  listObs[index]["date"],
+                                  // Print Date. Accept String / TimeStamp / DateTime. Else print ERROR
+                                  listObs[index]["date"] is String
+                                      ? listObs[index]["date"]
+                                      : listObs[index]["date"] is Timestamp
+                                          ? (listObs[index]["date"]
+                                                  as Timestamp)
+                                              .toDate()
+                                              .toString()
+                                          : listObs[index]["date"] is DateTime
+                                              ? listObs[index]["date"]
+                                                  .toString()
+                                              : 'ERROr',
                                   style: StyleText.getBody(
                                       color: Color.fromARGB(255, 25, 25, 28)),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
                                 ),
                                 SizedBox(width: 10),
                               ],
