@@ -15,7 +15,21 @@ class _NoticeWidgetState extends State<NoticeWidget> with AutomaticKeepAliveClie
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Text(widget.label);
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 235, 235, 235), 
+        border: Border.all(color: Colors.grey.shade400),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.info_outline, color: Colors.blueGrey), 
+          SizedBox(width: 10.0),
+          Expanded(child: Text(widget.label)),
+        ],
+      ),
+    );
   }
 
   @override

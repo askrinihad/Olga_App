@@ -19,7 +19,8 @@ class PictureWidget extends StatefulWidget {
   }
 }
 
-class _PictureWidgetState extends State<PictureWidget> with AutomaticKeepAliveClientMixin {
+class _PictureWidgetState extends State<PictureWidget>
+    with AutomaticKeepAliveClientMixin {
   final imageNotifier = ValueNotifier<XFile?>(null);
   double? _latitude;
   double? _longitude;
@@ -71,7 +72,8 @@ class _PictureWidgetState extends State<PictureWidget> with AutomaticKeepAliveCl
   }
 
   Future<void> _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     _latitude = position.latitude;
     _longitude = position.longitude;
   }
@@ -147,10 +149,13 @@ class _PictureWidgetState extends State<PictureWidget> with AutomaticKeepAliveCl
           ),
         ),
         if (imageNotifier.value != null)
-          Image.file(
-            File(imageNotifier.value!.path),
-            width: 300,
-            height: 300,
+          Container(
+            margin: const EdgeInsets.only(top: 15),
+            child: Image.file(
+              File(imageNotifier.value!.path),
+              width: 300,
+              height: 300,
+            ),
           ),
         if (_latitude != null && _longitude != null) ...[
           Text('Latitude: $_latitude'),

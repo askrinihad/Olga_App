@@ -43,37 +43,52 @@ class _DatePickerWidgetState extends State<DatePickerWidget>
     return ValueListenableBuilder<String>(
       valueListenable: dateNotifier,
       builder: (context, date, child) {
-        return TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+        return Container(
+          decoration: BoxDecoration(
+            color: Color(0xFFF8F8F8),
+            borderRadius: BorderRadius.circular(10.0),
           ),
-          onTap: () async {
-            FocusScope.of(context).requestFocus(new FocusNode());
-            final DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2100),
-            );
-            if (pickedDate != null) {
-              widget.data[widget.datakey] =
-                  "${pickedDate.toLocal()}".split(' ')[0];
-              dateNotifier.value = "${pickedDate.toLocal()}".split(' ')[0];
-            }
-          },
-          validator: widget.isRequired
-              ? (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Ce champ est obligatoire';
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: widget.label,
+              hintText: widget.hint,
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade400), 
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade400),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade600),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            onTap: () async {
+              FocusScope.of(context).requestFocus(new FocusNode());
+              final DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+              );
+              if (pickedDate != null) {
+                widget.data[widget.datakey] =
+                    "${pickedDate.toLocal()}".split(' ')[0];
+                dateNotifier.value = "${pickedDate.toLocal()}".split(' ')[0];
+              }
+            },
+            validator: widget.isRequired
+                ? (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ce champ est obligatoire';
+                    }
+                    return null;
                   }
-                  return null;
-                }
-              : null,
+                : null,
+          ),
         );
       },
     );

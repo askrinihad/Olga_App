@@ -35,6 +35,34 @@ class _TextFormFieldBuilderState extends State<TextFormFieldBuilder> with Automa
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    InputDecoration decoration = InputDecoration(
+      labelText: widget.label,
+      hintText: widget.hint,
+      filled: true,
+      fillColor: Color(0xFFF8F8F8), 
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Colors.grey.shade400, 
+          width: 1.0,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Colors.grey.shade400,
+          width: 1.0,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Colors.grey.shade600,
+          width: 1.0,
+        ),
+      ),
+    );
+
     switch (widget.keyboardType) {
       case 'text':
         return TextFormField(
@@ -42,13 +70,7 @@ class _TextFormFieldBuilderState extends State<TextFormFieldBuilder> with Automa
           onSaved: (value) {
             widget.data[widget.dataKey] = value;
           },
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
+          decoration: decoration,
           validator: widget.isRequired
               ? (value) {
                   if (value == null || value.isEmpty) {
@@ -68,13 +90,7 @@ class _TextFormFieldBuilderState extends State<TextFormFieldBuilder> with Automa
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d*([.,]\d*)?$')),
           ],
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
+          decoration: decoration,
           validator: widget.isRequired
               ? (value) {
                   if (value == null || value.isEmpty) {
@@ -94,13 +110,7 @@ class _TextFormFieldBuilderState extends State<TextFormFieldBuilder> with Automa
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d*$')),
           ],
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
+          decoration: decoration,
           validator: widget.isRequired
               ? (value) {
                   if (value == null || value.isEmpty) {
@@ -117,13 +127,7 @@ class _TextFormFieldBuilderState extends State<TextFormFieldBuilder> with Automa
             widget.data[widget.dataKey] = value;
           },
           keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
+          decoration: decoration,
           validator: widget.isRequired
               ? (value) {
                   if (value == null || value.isEmpty) {
@@ -144,13 +148,7 @@ class _TextFormFieldBuilderState extends State<TextFormFieldBuilder> with Automa
             widget.data[widget.dataKey] = value;
           },
           maxLines: 8,
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
+          decoration: decoration,
           validator: widget.isRequired
               ? (value) {
                   if (value == null || value.isEmpty) {

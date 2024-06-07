@@ -31,6 +31,34 @@ class _DropdownButtonFormFieldBuilderState
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    InputDecoration decoration = InputDecoration(
+      labelText: widget.label,
+      hintText: widget.hint,
+      filled: true,
+      fillColor: Color(0xFFF8F8F8), 
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Colors.grey.shade400, 
+          width: 1.0,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Colors.grey.shade400,
+          width: 1.0,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Colors.grey.shade600,
+          width: 1.0,
+        ),
+      ),
+    );
+
     switch (widget.multi) {
       case true:
         return MultiSelectDialogField(
@@ -40,7 +68,8 @@ class _DropdownButtonFormFieldBuilderState
           items: widget.options.map((e) => MultiSelectItem(e, e)).toList(),
           title: Text(widget.label),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.black87),
+            color: Color(0xFFF8F8F8),
+            border: Border.all(color: Colors.grey.shade400),
             borderRadius: BorderRadius.circular(10.0),
           ),
           buttonIcon: const Icon(Icons.arrow_drop_down),
@@ -61,13 +90,7 @@ class _DropdownButtonFormFieldBuilderState
           onSaved: (value) {
             widget.data[widget.datakey] = value;
           },
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
+          decoration: decoration,
           isExpanded: true,
           items: widget.options.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(

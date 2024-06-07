@@ -20,7 +20,7 @@ class TimeWidget extends StatefulWidget {
   _TimeWidgetState createState() => _TimeWidgetState();
 }
 
-class _TimeWidgetState extends State<TimeWidget> with AutomaticKeepAliveClientMixin{
+class _TimeWidgetState extends State<TimeWidget> with AutomaticKeepAliveClientMixin {
   final controller = TextEditingController();
   final timeNotifier = ValueNotifier<TimeOfDay?>(null);
 
@@ -47,35 +47,50 @@ class _TimeWidgetState extends State<TimeWidget> with AutomaticKeepAliveClientMi
     return ValueListenableBuilder<TimeOfDay?>(
       valueListenable: timeNotifier,
       builder: (context, time, child) {
-        return TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+        return Container(
+          decoration: BoxDecoration(
+            color: Color(0xFFF8F8F8),
+            borderRadius: BorderRadius.circular(10.0),
           ),
-          onTap: () async {
-            FocusScope.of(context).requestFocus(new FocusNode());
-            final TimeOfDay? timeOfDay = await showTimePicker(
-              context: context,
-              initialTime: timeNotifier.value ?? TimeOfDay.now(),
-              initialEntryMode: TimePickerEntryMode.dial,
-            );
-            if (timeOfDay != null) {
-              widget.data[widget.datakey] = timeOfDay;
-              timeNotifier.value = timeOfDay;
-            }
-          },
-          validator: widget.isRequired
-              ? (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Ce champ est obligatoire';
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: widget.label,
+              hintText: widget.hint,
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade400),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade400),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade600),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            onTap: () async {
+              FocusScope.of(context).requestFocus(new FocusNode());
+              final TimeOfDay? timeOfDay = await showTimePicker(
+                context: context,
+                initialTime: timeNotifier.value ?? TimeOfDay.now(),
+                initialEntryMode: TimePickerEntryMode.dial,
+              );
+              if (timeOfDay != null) {
+                widget.data[widget.datakey] = timeOfDay;
+                timeNotifier.value = timeOfDay;
+              }
+            },
+            validator: widget.isRequired
+                ? (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ce champ est obligatoire';
+                    }
+                    return null;
                   }
-                  return null;
-                }
-              : null,
+                : null,
+          ),
         );
       },
     );
