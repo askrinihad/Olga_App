@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:test_app/bdd/bdd_function.dart';
+import 'package:test_app/BDD/bdd_function.dart';
 
 /**
  * Displays the Map of observation history. (Button localiser)
@@ -82,26 +82,10 @@ class _HistoryMapState extends State<HistoryMap> {
   }
 
   _incrementCounter() async {
-    var collections = getCollectionsAll(widget.aeroport, widget.typeObs);
-
-    List<Map<String, dynamic>> templist = [];
-    var data = await collections[0].get();
-    data.docs.forEach((element) {
-      templist.add(element.data());
-    });
-    if (collections.length > 1) {
-      var data2 = await collections[1].get();
-      var data3 = await collections[2].get();
-      data2.docs.forEach((element) {
-        templist.add(element.data());
-      });
-      data3.docs.forEach((element) {
-        templist.add(element.data());
-      });
-    }
+    var collections = await getMapFromCollection(widget.aeroport, widget.typeObs);
 
     setState(() {
-      listObs = templist;
+      listObs = collections;
     });
     print("listObs************************************** $listObs");
   }

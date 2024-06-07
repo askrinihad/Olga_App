@@ -48,7 +48,7 @@ Future<List<Widget>> buildFormFromJson(BuildContext context,
         String source = field['select_source'] ?? '';
         switch (source) {
           case "species":
-            stringList = await getSpecie(airport, specie_type);
+            stringList = await getSpecie(airport: airport, type: specie_type);
             break;
           case "code_inventory":
             stringList = await getInventoryCode(airport);

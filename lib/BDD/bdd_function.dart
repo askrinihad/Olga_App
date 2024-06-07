@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-
 final airports = {
   "Paris-Charles de Gaulle Airport": "CDG",
   "Zagreb Airport": "zagreb",
@@ -90,28 +89,39 @@ CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
   }
 }
 
-List<CollectionReference<Map<String, dynamic>>> getCollectionsAll(
-    String airport, String type) {
+Future<List<Map<String, dynamic>>> getMapFromCollection(
+    String airport, String type) async {
   final types = {
-    "Plant life": "observationFlore",
-    "Wildlife": "observationFaune",
-    "Insects": "observationFaune",
+    "Plant life": "observationFlore_${airports[airport]!}",
+    "Wildlife": "observationFaune_${airports[airport]!}",
+    "Insects": "observationInsectes${airports[airport]!}",
   };
+  QuerySnapshot snapshot;
+  List<Map<String, dynamic>> map = [];
   if (types[type] != null) {
-    return [
-      FirebaseFirestore.instance
-          .collection(types[type]! + "_" + airports[airport]!)
-    ];
+    snapshot = await FirebaseFirestore.instance.collection(types[type]!).get();
+
+    for (var doc in snapshot.docs) {
+      map.add((doc.data() as Map<String, dynamic>));
+    }
   } else {
-    return [
-      FirebaseFirestore.instance
-          .collection("observationFlore_" + airports[airport]!),
-      FirebaseFirestore.instance
-          .collection("observationFaune_" + airports[airport]!),
-      FirebaseFirestore.instance
-          .collection("observationFaune_" + airports[airport]!)
-    ];
+    var snapshot1 = await FirebaseFirestore.instance
+        .collection("observationFlore_${airports[airport]!}")
+        .get();
+    var snapshot2 = await FirebaseFirestore.instance
+        .collection("observationFaune_${airports[airport]!}")
+        .get();
+    var snapshot3 = await FirebaseFirestore.instance
+        .collection("observationInsectes${airports[airport]!}")
+        .get();
+        
+    for (var docs in [snapshot1.docs, snapshot2.docs, snapshot3.docs]) {
+      for (var doc in docs) {
+        map.add(doc.data());
+      }
+    }
   }
+  return map;
 }
 
 CollectionReference<Map<String, dynamic>> getCollection_CodeInventaire(
@@ -153,9 +163,20 @@ Future uploadFile(File filePath, File fileName) async {
   }
 }
 
-Future<List<String>> getSpecie(String airport, String? type) async {
-  QuerySnapshot<Map<String, dynamic>> snap =
-      await getSpeciesCollection_Type(airport, type).get();
+Future<List<String>> getSpecie(
+    {required String airport,
+    required String? type,
+    bool alphabetic_order = true}) async {
+  QuerySnapshot<Map<String, dynamic>> snap;
+
+  if (alphabetic_order) {
+    snap = await await getSpeciesCollection_Type(airport, type)
+        .orderBy("Nom scientifique", descending: false)
+        .get();
+  } else {
+    snap = await getSpeciesCollection_Type(airport, type).get();
+  }
+
   return snap.docs
       .map((doc) => doc.get('Nom scientifique').toString())
       .toList();
@@ -167,7 +188,7 @@ Future<List<String>> getInventoryCode(String airport) async {
   return snap.docs.map((doc) => doc.get('code').toString()).toList();
 }
 
-/// Function that return forms ID / or name to 
+/// Function that return forms ID / or name to
 List<String> getFormListObs(String? type) {
   switch (type) {
     case "faune":
@@ -179,11 +200,14 @@ List<String> getFormListObs(String? type) {
     default:
       return ["faune", "flore", "insectes"];
   }
-
 }
 
 String? getFormpath(String id) {
-  var paths = {'faune' : 'assets/formJson/specie_wildlife.json', 'flore' : 'assets/formJson/specie_plantlife.json', 'insectes' : 'assets/formJson/specie_insect.json',};
+  var paths = {
+    'faune': 'assets/formJson/specie_wildlife.json',
+    'flore': 'assets/formJson/specie_plantlife.json',
+    'insectes': 'assets/formJson/specie_insect.json',
+  };
   return paths[id];
 }
 
@@ -196,19 +220,22 @@ Future<List<String>> getFormIds() async {
 
 Future<List<String>> getIdsByFormCategory(String category) async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
-  QuerySnapshot<Object?> snapshot = await forms.where('form_category', isEqualTo: category).get();
+  QuerySnapshot<Object?> snapshot =
+      await forms.where('form_category', isEqualTo: category).get();
   return snapshot.docs.map((doc) => doc.get('form_id').toString()).toList();
 }
 
 Future<Map<String, dynamic>> getForm(String id) async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
-  DocumentSnapshot<Object?> snapshot = (await forms.where('form_id', isEqualTo: id).get()).docs.first;
+  DocumentSnapshot<Object?> snapshot =
+      (await forms.where('form_id', isEqualTo: id).get()).docs.first;
   return snapshot.data() as Map<String, dynamic>;
 }
 
 Future<Map<String, dynamic>> getFormFieldForm(String id) async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
-  DocumentSnapshot<Object?> snapshot = (await forms.where('form_id', isEqualTo: id).get()).docs.first;
+  DocumentSnapshot<Object?> snapshot =
+      (await forms.where('form_id', isEqualTo: id).get()).docs.first;
   Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
   return data['form'] as Map<String, dynamic>;
 }
