@@ -11,7 +11,11 @@ import 'package:test_app/form/builder/date_time_picker_builder.dart';
 import 'package:test_app/form/builder/notice_builder.dart';
 import 'package:test_app/form/builder/geoloc_builder.dart';
 
-Future<List<Widget>> buildFormFromJson(BuildContext context,
+/// Fonction for build all Widget from Json forms.
+///
+/// Must return List of dynamic and not List of Widget because picture_widget implement a update method that can't be used if this function return Widget type. 
+/// It's weird, maybe you can fix that by a refactor, if you try : Good Luck!
+Future<List<dynamic>> buildFormFromJson(BuildContext context,
     Map<String, dynamic> values, String airport, Map<String, dynamic> formData,
     {String? specie_type}) async {
   List<Widget> formWidgets = [];
@@ -126,14 +130,13 @@ Future<List<Widget>> buildFormFromJson(BuildContext context,
         bool saveSpecie = field['field_saveScore'] ?? true;
 
         formWidgets.add(RecognitionButton(
-          type: specie_type,
-          data: values,
-          datakey: 'predicted_specie',
-          datakeyScore: 'score',
-          saveScore: saveScore,
-          showScore: showScore,
-          saveSpecie : saveSpecie
-        ));
+            type: specie_type,
+            data: values,
+            datakey: 'predicted_specie',
+            datakeyScore: 'score',
+            saveScore: saveScore,
+            showScore: showScore,
+            saveSpecie: saveSpecie));
       default:
         throw Exception('Unsupported widget type: $widgetType');
     }

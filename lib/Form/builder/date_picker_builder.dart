@@ -22,15 +22,14 @@ class _DatePickerWidgetState extends State<DatePickerWidget>
     with AutomaticKeepAliveClientMixin {
   final controller = TextEditingController();
   final dateNotifier = ValueNotifier<String>("");
+  String currentDate = "";
 
   @override
   void initState() {
     super.initState();
-    DateTime currentDate = DateTime.now();
-    String formattedDate = "${currentDate.toLocal()}".split(' ')[0];
-    dateNotifier.value = formattedDate;
-    widget.data[widget.datakey] = formattedDate;
-    controller.text = formattedDate;
+    currentDate = "${DateTime.now().toLocal()}".split(' ')[0];
+    dateNotifier.value = currentDate;
+    controller.text = currentDate;
     dateNotifier.addListener(() {
       controller.text = dateNotifier.value;
     });
@@ -80,10 +79,15 @@ class _DatePickerWidgetState extends State<DatePickerWidget>
                 lastDate: DateTime(2100),
               );
               if (pickedDate != null) {
-                widget.data[widget.datakey] =
-                    "${pickedDate.toLocal()}".split(' ')[0];
                 dateNotifier.value = "${pickedDate.toLocal()}".split(' ')[0];
               }
+            },
+            onSaved: (value) {
+              //Save
+              widget.data[widget.datakey] = dateNotifier.value;
+              // Reset to default
+              dateNotifier.value = "";
+              controller.text = currentDate;
             },
             validator: widget.isRequired
                 ? (value) {

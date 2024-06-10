@@ -34,7 +34,7 @@ class AddSpecieState extends State<AddSpecie> {
                 if (snapshot.hasData) {
                   return FormPage(
                       json: snapshot.data!,
-                      onSaved: (value) {
+                      onSaved: (value) async {
                         if (!value.containsKey('type')) {
                           throw Exception("Not field type");
                         }

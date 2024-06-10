@@ -63,7 +63,7 @@ class _ObservationListState extends State<ObservationList> {
                                           : listObs[index]["date"] is DateTime
                                               ? listObs[index]["date"]
                                                   .toString()
-                                              : 'ERROr',
+                                              : 'ERROR',
                                   style: StyleText.getBody(
                                       color: Color.fromARGB(255, 25, 25, 28)),
                                   overflow: TextOverflow.ellipsis,

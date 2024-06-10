@@ -22,15 +22,14 @@ class DateTimeWidget extends StatefulWidget {
 class _DateTimeWidgetState extends State<DateTimeWidget>
     with AutomaticKeepAliveClientMixin {
   final controller = TextEditingController();
-  DateTime dateTime = DateTime.now();
   final dateTimeNotifier = ValueNotifier<DateTime>(DateTime.now());
 
  @override
 void initState() {
   super.initState();
-  dateTime = DateTime.now();
-  controller.text = DateFormat('yyyy-MM-dd – kk:mm').format(dateTime.toLocal());
-  widget.data[widget.datakey] = dateTime;
+  dateTimeNotifier.value = DateTime.now();
+  controller.text = DateFormat('yyyy-MM-dd – kk:mm').format(dateTimeNotifier.value.toLocal());
+  widget.data[widget.datakey] = dateTimeNotifier.value;
   dateTimeNotifier.addListener(() {
     controller.text = DateFormat('yyyy-MM-dd – kk:mm').format(dateTimeNotifier.value.toLocal());
   });
@@ -75,27 +74,31 @@ void initState() {
               FocusScope.of(context).requestFocus(new FocusNode());
               final DateTime? pickedDate = await showDatePicker(
                 context: context,
-                initialDate: dateTime,
+                initialDate: dateTimeNotifier.value,
                 firstDate: DateTime(1900),
                 lastDate: DateTime(2100),
               );
               if (pickedDate != null) {
                 final TimeOfDay? pickedTime = await showTimePicker(
                   context: context,
-                  initialTime: TimeOfDay.fromDateTime(dateTime),
+                  initialTime: TimeOfDay.fromDateTime(dateTimeNotifier.value),
                 );
                 if (pickedTime != null) {
-                  dateTime = DateTime(
+                  dateTimeNotifier.value = DateTime(
                     pickedDate.year,
                     pickedDate.month,
                     pickedDate.day,
                     pickedTime.hour,
                     pickedTime.minute,
                   );
-                  widget.data[widget.datakey] = dateTime;
-                  dateTimeNotifier.value = dateTime;
                 }
               }
+            },
+            onSaved: (value) {
+              //Save
+              widget.data[widget.datakey] = dateTimeNotifier.value;
+              // Reset to default
+              dateTimeNotifier.value = DateTime.now();
             },
             validator: widget.isRequired
                 ? (value) {

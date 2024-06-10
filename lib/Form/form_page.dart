@@ -6,10 +6,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class FormPage extends StatefulWidget {
   final Map<String, dynamic> json;
   final String airport;
-  final void Function(Map<String, dynamic> values) onSaved;
+  final Future<void> Function(Map<String, dynamic> values) onSaved;
   final String? specie_type;
 
-  FormPage({required this.json, required this.onSaved, required this.airport, this.specie_type});
+  FormPage(
+      {required this.json,
+      required this.onSaved,
+      required this.airport,
+      this.specie_type});
 
   @override
   _FormPageState createState() => _FormPageState();
@@ -22,7 +26,8 @@ class _FormPageState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: buildFormFromJson(context, _values, widget.airport, widget.json, specie_type: widget.specie_type),
+      future: buildFormFromJson(context, _values, widget.airport, widget.json,
+          specie_type: widget.specie_type),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
@@ -43,10 +48,27 @@ class _FormPageState extends State<FormPage> {
               ),
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  widget.onSaved(_values);
+                    // SAVE
+                    _formKey.currentState!.save();
+                    await widget.onSaved(_values);
+
+                    //RESET
+                    _values.clear();
+                    _formKey.currentState!.reset();
+                    //RESET Image
+                    for (var element in snapshot.data!){
+                      // I don't understand why but the condition {element is PictureWidget} return false. but element.runtimeType return PictureWidget. 
+                      // Flutter is broken
+                      try{
+                        if(element.runtimeType.toString() == 'PictureWidget'){
+                          element.reset();
+                        } else if (element.runtimeType.toString() == 'RecognitionButton') {
+                          element.reset();
+                        }
+                      }catch (e){print(e);}
+                    }
                 }
               },
               child: Text(

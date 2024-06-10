@@ -46,35 +46,35 @@ class _ObservationInfoState extends State<ObservationInfo> {
                   Text(
                     AppLocalizations.of(context)!.observeLe +
                         " : ${ // Print Date. Accept String / TimeStamp / DateTime. Else print ERROR
-                        widget.item["date"] is String ? widget.item["date"] : widget.item["date"] is Timestamp ? (widget.item["date"] as Timestamp).toDate().toString() : widget.item["date"] is DateTime ? widget.item["date"].toString() : 'ERROr'}",
+                        widget.item["date"] is String ? widget.item["date"] : widget.item["date"] is Timestamp ? (widget.item["date"] as Timestamp).toDate().toString() : widget.item["date"] is DateTime ? widget.item["date"].toString() : 'ERROR'}",
                     textAlign: TextAlign.center,
                     style: fontstyle,
                   ),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.phase +
-                        " : ${widget.item.containsKey('phase') ? widget.item["phase"] : 'null'}",
+                        " : ${widget.item.containsKey('Phase') ? widget.item["Phase"] : 'null'}",
                     textAlign: TextAlign.center,
                     style: fontstyle,
                   ),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.nombre +
-                        " : ${widget.item.containsKey('nombre') ? widget.item["nombre"] : 'null'} individu (s)",
+                        " : ${widget.item.containsKey('individus') ? widget.item["individus"] : 'null'} individu (s)",
                     textAlign: TextAlign.center,
                     style: fontstyle,
                   ),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.etat +
-                        " : ${widget.item.containsKey('etat') ? widget.item["etat"] : 'null'}",
+                        " : ${widget.item.containsKey('State') ? widget.item["State"] : 'null'}",
                     textAlign: TextAlign.center,
                     style: fontstyle,
                   ),
                   SizedBox(height: 10),
                   Text(
                     AppLocalizations.of(context)!.action +
-                        " : ${widget.item.containsKey('action') ? widget.item["action"] : 'null'}",
+                        " : ${widget.item.containsKey('Action') ? widget.item["Action"] : 'null'}",
                     textAlign: TextAlign.center,
                     style: fontstyle,
                   ),

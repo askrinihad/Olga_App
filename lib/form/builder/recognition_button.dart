@@ -16,8 +16,9 @@ class RecognitionButton extends StatefulWidget {
   final bool saveScore;
   final bool showScore;
   final bool saveSpecie;
+  final response = ValueNotifier<String>('');
 
-  const RecognitionButton(
+  RecognitionButton(
       {Key? key,
       required this.type,
       required this.data,
@@ -30,18 +31,19 @@ class RecognitionButton extends StatefulWidget {
 
   @override
   _RecognitionButtonState createState() => _RecognitionButtonState();
+
+  void reset() {
+    response.value = '';
+  }
 }
 
 class _RecognitionButtonState extends State<RecognitionButton>
     with AutomaticKeepAliveClientMixin {
-  late Text _text;
-  String _response = '';
   late ElevatedButton _button;
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    _text = Text(overflow: TextOverflow.ellipsis, maxLines: 2, '$_response');
     _button = ElevatedButton(
         // Button for recognition
         style: ElevatedButton.styleFrom(
@@ -56,9 +58,7 @@ class _RecognitionButtonState extends State<RecognitionButton>
           try {
             if (widget.data.containsKey('image')) {
               recognition(widget.data['image'], widget.type).then((value) {
-                if(widget.saveScore){
-                  
-                }
+                if (widget.saveScore) {}
                 widget.data[widget.datakey] =
                     value["class_name"]; // Save the classname
                 if (widget.saveScore) {
@@ -68,10 +68,11 @@ class _RecognitionButtonState extends State<RecognitionButton>
                 setState(() {
                   // Update UI
                   if (widget.showScore) {
-                    _response =
+                    widget.response.value =
                         '${widget.data[widget.datakey].toString()} ${widget.data[widget.datakeyScore]}';
                   } else {
-                    _response = '${widget.data[widget.datakey].toString()}';
+                    widget.response.value =
+                        '${widget.data[widget.datakey].toString()}';
                   }
                 });
               });
@@ -107,7 +108,17 @@ class _RecognitionButtonState extends State<RecognitionButton>
               child: Text(AppLocalizations.of(context)!.reconnaissance,
                   style: StyleText.getButton()),
             )));
-    return Column(children: [_button, _text]);
+    return ValueListenableBuilder(
+        valueListenable: widget.response,
+        builder: (context, data, child) {
+          return Column(children: [
+            _button,
+            Text(
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                '${widget.response.value}')
+          ]);
+        });
   }
 
   @override

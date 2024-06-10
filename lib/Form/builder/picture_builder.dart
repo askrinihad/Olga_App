@@ -10,18 +10,22 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PictureWidget extends StatefulWidget {
   final Map<String, dynamic> data;
   final String datakey;
+  final imageNotifier = ValueNotifier<XFile?>(null);
 
-  const PictureWidget({super.key, required this.data, required this.datakey});
+  PictureWidget({super.key, required this.data, required this.datakey});
 
   @override
   State<StatefulWidget> createState() {
     return _PictureWidgetState();
   }
+  void reset() {
+    print('VALUE IS NONE');
+    imageNotifier.value = null;
+  }
 }
 
 class _PictureWidgetState extends State<PictureWidget>
     with AutomaticKeepAliveClientMixin {
-  final imageNotifier = ValueNotifier<XFile?>(null);
   double? _latitude;
   double? _longitude;
   bool _isPickingImage = false;
@@ -53,7 +57,7 @@ class _PictureWidgetState extends State<PictureWidget>
     if (source != null) {
       final image = await ImagePicker().pickImage(source: source);
       if (image != null) {
-        imageNotifier.value = image;
+        widget.imageNotifier.value = image;
         widget.data[widget.datakey] = File(image.path);
 
         if (source == ImageSource.camera) {
@@ -148,15 +152,22 @@ class _PictureWidgetState extends State<PictureWidget>
             ],
           ),
         ),
-        if (imageNotifier.value != null)
-          Container(
-            margin: const EdgeInsets.only(top: 15),
-            child: Image.file(
-              File(imageNotifier.value!.path),
-              width: 300,
-              height: 300,
-            ),
-          ),
+        ValueListenableBuilder(
+            valueListenable: widget.imageNotifier,
+            builder: (context, data, child) {
+              if (widget.imageNotifier.value != null) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 15),
+                  child: Image.file(
+                    File(widget.imageNotifier.value!.path),
+                    width: 300,
+                    height: 300,
+                  ),
+                );
+              } else {
+                return SizedBox.shrink();
+              }
+            }),
         if (_latitude != null && _longitude != null) ...[
           Text('Latitude: $_latitude'),
           Text('Longitude: $_longitude'),

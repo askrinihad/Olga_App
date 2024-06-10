@@ -34,7 +34,7 @@ class AddInventoryState extends State<AddInventory> {
                 if (snapshot.hasData) {
                   return FormPage(
                       json: snapshot.data!,
-                      onSaved: (value) {
+                      onSaved: (value) async {
                         CollectionReference<Map<String, dynamic>> collRef =
                             getCollection_CodeInventaire(widget.aeroport);
                         collRef.add(value).then((value) {
