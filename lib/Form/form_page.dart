@@ -49,7 +49,20 @@ class _FormPageState extends State<FormPage> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
+                // Trash code, eye burning... But It's WORK
+                bool imagevalid = true;
+                for (var element in snapshot.data!) {
+                  if (element.runtimeType.toString() == 'PictureWidget') {
+                    imagevalid = element.isRequired
+                        ? _values.containsKey(element.datakey)
+                            ? true
+                            : false
+                        : true;
+                  }
+                }
+
+                if (imagevalid) {
+                  if (_formKey.currentState!.validate()) {
                     // SAVE
                     _formKey.currentState!.save();
                     await widget.onSaved(_values);
@@ -58,17 +71,40 @@ class _FormPageState extends State<FormPage> {
                     _values.clear();
                     _formKey.currentState!.reset();
                     //RESET Image
-                    for (var element in snapshot.data!){
-                      // I don't understand why but the condition {element is PictureWidget} return false. but element.runtimeType return PictureWidget. 
+                    for (var element in snapshot.data!) {
+                      // I don't understand why but the condition {element is PictureWidget} return false. but element.runtimeType return PictureWidget.
                       // Flutter is broken
-                      try{
-                        if(element.runtimeType.toString() == 'PictureWidget'){
+                      try {
+                        if (element.runtimeType.toString() == 'PictureWidget') {
                           element.reset();
-                        } else if (element.runtimeType.toString() == 'RecognitionButton') {
+                        } else if (element.runtimeType.toString() ==
+                            'RecognitionButton') {
                           element.reset();
                         }
-                      }catch (e){print(e);}
+                      } catch (e) {
+                        print(e);
+                      }
                     }
+                  }
+                } else {
+                  _formKey.currentState!.validate();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Picture Required"),
+                        content: Text("Please add a picture before saving"),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("OK"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               child: Text(
