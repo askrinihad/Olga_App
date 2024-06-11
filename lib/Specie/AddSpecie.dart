@@ -39,7 +39,7 @@ class AddSpecieState extends State<AddSpecie> {
                           throw Exception("Not field type");
                         }
                         CollectionReference collRef =
-                            getSpeciesCollection_Type("", value['type']);
+                            getSpeciesCollection_Type("", value['type'], "");
                         collRef.add(value).then((value) {
                           showDialog(
                             context: context,

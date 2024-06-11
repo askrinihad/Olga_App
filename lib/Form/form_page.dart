@@ -8,12 +8,13 @@ class FormPage extends StatefulWidget {
   final String airport;
   final Future<void> Function(Map<String, dynamic> values) onSaved;
   final String? specie_type;
+  final String? specie_status;
 
   FormPage(
       {required this.json,
       required this.onSaved,
       required this.airport,
-      this.specie_type});
+      this.specie_type, this.specie_status});
 
   @override
   _FormPageState createState() => _FormPageState();
@@ -27,7 +28,7 @@ class _FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: buildFormFromJson(context, _values, widget.airport, widget.json,
-          specie_type: widget.specie_type),
+          specie_type: widget.specie_type, specie_status: widget.specie_status),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(

@@ -58,6 +58,7 @@ class AddObservationState extends State<AddObservation> {
           ))),
       Expanded(
           child: FormPage(
+              specie_status: widget.SpecieStatus,
               specie_type: widget.SpecieType,
               json: widget.json,
               onSaved: (value) async {
