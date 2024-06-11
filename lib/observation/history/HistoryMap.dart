@@ -42,26 +42,29 @@ class _HistoryMapState extends State<HistoryMap> {
             center: pointCenter,
             zoom: 18.0,
           ),
-          children: [
-            TileLayer(
-              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            ),
-            // MarkerLayer(
-            //   markers: listObs
-            //       .map((item) => Marker(
-            //             point: LatLng(item["latitude"], item["longitude"]),
-            //             child: Container(
-            //               width: 80.0,
-            //               height: 80.0,
-            //               child: Icon(
-            //                 Icons.location_on,
-            //                 color: Colors.red,
-            //               ),
-            //             ),
-            //           ))
-            //       .toList(),
-            // ),
-          ],
+                          children: [
+                TileLayer(
+                        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        minZoom: 0,
+                        maxZoom: 30,
+                      ),
+                MarkerLayer(
+                  markers: listObs
+                    .map((item) => Marker(
+                          point: LatLng(item["image_latitude"], item["image_longitude"]),
+                          builder: (context) => Container(
+                            width: 80.0,
+                            height: 80.0,
+                            child: Icon(
+                              Icons.location_on,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                ),
+              ],
+
         ),
       ],
     ));
