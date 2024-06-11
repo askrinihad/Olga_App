@@ -14,6 +14,9 @@ setup(
         'requests',
         'roboflow',
         'numpy',
-        'opencv-python-headless'
+        'opencv-python-headless',
+        'tensorflow==2.12.0',
+        'pillow',
+        'pandas'
     ]
 )

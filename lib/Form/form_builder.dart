@@ -127,7 +127,10 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
       case 'recognition':
         bool saveScore = field['field_saveScore'] ?? true;
         bool showScore = field['field_showScore'] ?? true;
+<<<<<<< Updated upstream
         bool saveSpecie = field['field_saveScore'] ?? true;
+=======
+>>>>>>> Stashed changes
 
         formWidgets.add(RecognitionButton(
             type: specie_type,

@@ -27,7 +27,7 @@ Future<Map<String, dynamic>> recognition(File? image, String? type) async {
 
 Future<Map<String, dynamic>> uploadFlore(File? image) async {
   try {
-    final Uri uri = Uri.parse("http://olga1.mercier.pro:9999/upload");
+    final Uri uri = Uri.parse("http://192.168.253.34:4000/upload");
     final request = http.MultipartRequest("POST", uri);
     final headers = {"Content-type": "multipart/form-data"};
 

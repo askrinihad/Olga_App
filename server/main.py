@@ -3,7 +3,14 @@ from threading import Thread
 from roboflow import Roboflow
 from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify
-
+import os
+import json
+import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.applications.densenet import preprocess_input
+import pandas as pd
+import tensorflow as tf
 #**************************************
 #   CONFIG
 #*************************************
@@ -16,6 +23,54 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
 
 results_data = []  # List to shared data between Thread and caller
+
+# Define the custom metric
+def macro_average_top_1_accuracy(y_true, y_pred):
+    y_true = tf.argmax(y_true, axis=1)
+    y_pred = tf.argmax(y_pred, axis=1)
+    correct_predictions = tf.reduce_sum(tf.cast(tf.equal(y_true, y_pred), tf.float32))
+    total_predictions = tf.cast(tf.size(y_true), tf.float32)
+    return correct_predictions / total_predictions
+
+def load_species_id_to_name(species_id_to_name_path):
+    with open(species_id_to_name_path, 'r') as f:
+        species_id_to_name = json.load(f)
+    return species_id_to_name
+
+def get_ordered_species_names(species_id_to_name):
+    # Get sorted species IDs
+    species_ids = sorted(species_id_to_name.keys(), key=lambda x: int(x))
+    return [species_id_to_name[id] for id in species_ids]
+
+def load_image(img_path, img_size):
+    img = image.load_img(img_path, target_size=(img_size, img_size))
+    img_array = image.img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0)
+    img_array = preprocess_input(img_array)
+    return img_array
+
+def predict_species(model, img_array, ordered_species_names):
+    predictions = model.predict(img_array)
+    predicted_class = np.argmax(predictions, axis=1)[0]
+    confidence = np.max(predictions, axis=1)[0]
+
+    species_name = ordered_species_names[predicted_class]
+    return species_name, confidence
+
+def predict_image_class(image_path):
+    model_path = 'plant_classification_model_densenet201_5epoch_0.64.h5'  # Update with your actual model file name
+    species_id_to_name_path = 'plantnet300K_species_id_2_name.json'
+    img_size = 224
+
+    # Load the model with the custom metric
+    model = load_model(model_path, custom_objects={'macro_average_top_1_accuracy': macro_average_top_1_accuracy})
+    species_id_to_name = load_species_id_to_name(species_id_to_name_path)
+    ordered_species_names = get_ordered_species_names(species_id_to_name)
+
+    img_array = load_image(image_path, img_size)
+    species_name, confidence = predict_species(model, img_array, ordered_species_names)
+
+    return species_name, confidence
 
 def image_recognition(type: str, request : request)-> list[dict, ...]:
     '''
@@ -83,7 +138,6 @@ def upload_bird():
     })
 
 def plant_recognition():
-    # TODO : Refactor, use only 1 image
     global results_data
     processed_images = False
     folder_path = "images"
@@ -91,10 +145,9 @@ def plant_recognition():
     image_paths = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith(('.jpeg', '.jpg', '.png', '.bmp', '.webp'))]
 
     if len(image_paths) == 0:
-        results_data.append({"error" : "No images were found in the folder."})
+        results_data.append({"error": "No images were found in the folder."})
         exit()
-        
-    # Process each image
+
     results = []
     for image_path in image_paths:
         with open(image_path, 'rb') as image_file:
@@ -102,24 +155,30 @@ def plant_recognition():
             response = requests.post(api_endpoint, files=files)
             json_result = response.json()
             results.append(json_result)
-
-    for i, result in enumerate(results):
-        image_path = image_paths[i]
-        for r in result.get('results', []):
-            try:
-                scientific_name = r['species']['scientificName']
-                score = r['score']
-                common_names = ', '.join(r['species']['commonNames'])
-            except KeyError:
-                scientific_name = 'Unavailable'
-                score = 'Unavailable'
-                common_names = 'Unavailable'
-            finally :
-                results_data.append({
-                "scientific_name": scientific_name,
-                "score": score,
-                })
-
+    if results:  # Check if results list is not empty
+        for i, result in enumerate(results):
+            image_path = image_paths[i]
+            for r in result.get('results', []):
+                try:
+                    scientific_name = r['species']['scientificName']
+                    score = r['score']
+                    common_names = ', '.join(r['species']['commonNames'])
+                except KeyError:
+                    scientific_name = 'Unavailable'
+                    score = 'Unavailable'
+                    common_names = 'Unavailable'
+                finally:
+                    results_data.append({
+                        "scientific_name": scientific_name,
+                        "score": score,
+                    })
+    else:  # If results list is empty, fall back to predict_image_class
+        imgPath = image_paths[0]
+        scientific_name, score = predict_image_class(imgPath)
+        results_data.append({
+            "scientific_name": scientific_name,
+            "score": float(score),
+        })
 def bird_recognition(image_path : str):
     global results_data
     rf = Roboflow(api_key="zil5scCJofh6YkIUGFAO")
