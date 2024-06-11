@@ -34,9 +34,11 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
                 style: styleblack,
               ),
               Text(
-                widget.item["Nom français"] == null
-                    ? widget.item["Nom scientifique"]
-                    : widget.item["Nom français"],
+                widget.item.containsKey("Nom français")
+                    ? widget.item["Nom français"]
+                    : widget.item.containsKey("Nom scientifique")
+                        ? widget.item["Nom scientifique"]
+                        : 'null',
                 textAlign: TextAlign.center,
                 style: stylegrey,
               ),
@@ -47,7 +49,9 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
                 style: styleblack,
               ),
               Text(
-                widget.item["Genre"],
+                widget.item.containsKey('Genre')
+                    ? widget.item['Genre']
+                    : 'null',
                 textAlign: TextAlign.center,
                 style: stylegrey,
               ),
@@ -58,24 +62,24 @@ class _SpeciesInfoState extends State<SpeciesInfo> {
                 style: styleblack,
               ),
               Text(
-                widget.item["Famille"],
+                widget.item.containsKey('Famille')
+                    ? widget.item['Famille']
+                    : 'null',
                 textAlign: TextAlign.center,
                 style: stylegrey,
               ),
               SizedBox(height: 10),
               Text(
                 AppLocalizations.of(context)!.description +
-                    " " +
-                    AppLocalizations.of(context)!.de +
-                    " : ${widget.item["nom"]}",
+                    " :",
                 textAlign: TextAlign.center,
                 style: styleblack,
               ),
               SizedBox(height: 10),
               Text(
-                widget.item["description"] == null
-                    ? ""
-                    : widget.item["description"],
+                widget.item.containsKey("description")
+                    ? widget.item["description"]
+                    : 'null',
                 textAlign: TextAlign.center,
                 style: stylegrey,
               ),
