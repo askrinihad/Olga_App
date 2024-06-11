@@ -11,15 +11,15 @@ class PictureWidget extends StatefulWidget {
   final Map<String, dynamic> data;
   final String datakey;
   final imageNotifier = ValueNotifier<XFile?>(null);
+  final bool isRequired;
 
-  PictureWidget({super.key, required this.data, required this.datakey});
+  PictureWidget({super.key, required this.data, required this.datakey, required this.isRequired});
 
   @override
   State<StatefulWidget> createState() {
     return _PictureWidgetState();
   }
   void reset() {
-    print('VALUE IS NONE');
     imageNotifier.value = null;
   }
 }

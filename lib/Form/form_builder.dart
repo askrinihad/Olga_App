@@ -27,7 +27,7 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
     String widgetType = field['field_type'] ?? '';
     String widgetLabel = field['field_label'] ?? '';
     String widgetHint = field['field_hint'] ?? '';
-    bool isRequired = field['field_required'] ?? false;
+    bool isRequired = field['field_required'] ?? true;
     String widgetKeyboardType = field['input_type'] ?? '';
     String keyvalue = field['field_key'] ??
         idgen
@@ -93,7 +93,7 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
         break;
       case 'picturepicker':
         //TODO: Make the possibility Required
-        formWidgets.add(PictureWidget(data: values, datakey: 'image'));
+        formWidgets.add(PictureWidget(data: values, datakey: 'image', isRequired: isRequired));
         break;
       case 'timepicker':
         //TODO: Make by default Datetime.now()
