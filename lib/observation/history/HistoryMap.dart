@@ -40,7 +40,7 @@ class _HistoryMapState extends State<HistoryMap> {
               //print("Coordinates: ${p.latitude}, ${p.longitude}");
             },
             center: pointCenter,
-            zoom: 16.0,
+            zoom: 18.0,
           ),
           children: [
             TileLayer(
