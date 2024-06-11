@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:test_app/BDD/bdd_function.dart';
+import 'package:test_app/navbar/NavBackbar.dart';
 
 /**
  * Displays the Map of observation history. (Button localiser)
@@ -31,7 +32,7 @@ class _HistoryMapState extends State<HistoryMap> {
   }
 
   Widget build(BuildContext context) {
-    return Stack(
+    return NavBackbar(body: Stack(
       children: [
         FlutterMap(
           options: MapOptions(
@@ -63,7 +64,7 @@ class _HistoryMapState extends State<HistoryMap> {
           ],
         ),
       ],
-    );
+    ));
   }
 
 ///////////////////////////////////////
