@@ -13,11 +13,11 @@ import 'package:test_app/form/builder/geoloc_builder.dart';
 
 /// Fonction for build all Widget from Json forms.
 ///
-/// Must return List of dynamic and not List of Widget because picture_widget implement a update method that can't be used if this function return Widget type. 
+/// Must return List of dynamic and not List of Widget because picture_widget implement a update method that can't be used if this function return Widget type.
 /// It's weird, maybe you can fix that by a refactor, if you try : Good Luck!
 Future<List<dynamic>> buildFormFromJson(BuildContext context,
     Map<String, dynamic> values, String airport, Map<String, dynamic> formData,
-    {String? specie_type}) async {
+    {String? specie_type, String? specie_status}) async {
   List<Widget> formWidgets = [];
 
   List<dynamic> formFields = formData['form'];
@@ -52,7 +52,8 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
         String source = field['select_source'] ?? '';
         switch (source) {
           case "species":
-            stringList = await getSpecie(airport: airport, type: specie_type);
+            stringList = await getSpecie(
+                airport: airport, type: specie_type, status: specie_status);
             break;
           case "code_inventory":
             stringList = await getInventoryCode(airport);
@@ -93,7 +94,8 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
         break;
       case 'picturepicker':
         //TODO: Make the possibility Required
-        formWidgets.add(PictureWidget(data: values, datakey: 'image', isRequired: isRequired));
+        formWidgets.add(PictureWidget(
+            data: values, datakey: 'image', isRequired: isRequired));
         break;
       case 'timepicker':
         //TODO: Make by default Datetime.now()
@@ -129,7 +131,6 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
         bool showScore = field['field_showScore'] ?? true;
 
         bool saveSpecie = field['field_saveScore'] ?? true;
-
 
         formWidgets.add(RecognitionButton(
             type: specie_type,

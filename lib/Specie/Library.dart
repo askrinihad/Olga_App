@@ -87,7 +87,7 @@ class _LibraryState extends State<Library> {
 
   @override
   Widget build(BuildContext context) {
-    collection = getSpeciesCollection_Type(widget.aeroport, widget.typeEspece);
+    collection = getSpeciesCollection_Type(widget.aeroport, widget.typeEspece, "");
     return NavBackbar(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

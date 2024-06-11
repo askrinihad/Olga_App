@@ -67,7 +67,7 @@ CollectionReference<Map<String, dynamic>> select_collection_airport_type(
 }
 
 CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
-    String airport, String? type) {
+    String airport, String? type, String? status) {
   final types = {
     "Plant life": "especes_flore",
     "Wildlife": "especes_faune",
@@ -80,7 +80,16 @@ CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
       case "faune":
         return FirebaseFirestore.instance.collection("especes_faune");
       case "flore":
-        return FirebaseFirestore.instance.collection("especes_flore");
+        switch (status) {
+          case 'protégé':
+            return FirebaseFirestore.instance
+                .collection("especes_flore_protege");
+          case 'indésirable':
+            return FirebaseFirestore.instance
+                .collection("especes_flore_invasive");
+          default:
+            return FirebaseFirestore.instance.collection("especes_flore");
+        }
       case "insect":
         return FirebaseFirestore.instance.collection("espece_insectes");
       default:
@@ -114,7 +123,7 @@ Future<List<Map<String, dynamic>>> getMapFromCollection(
     var snapshot3 = await FirebaseFirestore.instance
         .collection("observationInsectes${airports[airport]!}")
         .get();
-        
+
     for (var docs in [snapshot1.docs, snapshot2.docs, snapshot3.docs]) {
       for (var doc in docs) {
         map.add(doc.data());
@@ -166,15 +175,16 @@ Future uploadFile(File filePath, File fileName) async {
 Future<List<String>> getSpecie(
     {required String airport,
     required String? type,
+    required String? status,
     bool alphabetic_order = true}) async {
   QuerySnapshot<Map<String, dynamic>> snap;
 
   if (alphabetic_order) {
-    snap = await await getSpeciesCollection_Type(airport, type)
+    snap = await await getSpeciesCollection_Type(airport, type, status)
         .orderBy("Nom scientifique", descending: false)
         .get();
   } else {
-    snap = await getSpeciesCollection_Type(airport, type).get();
+    snap = await getSpeciesCollection_Type(airport, type, status).get();
   }
 
   return snap.docs
