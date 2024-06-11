@@ -66,6 +66,9 @@ class _PictureWidgetState extends State<PictureWidget> with AutomaticKeepAliveCl
           await _readExifFromImage(File(image.path));
           if (_latitude == null || _longitude == null) {
             await _getCurrentLocation();
+            print("latitude $_latitude");
+             print("longitude $_longitude");
+
           }
         }
 
