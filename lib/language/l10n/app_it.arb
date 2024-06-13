@@ -76,5 +76,9 @@
      "etat2":"Etat 2",
      "bird_recognition":"Riconoscimento degli uccelli",
      "selectionnerCode":"Seleziona un codice di inventario",
-     "choixForm":"Sélection de formulaire"
+     "choixForm":"Sélection de formulaire",
+     "classe":"Class",
+     "regne":"Reign",
+     "groupegrandpublic":"General Public Group"
+
 }

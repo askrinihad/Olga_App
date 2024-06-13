@@ -78,6 +78,10 @@
      "etat2":"Etat 2",
      "bird_recognition":"Reconnaissance des oiseaux",
      "selectionnerCode":"Séléctionner un code",
-     "choixForm":"Sélection de formulaire"
+     "choixForm":"Sélection de formulaire",
+     "classe":"Class",
+     "regne":"Reign",
+     "groupegrandpublic":"General Public Group"
+
 
 }
