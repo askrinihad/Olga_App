@@ -58,10 +58,10 @@ CollectionReference<Map<String, dynamic>> select_collection_airport_type(
             .collection("observationFlore_" + airports[airport]!);
       case "insect":
         return FirebaseFirestore.instance
-            .collection("observationInsectes" + airports[airport]!);
+            .collection("observationInsectes_" + airports[airport]!);
       default:
         return FirebaseFirestore.instance
-            .collection("observationInsectes" + airports[airport]!);
+            .collection("observationInsectes_" + airports[airport]!);
     }
   }
 }
@@ -103,7 +103,7 @@ Future<List<Map<String, dynamic>>> getMapFromCollection(
   final types = {
     "Plant life": "observationFlore_${airports[airport]!}",
     "Wildlife": "observationFaune_${airports[airport]!}",
-    "Insects": "observationInsectes${airports[airport]!}",
+    "Insects": "observationInsectes_${airports[airport]!}",
   };
   QuerySnapshot snapshot;
   List<Map<String, dynamic>> map = [];
@@ -121,7 +121,7 @@ Future<List<Map<String, dynamic>>> getMapFromCollection(
         .collection("observationFaune_${airports[airport]!}")
         .get();
     var snapshot3 = await FirebaseFirestore.instance
-        .collection("observationInsectes${airports[airport]!}")
+        .collection("observationInsectes_${airports[airport]!}")
         .get();
 
     for (var docs in [snapshot1.docs, snapshot2.docs, snapshot3.docs]) {
