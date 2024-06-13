@@ -25,13 +25,15 @@ class especesbddAdapter extends TypeAdapter<especes_bdd> {
       Order: fields[5] as String,
       Family: fields[6] as String,
       Note: fields[7] as String,
+      Type: fields[8] as String,
+      Status: fields[9] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, especes_bdd obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +49,11 @@ class especesbddAdapter extends TypeAdapter<especes_bdd> {
       ..writeByte(6)
       ..write(obj.Family)
       ..writeByte(7)
-      ..write(obj.Note);
+      ..write(obj.Note)
+      ..writeByte(8)
+      ..write(obj.Type)
+      ..writeByte(9)
+      ..write(obj.Status);
   }
 
   @override

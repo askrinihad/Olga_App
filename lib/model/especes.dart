@@ -28,5 +28,11 @@ class especes_bdd extends HiveObject{
   @HiveField(7)
   final String Note;
 
-  especes_bdd({required this.id, required this.ScientifiqueName, required this.VernacularName, required this.Phylum, required this.Class, required this.Order, required this.Family, required this.Note});
+  @HiveField(8)
+  final String Type;
+
+  @HiveField(9)
+  final String Status;
+
+  especes_bdd({required this.id, required this.ScientifiqueName, required this.VernacularName, required this.Phylum, required this.Class, required this.Order, required this.Family, required this.Note, required this.Type, required this.Status});
 }
