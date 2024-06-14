@@ -1,4 +1,3 @@
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:test_app/model/especes_faune.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,8 @@ class _EspecesFauneTestState extends State<EspecesFauneTest> {
 
   void _loadCSV() async {
     final _rawData = await rootBundle.loadString("assets/csv/faune.csv");
-    List<List<dynamic>> _listData = const CsvToListConverter().convert(_rawData);
+    List<List<dynamic>> _listData =
+        const CsvToListConverter().convert(_rawData);
 
     for (var i = 1; i < _listData.length; i++) {
       var row = _listData[i];
@@ -40,7 +40,7 @@ class _EspecesFauneTestState extends State<EspecesFauneTest> {
       );
       await fauneBox.add(faune);
     }
- 
+
     setState(() {
       // Trigger a rebuild to display the data
     });

@@ -67,7 +67,7 @@ CollectionReference<Map<String, dynamic>> select_collection_airport_type(
 }
 
 CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
-    String airport, String? type, String? status) {
+    String airport, String? type) {
   final types = {
     "Plant life": "especes_flore",
     "Wildlife": "especes_faune",
@@ -80,16 +80,7 @@ CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
       case "faune":
         return FirebaseFirestore.instance.collection("especes_faune");
       case "flore":
-        switch (status) {
-          case 'protégé':
-            return FirebaseFirestore.instance
-                .collection("especes_flore_protege");
-          case 'indésirable':
-            return FirebaseFirestore.instance
-                .collection("especes_flore_invasive");
-          default:
-            return FirebaseFirestore.instance.collection("especes_flore");
-        }
+        return FirebaseFirestore.instance.collection("especes_flore");
       case "insect":
         return FirebaseFirestore.instance.collection("espece_insectes");
       default:
@@ -175,16 +166,15 @@ Future uploadFile(File filePath, File fileName) async {
 Future<List<String>> getSpecie(
     {required String airport,
     required String? type,
-    required String? status,
     bool alphabetic_order = true}) async {
   QuerySnapshot<Map<String, dynamic>> snap;
 
   if (alphabetic_order) {
-    snap = await await getSpeciesCollection_Type(airport, type, status)
+    snap = await await getSpeciesCollection_Type(airport, type)
         .orderBy("Nom scientifique", descending: false)
         .get();
   } else {
-    snap = await getSpeciesCollection_Type(airport, type, status).get();
+    snap = await getSpeciesCollection_Type(airport, type).get();
   }
 
   return snap.docs
@@ -199,10 +189,10 @@ Future<List<String>> getInventoryCode(String airport) async {
 }
 
 Future<List<String>> getUsers({String field = ''}) async {
-  QuerySnapshot<Map<String, dynamic>> snap = await FirebaseFirestore.instance
-      .collection("users").get();
+  QuerySnapshot<Map<String, dynamic>> snap =
+      await FirebaseFirestore.instance.collection("users").get();
 
-  if(field.isEmpty){
+  if (field.isEmpty) {
     return snap.docs.map((doc) => doc.toString()).toList();
   }
   return snap.docs.map((doc) => doc.get(field).toString()).toList();

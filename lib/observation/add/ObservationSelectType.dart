@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/observation/add/ChoiceStatus.dart';
+import 'package:test_app/observation/add/ChoiceForms.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/style/StyleText.dart';
 
@@ -43,7 +43,7 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ChoiceStatus(
+                        builder: (context) => ChoiceForms(
                             specie_type: "faune",
                             email: widget.email,
                             aeroport: widget.aeroport),
@@ -73,7 +73,7 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ChoiceStatus(
+                        builder: (context) => ChoiceForms(
                             specie_type: "flore",
                             email: widget.email,
                             aeroport: widget.aeroport),
@@ -105,7 +105,7 @@ class _ObservationSelectTypeState extends State<ObservationSelectType> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ChoiceStatus(
+                        builder: (context) => ChoiceForms(
                             specie_type: "insectes",
                             email: widget.email,
                             aeroport: widget.aeroport),

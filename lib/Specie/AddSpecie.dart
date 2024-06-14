@@ -6,7 +6,7 @@ import 'package:test_app/form/form_page.dart';
 import 'package:test_app/style/StyleText.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//TODO: When specie exist in specieBDD, check specie exist in collection and add it. If specie doesn't exist in BDD, add in specieBDD and collection
+//TODO: check specie exist in collection and add it. If specie doesn't exist in BDD, add in specieBDD and collection else don't.
 class AddSpecie extends StatefulWidget {
   final String json = 'assets/formJson/add_specie.json';
   final String email;
@@ -39,7 +39,7 @@ class AddSpecieState extends State<AddSpecie> {
                           throw Exception("Not field type");
                         }
                         CollectionReference collRef =
-                            getSpeciesCollection_Type("", value['type'], "");
+                            getSpeciesCollection_Type("", value['type']);
                         collRef.add(value).then((value) {
                           showDialog(
                             context: context,

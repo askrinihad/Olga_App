@@ -1,7 +1,6 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:test_app/model/oiseaux_proteges.dart';
 
@@ -23,13 +22,15 @@ class _OiseauxProtegesTestState extends State<OiseauxProtegesTest> {
   }
 
   void _loadCSV() async {
-    final _rawData = await rootBundle.loadString("assets/csv/oiseaux_proteges.csv");
-    List<List<dynamic>> _listData = const CsvToListConverter().convert(_rawData);
+    final _rawData =
+        await rootBundle.loadString("assets/csv/oiseaux_proteges.csv");
+    List<List<dynamic>> _listData =
+        const CsvToListConverter().convert(_rawData);
 
     for (var i = 1; i < _listData.length; i++) {
       var row = _listData[i];
       var oiseau = oiseaux_proteges(
-        id: i, 
+        id: i,
         Nom: row[0].toString(),
         NomFrancais: row[1].toString(),
         NomValide: row[2].toString(),

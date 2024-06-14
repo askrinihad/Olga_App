@@ -17,7 +17,7 @@ import 'package:test_app/form/builder/geoloc_builder.dart';
 /// It's weird, maybe you can fix that by a refactor, if you try : Good Luck!
 Future<List<dynamic>> buildFormFromJson(BuildContext context,
     Map<String, dynamic> values, String airport, Map<String, dynamic> formData,
-    {String? specie_type, String? specie_status}) async {
+    {String? specie_type}) async {
   List<Widget> formWidgets = [];
 
   List<dynamic> formFields = formData['form'];
@@ -52,8 +52,7 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
         String source = field['select_source'] ?? '';
         switch (source) {
           case "species":
-            stringList = await getSpecie(
-                airport: airport, type: specie_type, status: specie_status);
+            stringList = await getSpecie(airport: airport, type: specie_type);
             break;
           case "code_inventory":
             stringList = await getInventoryCode(airport);
@@ -96,12 +95,10 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
         ));
         break;
       case 'picturepicker':
-        //TODO: Make the possibility Required
         formWidgets.add(PictureWidget(
             data: values, datakey: 'image', isRequired: isRequired));
         break;
       case 'timepicker':
-        //TODO: Make by default Datetime.now()
         formWidgets.add(TimeWidget(
           label: widgetLabel,
           hint: widgetHint,
@@ -111,7 +108,6 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
         ));
         break;
       case 'datetimepicker':
-        //TODO: Make by default Datetime.now()
         formWidgets.add(DateTimeWidget(
           label: widgetLabel,
           hint: widgetHint,

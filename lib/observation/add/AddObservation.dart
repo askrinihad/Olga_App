@@ -11,14 +11,12 @@ class AddObservation extends StatefulWidget {
   final Map<String, dynamic> json;
   final String email;
   final String aeroport;
-  final String SpecieStatus;
   final String SpecieType;
   const AddObservation(
       {required this.email,
       required this.aeroport,
       super.key,
       required this.json,
-      required this.SpecieStatus,
       required this.SpecieType});
 
   @override
@@ -26,23 +24,8 @@ class AddObservation extends StatefulWidget {
 }
 
 class AddObservationState extends State<AddObservation> {
-
   @override
   Widget build(BuildContext context) {
-    String status;
-
-    switch (widget.SpecieStatus) {
-      case 'protégé':
-        status = AppLocalizations.of(context)!.protege;
-        break;
-      case 'indésirable':
-        status = AppLocalizations.of(context)!.invasive;
-        break;
-      case 'courante':
-        status = AppLocalizations.of(context)!.courante;
-      default:
-        status = AppLocalizations.of(context)!.inconnue;
-    }
     return NavBackbar(
         body: Column(children: [
       SizedBox(
@@ -51,14 +34,13 @@ class AddObservationState extends State<AddObservation> {
               child: Text(
             AppLocalizations.of(context)!.nouvelleObservation +
                 " : " +
-                status +
+                widget.SpecieType +
                 " " +
                 AppLocalizations.of(context)!.espece,
             style: StyleText.getTitle(size: 18),
           ))),
       Expanded(
           child: FormPage(
-              specie_status: widget.SpecieStatus,
               specie_type: widget.SpecieType,
               json: widget.json,
               onSaved: (value) async {
@@ -67,8 +49,7 @@ class AddObservationState extends State<AddObservation> {
                   value['image'] = await DownloadUrl(value['image']);
                 }
                 value['email'] = widget.email;
-                value['status'] = widget.SpecieStatus;
-                
+
                 CollectionReference collRef = select_collection_airport_type(
                     widget.aeroport, widget.SpecieType);
                 collRef.add(value).then((value) {

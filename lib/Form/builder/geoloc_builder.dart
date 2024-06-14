@@ -6,17 +6,18 @@ class LocationWidget extends StatefulWidget {
   final String label;
   final int stopLocation;
 
-  const LocationWidget({required this.label, this.stopLocation = 0, Key? key}) : super(key: key);
+  const LocationWidget({required this.label, this.stopLocation = 0, Key? key})
+      : super(key: key);
 
   @override
   _LocationWidgetState createState() => _LocationWidgetState();
 }
 
-class _LocationWidgetState extends State<LocationWidget> with AutomaticKeepAliveClientMixin {
+class _LocationWidgetState extends State<LocationWidget>
+    with AutomaticKeepAliveClientMixin {
   double? _latitude;
   double? _longitude;
   Timer? _timer;
-  bool _isRunning = true;
 
   @override
   void initState() {
@@ -32,9 +33,11 @@ class _LocationWidgetState extends State<LocationWidget> with AutomaticKeepAlive
 
   Future<void> _checkPermissionsAndStartLocationUpdates() async {
     LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
         // Permissions are denied, show a message to the user.
         if (mounted) {
           setState(() {
@@ -64,7 +67,8 @@ class _LocationWidgetState extends State<LocationWidget> with AutomaticKeepAlive
   void _startLocationUpdates() {
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) async {
       if (widget.stopLocation == 0) {
-        Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
         if (mounted) {
           setState(() {
             _latitude = position.latitude;
