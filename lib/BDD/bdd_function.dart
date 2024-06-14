@@ -198,6 +198,16 @@ Future<List<String>> getInventoryCode(String airport) async {
   return snap.docs.map((doc) => doc.get('code').toString()).toList();
 }
 
+Future<List<String>> getUsers({String field = ''}) async {
+  QuerySnapshot<Map<String, dynamic>> snap = await FirebaseFirestore.instance
+      .collection("users").get();
+
+  if(field.isEmpty){
+    return snap.docs.map((doc) => doc.toString()).toList();
+  }
+  return snap.docs.map((doc) => doc.get(field).toString()).toList();
+}
+
 /// Function that return forms ID / or name to
 List<String> getFormListObs(String? type) {
   switch (type) {

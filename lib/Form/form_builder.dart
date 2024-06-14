@@ -58,6 +58,9 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
           case "code_inventory":
             stringList = await getInventoryCode(airport);
             break;
+          case "users_email":
+            stringList = await getUsers(field: 'email');
+            break;
           default:
             List<dynamic> options = field['select_options'] ?? [];
             stringList =
