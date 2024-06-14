@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/Specie/SpeciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/bdd/bdd_function.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/navbar/NavDrawerbar.dart';
 import 'package:test_app/navbar/drawer/DrawerSections.dart';
@@ -23,78 +23,93 @@ class Library extends StatefulWidget {
 }
 
 class _LibraryState extends State<Library> {
-  late List<Map<String, dynamic>> items;
-  bool isLoaded = false;
+  late ValueNotifier<Future<List<Map<String, dynamic>>>> _refresh =
+      ValueNotifier(Future.value([]));
   late CollectionReference<Map<String, dynamic>> collection;
 
+  @override
+  void initState() {
+    super.initState();
+    _refresh.value = getSpeciesList(widget.aeroport, widget.typeEspece);
+  }
+
   Loader() {
-    return FutureBuilder(
-        future: collection.get(),
-        builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.hasData) {
-            List<Map<String, dynamic>> list = [];
-            snapshot.data!.docs.forEach((element) {
-              list.add(element.data());
-            });
-            return list.length < 1
-                ? Text(AppLocalizations.of(context)!.aucunEspece)
-                : ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            // Navigate to a new page when the ListTile is tapped
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    SpeciesInfo(item: list[index]),
+    return ValueListenableBuilder(
+        valueListenable: _refresh,
+        builder: (context, value, child) {
+          return FutureBuilder(
+              future: value,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Map<String, dynamic>> list = snapshot.data!;
+                  return list.length < 1
+                      ? Text(AppLocalizations.of(context)!.aucunEspece)
+                      : ListView.builder(
+                          itemCount: list.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Navigate to a new page when the ListTile is tapped
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          SpeciesInfo(item: list[index]),
+                                    ),
+                                  );
+                                },
+                                child: ListTile(
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(width: 2),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                        list[index].containsKey("Nom français")
+                                            ? list[index]["Nom français"]
+                                            : list[index].containsKey(
+                                                    "Nom scientifique")
+                                                ? list[index]
+                                                    ["Nom scientifique"]
+                                                : 'null',
+                                        style: StyleText.getBody(),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  ),
+                                  trailing: Icon(Icons.more_vert),
+                                ),
                               ),
                             );
                           },
-                          child: ListTile(
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(width: 2),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            title: Row(
-                              children: [
-                                Text(
-                                  list[index]["Nom français"] == null
-                                      ? list[index]["Nom scientifique"]
-                                      : list[index]["Nom français"],
-                                  style: StyleText.getBody(),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ),
-                                SizedBox(width: 10),
-                              ],
-                            ),
-                            trailing: Icon(Icons.more_vert),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-          } else {
-            return CircularProgressIndicator();
-          }
+                        );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              });
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    collection = getSpeciesCollection_Type(widget.aeroport, widget.typeEspece);
     return NavBackbar(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: Container(
-              child: Center(child: Loader()),
+              child: Center(
+                  child: RefreshIndicator(
+                      child: Loader(),
+                      onRefresh: () async {
+                        _refresh.value =
+                            getSpeciesList(widget.aeroport, widget.typeEspece);
+                      })),
             ),
           ),
           FloatingActionButton(
