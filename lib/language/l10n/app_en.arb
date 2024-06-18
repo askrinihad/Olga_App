@@ -78,5 +78,6 @@
      "etat2":"State 2",
      "bird_recognition":"Bird Recognition",
      "selectionnerCode":"Select an inventory code",
-     "choixForm":"Form selection"
+     "choixForm":"Form selection",
+     "espece_attente":"Species pending"
 }

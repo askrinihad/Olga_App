@@ -8,5 +8,6 @@ enum DrawerSections {
   Bibliotheque,
   parametre,
   bird_recognition,
+  espece_attente,
   Deconnexion,
 }

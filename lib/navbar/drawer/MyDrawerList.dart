@@ -54,6 +54,8 @@ class MyDrawerList extends StatelessWidget {
         return AppLocalizations.of(context)!.bird_recognition;
       case DrawerSections.Deconnexion:
         return AppLocalizations.of(context)!.deconnexion;
+      case DrawerSections.espece_attente:
+        return AppLocalizations.of(context)!.espece_attente;
       default:
         return '';
     }
@@ -78,6 +80,8 @@ class MyDrawerList extends StatelessWidget {
         return Icons.explore;
       case DrawerSections.Deconnexion:
         return Icons.logout;
+      case DrawerSections.espece_attente:
+        return Icons.pending_actions;
       default:
         return Icons.menu;
     }

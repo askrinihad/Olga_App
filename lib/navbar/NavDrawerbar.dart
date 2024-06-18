@@ -11,6 +11,7 @@ import 'package:test_app/single_pages/SettingsPage.dart';
 import 'package:test_app/navbar/drawer/DrawerSections.dart';
 import 'package:test_app/navbar/drawer/HeaderDrawer.dart';
 import 'package:test_app/navbar/drawer/MyDrawerList.dart';
+import 'package:test_app/model/test/observation_test.dart';
 
 // TODO: Refactor like NavBackBar, doesn't take a DrawerSections but a Widget
 // sert a afficher le menu de navigation et créer les redirections
@@ -85,6 +86,8 @@ class _NavDrawerbarState extends State<NavDrawerbar> {
         return LogOut(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.bird_recognition:
         return BirdRecognition();
+      case DrawerSections.espece_attente:
+        return ObservationTest();
       default:
         return Container();
     }

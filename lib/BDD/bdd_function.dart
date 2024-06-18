@@ -248,3 +248,14 @@ Future<Map<String, dynamic>> getFormFieldCategory(String id) async {
   Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
   return data['form_category'] as Map<String, dynamic>;
 }
+
+Future<String> uploadImage(File imageFile, String path) async {
+  FirebaseStorage storage = FirebaseStorage.instance;
+  Reference ref = storage.ref().child(path);
+  UploadTask uploadTask = ref.putFile(imageFile);
+
+  await uploadTask.whenComplete(() => null);
+  String downloadURL = await ref.getDownloadURL();
+
+  return downloadURL;
+}
