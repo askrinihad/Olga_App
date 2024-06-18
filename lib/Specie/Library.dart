@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app/BDD/bdd_function.dart';
+import 'package:test_app/Specie/AddSpecie.dart';
 import 'package:test_app/Specie/SpeciesInfo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
-import 'package:test_app/navbar/NavDrawerbar.dart';
-import 'package:test_app/navbar/drawer/DrawerSections.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class Library extends StatefulWidget {
@@ -115,16 +114,12 @@ class _LibraryState extends State<Library> {
           FloatingActionButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => NavDrawerbar(
-                      email: widget.email,
-                      aeroport: widget.aeroport,
-                      currentPage: DrawerSections.NouvelleEspece)));
+                  builder: (context) => NavBackbar(
+                      body: AddSpecie(
+                          email: widget.email, aeroport: widget.aeroport))));
             },
             tooltip: 'Add Specie',
             child: Icon(Icons.add),
-          ),
-          SizedBox(
-            height: 30,
           ),
         ],
       ),

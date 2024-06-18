@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/observation/history/History.dart';
-import 'package:test_app/Specie/AddSpecie.dart';
-import 'package:test_app/inventory/AddInventory.dart';
 import 'package:test_app/Specie/LibrarySelectType.dart';
 import 'package:test_app/single_pages/BirdRecognition.dart';
 import 'package:test_app/single_pages/log/LogOut.dart';
@@ -69,19 +67,19 @@ class _NavDrawerbarState extends State<NavDrawerbar> {
   Widget getContainer(DrawerSections currentPage) {
     switch (currentPage) {
       case DrawerSections.NouvelleObservation:
-        return ObservationSelectType(email: widget.email, aeroport: widget.aeroport);
-      case DrawerSections.NouvelleEspece:
-        return AddSpecie(email: widget.email, aeroport: widget.aeroport,);
-      case DrawerSections.NouveauInventaire:
-        return AddInventory(email: widget.email, aeroport: widget.aeroport);
+        return ObservationSelectType(
+            email: widget.email, aeroport: widget.aeroport);
+      case DrawerSections.Protocole:
+        return Center(child: Text('Not implemented Yet'));
       case DrawerSections.Bibliotheque:
-        return LibrarySelectType(email: widget.email, aeroport: widget.aeroport);
+        return LibrarySelectType(
+            email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Historique:
         return History(aeroport: widget.aeroport);
       case DrawerSections.Accueil:
         return AccueilPage();
       case DrawerSections.parametre:
-        return SettingsPage();
+        return SettingsPage(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Deconnexion:
         return LogOut(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.bird_recognition:

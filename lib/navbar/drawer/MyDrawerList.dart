@@ -40,10 +40,8 @@ class MyDrawerList extends StatelessWidget {
         return AppLocalizations.of(context)!.accueil;
       case DrawerSections.NouvelleObservation:
         return AppLocalizations.of(context)!.nouvelleObservation;
-      case DrawerSections.NouvelleEspece:
-        return AppLocalizations.of(context)!.nouvelleEspece;
-      case DrawerSections.NouveauInventaire:
-        return AppLocalizations.of(context)!.nouveauInventaire;
+      case DrawerSections.Protocole:
+        return AppLocalizations.of(context)!.protocole;
       case DrawerSections.Historique:
         return AppLocalizations.of(context)!.historique;
       case DrawerSections.Bibliotheque:
@@ -67,8 +65,7 @@ class MyDrawerList extends StatelessWidget {
       case DrawerSections.Accueil:
         return Icons.home;
       case DrawerSections.NouvelleObservation:
-      case DrawerSections.NouvelleEspece:
-      case DrawerSections.NouveauInventaire:
+      case DrawerSections.Protocole:
         return Icons.add_box_rounded;
       case DrawerSections.Historique:
         return Icons.history;

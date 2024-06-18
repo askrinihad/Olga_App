@@ -82,6 +82,7 @@
      "espece_attente":"Species pending",
      "classe":"Class",
      "regne":"Reign",
-     "groupegrandpublic":"General Public Group"
+     "groupegrandpublic":"General Public Group",
+     "protocole" : "Protocol"
 
 }

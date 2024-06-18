@@ -2,8 +2,7 @@
 enum DrawerSections {
   Accueil,
   NouvelleObservation,
-  NouvelleEspece,
-  NouveauInventaire,
+  Protocole,
   Historique,
   Bibliotheque,
   parametre,
