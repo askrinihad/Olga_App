@@ -81,7 +81,7 @@
      "choixForm":"Sélection de formulaire",
      "classe":"Class",
      "regne":"Reign",
-     "groupegrandpublic":"General Public Group"
-,
+     "groupegrandpublic":"General Public Group",
+     "protocole" : "Protocole",
      "espece_attente":"Espèce en attente"
 }
