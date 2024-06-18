@@ -79,5 +79,9 @@
      "bird_recognition":"Reconnaissance des oiseaux",
      "selectionnerCode":"Séléctionner un code",
      "choixForm":"Sélection de formulaire",
+     "classe":"Class",
+     "regne":"Reign",
+     "groupegrandpublic":"General Public Group"
+,
      "espece_attente":"Espèce en attente"
 }

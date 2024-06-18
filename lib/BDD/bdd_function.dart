@@ -67,7 +67,7 @@ CollectionReference<Map<String, dynamic>> select_collection_airport_type(
 }
 
 CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
-    String airport, String? type, String? status) {
+    String airport, String? type) {
   final types = {
     "Plant life": "especes_flore",
     "Wildlife": "especes_faune",
@@ -80,16 +80,7 @@ CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
       case "faune":
         return FirebaseFirestore.instance.collection("especes_faune");
       case "flore":
-        switch (status) {
-          case 'protégé':
-            return FirebaseFirestore.instance
-                .collection("especes_flore_protege");
-          case 'indésirable':
-            return FirebaseFirestore.instance
-                .collection("especes_flore_invasive");
-          default:
-            return FirebaseFirestore.instance.collection("especes_flore");
-        }
+        return FirebaseFirestore.instance.collection("especes_flore");
       case "insect":
         return FirebaseFirestore.instance.collection("espece_insectes");
       default:
@@ -98,7 +89,42 @@ CollectionReference<Map<String, dynamic>> getSpeciesCollection_Type(
   }
 }
 
-Future<List<Map<String, dynamic>>> getMapFromCollection(
+Future<List<Map<String, dynamic>>> getSpeciesList(
+    String airport, String? type) async {
+  QuerySnapshot snapshot;
+  final types = {
+    "Plant life": "especes_flore",
+    "Wildlife": "especes_faune",
+    "Insects": "espece_insectes",
+  };
+  if (types[type] != null) {
+    snapshot = await FirebaseFirestore.instance.collection(types[type]!).get();
+  } else {
+    switch (type) {
+      case "faune":
+        snapshot =
+            await FirebaseFirestore.instance.collection("especes_faune").get();
+      case "flore":
+        snapshot =
+            await FirebaseFirestore.instance.collection("especes_flore").get();
+      case "insect":
+        snapshot = await FirebaseFirestore.instance
+            .collection("espece_insectes")
+            .get();
+      default:
+        snapshot = await FirebaseFirestore.instance
+            .collection("espece_insectes")
+            .get();
+    }
+  }
+  List<Map<String, dynamic>> map = [];
+  for (var doc in snapshot.docs) {
+    map.add((doc.data() as Map<String, dynamic>));
+  }
+  return map;
+}
+
+Future<List<Map<String, dynamic>>> getObservationList(
     String airport, String type) async {
   final types = {
     "Plant life": "observationFlore_${airports[airport]!}",
@@ -175,16 +201,15 @@ Future uploadFile(File filePath, File fileName) async {
 Future<List<String>> getSpecie(
     {required String airport,
     required String? type,
-    required String? status,
     bool alphabetic_order = true}) async {
   QuerySnapshot<Map<String, dynamic>> snap;
 
   if (alphabetic_order) {
-    snap = await await getSpeciesCollection_Type(airport, type, status)
+    snap = await await getSpeciesCollection_Type(airport, type)
         .orderBy("Nom scientifique", descending: false)
         .get();
   } else {
-    snap = await getSpeciesCollection_Type(airport, type, status).get();
+    snap = await getSpeciesCollection_Type(airport, type).get();
   }
 
   return snap.docs
@@ -196,6 +221,16 @@ Future<List<String>> getInventoryCode(String airport) async {
   QuerySnapshot<Map<String, dynamic>> snap =
       await getCollection_CodeInventaire(airport).get();
   return snap.docs.map((doc) => doc.get('code').toString()).toList();
+}
+
+Future<List<String>> getUsers({String field = ''}) async {
+  QuerySnapshot<Map<String, dynamic>> snap =
+      await FirebaseFirestore.instance.collection("users").get();
+
+  if (field.isEmpty) {
+    return snap.docs.map((doc) => doc.toString()).toList();
+  }
+  return snap.docs.map((doc) => doc.get(field).toString()).toList();
 }
 
 /// Function that return forms ID / or name to

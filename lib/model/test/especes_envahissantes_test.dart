@@ -1,7 +1,6 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:test_app/model/especes_envahissantes.dart';
 
@@ -9,7 +8,8 @@ class EspecesEnvahissantesTest extends StatefulWidget {
   const EspecesEnvahissantesTest({Key? key}) : super(key: key);
 
   @override
-  _EspecesEnvahissantesTestState createState() => _EspecesEnvahissantesTestState();
+  _EspecesEnvahissantesTestState createState() =>
+      _EspecesEnvahissantesTestState();
 }
 
 class _EspecesEnvahissantesTestState extends State<EspecesEnvahissantesTest> {
@@ -23,27 +23,29 @@ class _EspecesEnvahissantesTestState extends State<EspecesEnvahissantesTest> {
   }
 
   void _loadCSV() async {
-  final _rawData = await rootBundle.loadString("assets/csv/especes_envahissantes.csv");
-  List<List<dynamic>> _listData = const CsvToListConverter().convert(_rawData);
+    final _rawData =
+        await rootBundle.loadString("assets/csv/especes_envahissantes.csv");
+    List<List<dynamic>> _listData =
+        const CsvToListConverter().convert(_rawData);
 
-  for (var i = 1; i < _listData.length; i++) {
-    var row = _listData[i];
-    var envahissante = especes_envahissantes(
-      id: i,
-      NomValide: row[0].toString(),
-      NomFrancais: row[1].toString(),
-      Regne: row[2].toString(),
-      Classe: row[3].toString(),
-      Ordre: row[4].toString(),
-      Famille: row[5].toString(),
-    );
-    await envahissantesBox.add(envahissante);
+    for (var i = 1; i < _listData.length; i++) {
+      var row = _listData[i];
+      var envahissante = especes_envahissantes(
+        id: i,
+        NomValide: row[0].toString(),
+        NomFrancais: row[1].toString(),
+        Regne: row[2].toString(),
+        Classe: row[3].toString(),
+        Ordre: row[4].toString(),
+        Famille: row[5].toString(),
+      );
+      await envahissantesBox.add(envahissante);
+    }
+
+    setState(() {
+      // Trigger a rebuild to display the data
+    });
   }
-
-  setState(() {
-    // Trigger a rebuild to display the data
-  });
-}
 
   @override
   Widget build(BuildContext context) {

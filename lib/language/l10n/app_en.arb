@@ -79,5 +79,9 @@
      "bird_recognition":"Bird Recognition",
      "selectionnerCode":"Select an inventory code",
      "choixForm":"Form selection",
-     "espece_attente":"Species pending"
+     "espece_attente":"Species pending",
+     "classe":"Class",
+     "regne":"Reign",
+     "groupegrandpublic":"General Public Group"
+
 }
