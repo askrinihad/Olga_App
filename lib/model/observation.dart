@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:hive/hive.dart';
 
 part 'observation.g.dart';
@@ -19,10 +17,4 @@ class Observation extends HiveObject{
   final String? airport;
 
   Observation({required this.id, required this.formData, required this.type, required this.airport});
-
-  @override
-  String toString() {
-    // TODO: implement toString
-    return 'Observation{id: $id, formData: $formData, type: $type}';
-  }
 }

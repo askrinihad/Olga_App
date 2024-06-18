@@ -4,6 +4,7 @@ import 'package:test_app/model/oiseaux_proteges.dart';
 import 'package:test_app/model/especes_envahissantes.dart';
 import 'package:test_app/model/especes_faune.dart';
 import 'package:test_app/model/observation.dart';
+import 'package:test_app/model/user.dart';
 
 class HiveService {
   static Future initializeHive() async {
@@ -23,6 +24,9 @@ class HiveService {
 
     Hive.registerAdapter(ObservationAdapter());
     await Hive.openBox<Observation>('observation');
+
+    Hive.registerAdapter(UserAdapter());
+    await Hive.openBox<User>('user');
   }
 
   static Future<void> storeObservation(int id, Map<String, dynamic> formData, String type, String airport) async {
@@ -43,5 +47,9 @@ class HiveService {
 
   static Future<void> clearDataObservation() async {
     await Hive.box<Observation>('observation').clear();
+  }
+
+  static Future<void> clearDataUser() async {
+    await Hive.box<User>('user').clear();
   }
 }

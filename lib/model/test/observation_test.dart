@@ -22,12 +22,25 @@ class _ObservationTestState extends State<ObservationTest> {
   void initState() {
     super.initState();
     observationBox = Hive.box<Observation>('observation');
-    print(
-        'Number of observation in HIVE: ${observationBox.length}'); // Print the number of observations in the box
   }
 
   Future<void> sendToFirebaseAndClear() async {
-    print('sendToFirebaseAndClear called');
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: new Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              new CircularProgressIndicator(),
+              new Text("Veuillez attendre la fin de l'envoi..."),
+            ],
+          ),
+        );
+      },
+    );
+    
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       // No internet connection
@@ -40,23 +53,15 @@ class _ObservationTestState extends State<ObservationTest> {
     }
 
     for (var observation in observationBox.values) {
-      print('Observation: $observation');
       if (observation.type != null && observation.formData['airport'] != null) {
-        print('Observation type and airport are not null');
         CollectionReference collRef = select_collection_airport_type(
             observation.formData['airport']!, observation.type!);
-        print('Sending the following data to Firebase:');
-        print(observation.formData);
-        // Add the airport to the formData before sending to Firebase
         observation.formData['airport'] = observation.airport;
 
-        // Check if the image path exists in formData
         if (observation.formData.containsKey('image')) {
           String imagePath = observation.formData['image'];
           File imageFile = File(imagePath);
-          // Use the imagePath as the path in Firebase Storage
           String downloadURL = await uploadImage(imageFile, imagePath);
-          // Replace the image path with the downloadURL in formData
           observation.formData['image'] = downloadURL;
         }
 
@@ -64,6 +69,7 @@ class _ObservationTestState extends State<ObservationTest> {
       }
     }
     await HiveService.clearDataObservation();
+    Navigator.pop(context);
     setState(() {});
   }
 
