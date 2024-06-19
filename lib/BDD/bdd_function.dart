@@ -217,10 +217,10 @@ Future<List<String>> getSpecie(
       .toList();
 }
 
-Future<List<String>> getInventoryCode(String airport) async {
+Future<List<String>> getInventoryCode(String airport, String userEmail) async {
   QuerySnapshot<Map<String, dynamic>> snap =
       await getCollection_CodeInventaire(airport).get();
-  return snap.docs.map((doc) => doc.get('code').toString()).toList();
+  return snap.docs.where((doc) => doc.get('email') == userEmail || doc.get('membres').contains(userEmail)).map((doc) => doc.get('code').toString()).toList();
 }
 
 Future<List<String>> getUsers({String field = ''}) async {

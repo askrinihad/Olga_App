@@ -27,7 +27,7 @@ class _FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: buildFormFromJson(context, _values, widget.airport, widget.json,
-          specie_type: widget.specie_type),
+          specie_type: widget.specie_type, userEmail: widget.airport),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(

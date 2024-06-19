@@ -113,7 +113,7 @@ class _SettingsPageState extends State<SettingsPage> {
               width: 50,
             ),
             FutureBuilder(
-                future: getInventoryCode(widget.aeroport),
+                future: getInventoryCode(widget.aeroport, widget.email),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     //TODO: Init with the saved codeInventory
