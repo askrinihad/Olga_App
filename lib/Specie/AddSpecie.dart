@@ -33,6 +33,7 @@ class AddSpecieState extends State<AddSpecie> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return FormPage(
+                      email: widget.email,
                       json: snapshot.data!,
                       onSaved: (value) async {
                         if (!value.containsKey('type')) {

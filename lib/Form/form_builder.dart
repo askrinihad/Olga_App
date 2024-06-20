@@ -17,7 +17,7 @@ import 'package:test_app/form/builder/geoloc_builder.dart';
 /// It's weird, maybe you can fix that by a refactor, if you try : Good Luck!
 Future<List<dynamic>> buildFormFromJson(BuildContext context,
     Map<String, dynamic> values, String airport, Map<String, dynamic> formData,
-    {String? specie_type}) async {
+    {String? specie_type, required String userEmail}) async {
   List<Widget> formWidgets = [];
 
   List<dynamic> formFields = formData['form'];
@@ -55,7 +55,8 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
             stringList = await getSpecie(airport: airport, type: specie_type);
             break;
           case "code_inventory":
-            stringList = await getInventoryCode(airport);
+            print(airport + ' ' + userEmail);
+            stringList = await getInventoryCode(airport, userEmail);
             break;
           case "users_email":
             stringList = await getUsers(field: 'email');

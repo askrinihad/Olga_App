@@ -43,6 +43,7 @@ class AddObservationState extends State<AddObservation> {
           ))),
       Expanded(
           child: FormPage(
+              email: widget.email,
               specie_type: widget.SpecieType,
               json: widget.json,
               onSaved: (value) async {

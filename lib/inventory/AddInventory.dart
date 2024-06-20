@@ -35,6 +35,7 @@ class AddInventoryState extends State<AddInventory> {
                   return FormPage(
                       json: snapshot.data!,
                       onSaved: (value) async {
+                        value['email'] = widget.email;
                         CollectionReference<Map<String, dynamic>> collRef =
                             getCollection_CodeInventaire(widget.aeroport);
                         collRef.add(value).then((value) {
@@ -69,7 +70,7 @@ class AddInventoryState extends State<AddInventory> {
                           print(error.toString());
                         });
                       },
-                      airport: widget.aeroport);
+                      airport: widget.aeroport, email: widget.email,);
                 } else {
                   return CircularProgressIndicator();
                 }
