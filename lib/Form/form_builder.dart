@@ -55,6 +55,7 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
             stringList = await getSpecie(airport: airport, type: specie_type);
             break;
           case "code_inventory":
+            print(airport + ' ' + userEmail);
             stringList = await getInventoryCode(airport, userEmail);
             break;
           case "users_email":
