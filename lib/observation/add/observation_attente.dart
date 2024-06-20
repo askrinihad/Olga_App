@@ -25,6 +25,18 @@ class _ObservationTestState extends State<ObservationTest> {
   }
 
   Future<void> sendToFirebaseAndClear() async {
+    
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      // No internet connection
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Pas de connexion, veuillez réessayer plus tard'),
+        ),
+      );
+      return;
+    }
+    
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -40,17 +52,6 @@ class _ObservationTestState extends State<ObservationTest> {
         );
       },
     );
-    
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
-      // No internet connection
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Pas de connexion, veuillez réessayer plus tard'),
-        ),
-      );
-      return;
-    }
 
     for (var observation in observationBox.values) {
       if (observation.type != null && observation.formData['airport'] != null) {

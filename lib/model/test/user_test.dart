@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:test_app/model/user.dart';
+import 'package:test_app/BDD/hive_function.dart'; // Assurez-vous d'importer HiveService
 
 class UserTest extends StatefulWidget {
   const UserTest({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class UserTest extends StatefulWidget {
 
 class _UserTestState extends State<UserTest> {
   late Box<User> userBox;
+  final hiveService = HiveService(); // Créez une instance de HiveService
 
   @override
   void initState() {
@@ -19,7 +21,7 @@ class _UserTestState extends State<UserTest> {
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF006766),
@@ -47,8 +49,10 @@ class _UserTestState extends State<UserTest> {
                     children: [
                       Text(user.id.toString()),
                       Text(user.email),
-                      Text(user.password),
+                      Text(user.password ?? ''),
                       Text(user.airport),
+                      Text(user.tokenExpiryDate.toString()),
+                      Text(user.isLogged.toString()),
                     ],
                   ),
                 ),
@@ -56,6 +60,14 @@ class _UserTestState extends State<UserTest> {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          HiveService
+              .clearDataUser(); // Appelle la méthode clearDataUser lorsque le bouton est pressé
+        },
+        child: Icon(Icons.delete),
+        tooltip: 'Supprimer tout',
       ),
     );
   }

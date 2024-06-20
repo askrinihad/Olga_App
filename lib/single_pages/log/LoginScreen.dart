@@ -5,15 +5,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test_app/navbar/drawer/DrawerSections.dart';
 import 'package:test_app/style/StyleText.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-
-
-const List<String> aeroportList = <String>[
-  'Paris-Charles de Gaulle Airport',
-  'Zagreb Airport ',
-  'Milan Airport',
-  'Avram Iancu Cluj Airport'
-];
+import 'package:test_app/single_pages/log/LoginFunction.dart';
+import 'package:test_app/BDD/hive_function.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,37 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String aeroportValue = aeroportList.first;
-
-  Widget _buildAeroport() {
-    return DropdownButton<String>(
-      value: aeroportValue,
-      isExpanded: false,
-      underline: Container(
-        height: 0,
-        color: Colors.transparent,
-      ),
-      icon: Padding(
-        padding: EdgeInsets.only(left: 103.0),
-        child: Icon(Icons.arrow_drop_down),
-      ),
-      elevation: 16,
-      style: StyleText.getHintForm(),
-      onChanged: (String? value) {
-        setState(() {
-          aeroportValue = value!;
-        });
-      },
-      items: aeroportList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5.0),
-            child: Text(value),
-          ),
-        );
-      }).toList(),
-    );
-  }
+  bool _saveUser = false;
+  HiveService hiveService = HiveService();
 
   @override
   void dispose() {
@@ -66,12 +30,28 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<bool> _checkInternetConnection() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
-      return false;
+  @override
+  void initState() {
+    super.initState();
+    _initializeSaveUser();
+    _loadUser();
+  }
+
+  Future<void> _initializeSaveUser() async {
+    bool? isUserLogged = await hiveService.isUserLogged();
+    setState(() {
+      _saveUser = isUserLogged;
+    });
+  }
+
+  void _loadUser() async {
+    var user = await hiveService.getUser();
+    if (user != null) {
+      setState(() {
+        _emailController.text = user.email;
+        _passwordController.text = user.password ?? '';
+      });
     }
-    return true;
   }
 
   @override
@@ -109,7 +89,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                child: _buildAeroport(),
+                child: buildAeroport(aeroportValue, (value) {
+                  setState(() {
+                    aeroportValue = value;
+                  });
+                }),
               ),
               const SizedBox(height: 26),
               TextField(
@@ -122,8 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Color(0xFF006766),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color(0xFF006766)),
+                    borderSide: BorderSide(color: Color(0xFF006766)),
                   ),
                 ),
               ),
@@ -140,8 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Color(0xFF006766),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color(0xFF006766)),
+                    borderSide: BorderSide(color: Color(0xFF006766)),
                   ),
                 ),
               ),
@@ -151,6 +133,23 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 appLocalizations.motdepasseOublie,
                 style: TextStyle(color: Color(0xff8E7F7F)),
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                    'Stay Connected',
+                    style: TextStyle(color: Color(0xFF006766)),
+                  ),
+                  Checkbox(
+                    value: _saveUser,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _saveUser = value ?? false;
+                      });
+                    },
+                    activeColor: Color(0xFF006766),
+                  ),
+                ],
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.width * 0.06,
@@ -174,26 +173,73 @@ class _LoginScreenState extends State<LoginScreen> {
                     elevation: 0.0,
                   ),
                   onPressed: () async {
-                    bool hasInternet = await _checkInternetConnection();
-                    if (!hasInternet) {
-                      setState(() {
-                        _errorMessage = 'No internet connection. Please check your connection and try again.';
-                      });
-                      return;
-                    }
-                    User? user = await loginUsingEmailPassword(
-                        email: _emailController.text,
-                        password: _passwordController.text);
-                    if (user != null) {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => NavDrawerbar(
-                              email: _emailController.text,
-                              aeroport: aeroportValue,
-                              currentPage: DrawerSections.Accueil)));
+                    bool hasInternet = await checkInternetConnection();
+                    if (hasInternet) {
+                      User? user = await loginUsingEmailPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text);
+                      if (user != null) {
+                        if (_saveUser) {
+                          await hiveService.saveUser(
+                            id: int.tryParse(user.uid) ?? 0,
+                            email: _emailController.text,
+                            password:
+                                _saveUser ? _passwordController.text : null,
+                            airport: aeroportValue,
+                            token: user.refreshToken ?? '',
+                            tokenExpiryDate:
+                                DateTime.now().add(Duration(hours: 1)),
+                            isLogged: true,
+                          );
+                        } else {
+                          await hiveService.saveUser(
+                            id: int.tryParse(user.uid) ?? 0,
+                            email: _emailController.text,
+                            password: null,
+                            airport: aeroportValue,
+                            token: user.refreshToken ?? '',
+                            tokenExpiryDate:
+                                DateTime.now().add(Duration(hours: 1)),
+                            isLogged: false,
+                          );
+                        }
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => NavDrawerbar(
+                                email: _emailController.text,
+                                aeroport: aeroportValue,
+                                currentPage: DrawerSections.Accueil)));
+                      } else {
+                        setState(() {
+                          _errorMessage = 'Email or password is incorrect';
+                        });
+                      }
                     } else {
-                      setState(() {
-                        _errorMessage = 'Email or password is incorrect';
-                      });
+                      var user = await hiveService.getUser();
+                      if (user != null && user.password != null) {
+                        if (user.email == _emailController.text &&
+                            user.password == _passwordController.text) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => NavDrawerbar(
+                                      email: _emailController.text,
+                                      aeroport: aeroportValue,
+                                      currentPage: DrawerSections.Accueil)));
+                        } else {
+                          setState(() {
+                            _errorMessage = 'Email or password is incorrect';
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          if (_saveUser) {
+                            _errorMessage =
+                                'No internet connection. Please check your connection and try again.';
+                          } else {
+                            _errorMessage =
+                                'No internet connection and user credentials not saved. Please check your connection and try again.';
+                          }
+                        });
+                      }
                     }
                   },
                   child: Text(appLocalizations.connexion,

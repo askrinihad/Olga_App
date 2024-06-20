@@ -29,11 +29,12 @@ class HiveService {
     await Hive.openBox<User>('user');
   }
 
-  static Future<void> storeObservation(int id, Map<String, dynamic> formData, String type, String airport) async {
+  static Future<void> storeObservation(int id, Map<String, dynamic> formData,
+      String type, String airport) async {
     var box = await Hive.openBox<Observation>('observation');
 
-
-    var observation = Observation(id: id, formData: formData, type: type,airport : airport);
+    var observation =
+        Observation(id: id, formData: formData, type: type, airport: airport);
     await box.put(id.toString(), observation);
   }
 
@@ -47,6 +48,40 @@ class HiveService {
 
   static Future<void> clearDataObservation() async {
     await Hive.box<Observation>('observation').clear();
+  }
+
+  Future<void> saveUser(
+      {required int id,
+      required String email,
+      String? password,
+      required String airport,
+      required String token,
+      required DateTime tokenExpiryDate,
+      bool isLogged = false}) async {
+    var box = await Hive.openBox<User>('user');
+
+    var user = User(
+        id: id,
+        email: email,
+        password: password,
+        airport: airport,
+        token: token,
+        tokenExpiryDate: tokenExpiryDate,
+        isLogged: isLogged);
+    await box.put('user', user);
+  }
+
+  Future<bool> isUserLogged() async {
+    var box = await Hive.openBox<User>('user');
+    var user = box.get('user');
+    return user?.isLogged ?? false;
+  }
+
+  Future<User?> getUser() async {
+    var box = await Hive.openBox<User>('user'); 
+    var user = box.get('user');
+
+    return user;
   }
 
   static Future<void> clearDataUser() async {
