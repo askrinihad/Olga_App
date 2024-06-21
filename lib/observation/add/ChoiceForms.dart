@@ -49,12 +49,13 @@ class _ChoiceFormsState extends State<ChoiceForms> {
                             child: Container(
                               width: 200,
                               child: DropdownButtonFormField<String>(
+                                isExpanded: true,
                                 items: snapshot.data
                                     ?.map<DropdownMenuItem<String>>(
                                   (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
-                                      child: Text(value),
+                                      child: Text(value, overflow: TextOverflow.ellipsis, maxLines: 2),
                                     );
                                   },
                                 ).toList(),
