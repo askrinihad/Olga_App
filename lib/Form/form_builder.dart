@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/BDD/bdd_function.dart';
 import 'package:test_app/Form/builder/dropdown_button_form_field_builder.dart';
+import 'package:test_app/Form/builder/search_dropdown.dart';
 import 'package:test_app/Form/builder/text_form_field_builder.dart';
 import 'package:test_app/form/builder/checkbox_builder.dart';
 import 'package:test_app/form/builder/date_picker_builder.dart';
@@ -66,16 +67,28 @@ Future<List<dynamic>> buildFormFromJson(BuildContext context,
             stringList =
                 options.map((option) => option['label'].toString()).toList();
         }
+        bool searchbar = field['select_search'] ?? false;
         bool dropDownMulti = field['select_multi'] ?? false;
-        formWidgets.add(DropdownButtonFormFieldBuilder(
-          label: widgetLabel,
-          hint: widgetHint,
-          isRequired: isRequired,
-          options: stringList,
-          multi: dropDownMulti,
-          data: values,
-          datakey: keyvalue,
-        ));
+        if (searchbar) {
+          formWidgets.add(SearchDropdown(
+              label: widgetLabel,
+              hint: widgetHint,
+              isRequired: isRequired,
+              options: stringList,
+              multi: dropDownMulti,
+              data: values,
+              datakey: keyvalue));
+        } else {
+          formWidgets.add(DropdownButtonFormFieldBuilder(
+            label: widgetLabel,
+            hint: widgetHint,
+            isRequired: isRequired,
+            options: stringList,
+            multi: dropDownMulti,
+            data: values,
+            datakey: keyvalue,
+          ));
+        }
         ;
         break;
       case 'checkbox':
