@@ -16,7 +16,7 @@ class AddObservation extends StatefulWidget {
   final String email;
   final String aeroport;
   final String SpecieType;
-  final Map<int, LatLng>? polygonCoordinates;
+  
 
   const AddObservation({
     required this.email,
@@ -24,7 +24,7 @@ class AddObservation extends StatefulWidget {
     super.key,
     required this.json,
     required this.SpecieType,
-    this.polygonCoordinates,
+   
   });
 
   @override
@@ -32,10 +32,11 @@ class AddObservation extends StatefulWidget {
 }
 
 class AddObservationState extends State<AddObservation> {
+ Map<int, LatLng>? polygonCoordinates;
   @override
   Widget build(BuildContext context) {
-    if (widget.polygonCoordinates != null) {
-      widget.polygonCoordinates?.forEach((key, value) {
+    if (polygonCoordinates != null) {
+      polygonCoordinates?.forEach((key, value) {
         print('Point $key: (${value.latitude}, ${value.longitude})');
       });
     } else {
@@ -68,8 +69,8 @@ class AddObservationState extends State<AddObservation> {
                 value['airport'] = widget.aeroport;
                 
                 // Add polygonCoordinates to the value map
-                if (widget.polygonCoordinates != null) {
-                  value['polygonCoordinates'] = widget.polygonCoordinates!.entries.map((entry) {
+                if (polygonCoordinates != null) {
+                  value['polygonCoordinates'] = polygonCoordinates!.entries.map((entry) {
                     return {
                       'key': entry.key,
                       'latitude': entry.value.latitude,
@@ -148,17 +149,19 @@ class AddObservationState extends State<AddObservation> {
                 borderRadius: BorderRadius.circular(12.0),
               ),
               onPressed: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MapWidget(
-                      json: widget.json,
-                      email: widget.email,
-                      aeroport: widget.aeroport,
-                      SpecieType: widget.SpecieType,
-                    ),
-                  ),
-                );
+              Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MapWidget(),
+                            ),
+                          ).then((result) {
+                            // This block will be executed when the MapScreen is popped
+                            if (result != null) {
+                              setState(() {
+                                polygonCoordinates = result;
+                              });
+                            }
+});
               },
               child: Text(
                 AppLocalizations.of(context)!.localiser,

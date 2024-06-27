@@ -6,17 +6,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:test_app/observation/add/AddObservation.dart';
 
 class MapWidget extends StatefulWidget {
-  final Map<String, dynamic> json;
-  final String email;
-  final String aeroport;
-  final String SpecieType;
+ 
 
     const MapWidget(
-      {required this.email,
-      required this.aeroport,
-      super.key,
-      required this.json,
-      required this.SpecieType,
+      {
+      super.key
     });
   @override
   _MapWidgetState createState() => _MapWidgetState();
@@ -113,13 +107,7 @@ class _MapWidgetState extends State<MapWidget> {
           ElevatedButton(
             onPressed: () {
                
-               Navigator.push(
-                  context,
-                   MaterialPageRoute(
-                    builder: (context) => AddObservation(email: widget.email, aeroport: widget.aeroport, 
-                    json: widget.json, SpecieType: widget.SpecieType, polygonCoordinates:_polygonCoordinates)
-                  ),
-                      ); 
+              Navigator.pop(context, _polygonCoordinates); 
             //  _polygonCoordinates.forEach((key, value) {
              //   print('Point $key: (${value.latitude}, ${value.longitude})');
              // });
