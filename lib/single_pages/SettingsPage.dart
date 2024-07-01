@@ -7,10 +7,12 @@ import 'package:test_app/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:test_app/navbar/NavBackbar.dart';
 import 'package:test_app/style/StyleText.dart';
+import 'package:test_app/BDD/hive_function.dart';
 
 class SettingsPage extends StatefulWidget {
   final String email;
   final String aeroport;
+
   const SettingsPage({Key? key, required this.email, required this.aeroport})
       : super(key: key);
 
@@ -20,6 +22,24 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   ValueNotifier<String> _selectedCodeInventory = ValueNotifier('');
+  HiveService hiveService = HiveService();
+
+  void saveCode(String code) async {
+    await HiveService.saveCode(code);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInitialCodeInventory();
+  }
+
+  Future<void> _loadInitialCodeInventory() async {
+    var user = await hiveService.getUser();
+    String initialCode = user?.inventoryCode ?? '';
+    _selectedCodeInventory.value = initialCode;
+  }
+
   @override
   Widget build(BuildContext context) {
     // The UI consists of a Container with a Column of widgets.
@@ -107,40 +127,46 @@ class _SettingsPageState extends State<SettingsPage> {
                         body: AddInventory(
                             email: widget.email, aeroport: widget.aeroport))));
               },
-              child: Icon(Icons.add, color: Color.fromRGBO(255, 255, 255, 0.66)),
+              child:
+                  Icon(Icons.add, color: Color.fromRGBO(255, 255, 255, 0.66)),
             ),
             SizedBox(
               width: 50,
             ),
-            FutureBuilder(
-                future: getInventoryCode(widget.aeroport, widget.email),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    //TODO: Init with the saved codeInventory
-                    _selectedCodeInventory.value = snapshot.data!.first;
-                    return ValueListenableBuilder(
-                        valueListenable: _selectedCodeInventory,
-                        builder: (context, value, child) {
-                          return DropdownButton<String>(
+            ValueListenableBuilder<String>(
+              valueListenable: _selectedCodeInventory,
+              builder: (context, value, child) {
+                return FutureBuilder<List<String>>(
+                  future: getInventoryCode(widget.aeroport, widget.email), // Fetch all inventory codes
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+                      return DropdownButton<String>(
+                        value: value.isNotEmpty ? value : null,
+                        iconSize: 25,
+                        hint: Text(AppLocalizations.of(context)!.codeInventaire, style: StyleText.getHintForm()),
+                        items: snapshot.data!.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
                             value: value,
-                            iconSize: 25,
-                            hint: Text(
-                                AppLocalizations.of(context)!.codeInventaire,
-                                style: StyleText.getHintForm()),
-                            items: snapshot.data!
-                                .map((value) => DropdownMenuItem(
-                                    child: Text(value), value: value))
-                                .toList(),
-                            onChanged: (String? value) {
-                              _selectedCodeInventory.value = value!;
-                              //TODO: Save codeInventory in HIVE and get&save default daily forms in Hive
-                            },
+                            child: Text(value),
                           );
-                        });
-                  } else {
-                    return Expanded(child: LinearProgressIndicator());
-                  }
-                })
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          // Update the selected inventory code
+                          _selectedCodeInventory.value = newValue ?? '';
+                          // Save the selected code to Hive database
+                          saveCode(newValue ?? '');
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      // Show a loading indicator while the future is in progress
+                      return CircularProgressIndicator();
+                    }
+                  },
+                );
+              },
+            )
           ]))
     ])));
   }

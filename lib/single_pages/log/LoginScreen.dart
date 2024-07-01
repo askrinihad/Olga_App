@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             password:
                                 _saveUser ? _passwordController.text : null,
                             airport: aeroportValue,
-                            token: user.refreshToken ?? '',
+                            inventoryCode: '',
                             tokenExpiryDate:
                                 DateTime.now().add(Duration(hours: 1)),
                             isLogged: true,
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             email: _emailController.text,
                             password: null,
                             airport: aeroportValue,
-                            token: user.refreshToken ?? '',
+                            inventoryCode: '',
                             tokenExpiryDate:
                                 DateTime.now().add(Duration(hours: 1)),
                             isLogged: false,

@@ -17,7 +17,7 @@ class User extends HiveObject{
   final String airport;
 
   @HiveField(4)
-  final String? token;
+  String? inventoryCode;
 
   @HiveField(5)
   final DateTime? tokenExpiryDate;
@@ -25,7 +25,7 @@ class User extends HiveObject{
   @HiveField(6)
   bool? isLogged;
 
-  User({required this.id, required this.email, this.password, required this.airport,this.token, this.tokenExpiryDate, this.isLogged}) {
+  User({required this.id, required this.email, this.password, required this.airport, this.inventoryCode, this.tokenExpiryDate, this.isLogged}) {
     isLogged ??= false;
   }
 }

@@ -51,6 +51,7 @@ class _UserTestState extends State<UserTest> {
                       Text(user.email),
                       Text(user.password ?? ''),
                       Text(user.airport),
+                      Text(user.inventoryCode ?? ''),
                       Text(user.tokenExpiryDate.toString()),
                       Text(user.isLogged.toString()),
                     ],

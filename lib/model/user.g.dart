@@ -21,7 +21,7 @@ class UserAdapter extends TypeAdapter<User> {
       email: fields[1] as String,
       password: fields[2] as String?,
       airport: fields[3] as String,
-      token: fields[4] as String?,
+      inventoryCode: fields[4] as String?,
       tokenExpiryDate: fields[5] as DateTime?,
       isLogged: fields[6] as bool?,
     );
@@ -40,7 +40,7 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(3)
       ..write(obj.airport)
       ..writeByte(4)
-      ..write(obj.token)
+      ..write(obj.inventoryCode)
       ..writeByte(5)
       ..write(obj.tokenExpiryDate)
       ..writeByte(6)

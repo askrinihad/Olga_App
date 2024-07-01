@@ -50,24 +50,34 @@ class HiveService {
     await Hive.box<Observation>('observation').clear();
   }
 
-  Future<void> saveUser(
-      {required int id,
-      required String email,
-      String? password,
-      required String airport,
-      required String token,
-      required DateTime tokenExpiryDate,
-      bool isLogged = false}) async {
+  Future<void> saveUser({
+    required int id,
+    required String email,
+    String? password,
+    required String airport,
+    String inventoryCode =
+        '',
+    required DateTime tokenExpiryDate,
+    bool isLogged = false,
+  }) async {
     var box = await Hive.openBox<User>('user');
 
+    User? existingUser = box.get('user');
+    if (existingUser?.inventoryCode?.isNotEmpty ?? false) {
+      inventoryCode = existingUser!.inventoryCode!;
+    }
+
     var user = User(
-        id: id,
-        email: email,
-        password: password,
-        airport: airport,
-        token: token,
-        tokenExpiryDate: tokenExpiryDate,
-        isLogged: isLogged);
+      id: id,
+      email: email,
+      password: password,
+      airport: airport,
+      inventoryCode:
+          inventoryCode,
+      tokenExpiryDate: tokenExpiryDate,
+      isLogged: isLogged,
+    );
+
     await box.put('user', user);
   }
 
@@ -78,7 +88,7 @@ class HiveService {
   }
 
   Future<User?> getUser() async {
-    var box = await Hive.openBox<User>('user'); 
+    var box = await Hive.openBox<User>('user');
     var user = box.get('user');
 
     return user;
@@ -89,7 +99,17 @@ class HiveService {
   }
 
   static Future<String> getCode() async {
-    // TODO : get saved code from Hive
-    return "";
+    var box = await Hive.openBox<User>('user');
+    User? user = box.get('user');
+    return user?.inventoryCode ?? "";
+  }
+
+  static Future<void> saveCode(String code) async {
+    var box = await Hive.openBox<User>('user');
+    User? currentUser = box.getAt(0);
+    if (currentUser != null) {
+      currentUser.inventoryCode = code;
+      currentUser.save();
+    }
   }
 }
