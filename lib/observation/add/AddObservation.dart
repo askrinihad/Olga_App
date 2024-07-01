@@ -16,7 +16,7 @@ class AddObservation extends StatefulWidget {
   final String email;
   final String aeroport;
   final String SpecieType;
-  
+  final String inventoryCode;
 
   const AddObservation({
     required this.email,
@@ -24,7 +24,7 @@ class AddObservation extends StatefulWidget {
     super.key,
     required this.json,
     required this.SpecieType,
-   
+    required this.inventoryCode,
   });
 
   @override
@@ -32,7 +32,7 @@ class AddObservation extends StatefulWidget {
 }
 
 class AddObservationState extends State<AddObservation> {
- Map<int, LatLng>? polygonCoordinates;
+  Map<int, LatLng>? polygonCoordinates;
   @override
   Widget build(BuildContext context) {
     if (polygonCoordinates != null) {
@@ -67,10 +67,12 @@ class AddObservationState extends State<AddObservation> {
                 print("Saving observation...");
                 value['email'] = widget.email;
                 value['airport'] = widget.aeroport;
-                
+                value['codeInventaire'] = widget.inventoryCode;
+
                 // Add polygonCoordinates to the value map
                 if (polygonCoordinates != null) {
-                  value['polygonCoordinates'] = polygonCoordinates!.entries.map((entry) {
+                  value['polygonCoordinates'] =
+                      polygonCoordinates!.entries.map((entry) {
                     return {
                       'key': entry.key,
                       'latitude': entry.value.latitude,
@@ -80,7 +82,8 @@ class AddObservationState extends State<AddObservation> {
                 }
 
                 try {
-                  var connectivityResult = await (Connectivity().checkConnectivity());
+                  var connectivityResult =
+                      await (Connectivity().checkConnectivity());
                   if (connectivityResult == ConnectivityResult.none) {
                     // No internet connection
                     if (value.containsKey('image')) {
@@ -91,7 +94,8 @@ class AddObservationState extends State<AddObservation> {
                     if (type == 'insectes') {
                       type = 'insect';
                     }
-                    await HiveService.storeObservation(id, value, type, widget.aeroport);
+                    await HiveService.storeObservation(
+                        id, value, type, widget.aeroport);
                   } else {
                     // There's internet connection
                     if (value.containsKey('image')) {
@@ -99,16 +103,18 @@ class AddObservationState extends State<AddObservation> {
                       await uploadFile(value['image'], value['image']);
                       value['image'] = await DownloadUrl(value['image']);
                     }
-                    
-                    CollectionReference collRef = select_collection_airport_type(
-                        widget.aeroport, widget.SpecieType);
+
+                    CollectionReference collRef =
+                        select_collection_airport_type(
+                            widget.aeroport, widget.SpecieType);
                     collRef.add(value).then((value) {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text(AppLocalizations.of(context)!.succes),
-                            content: Text(AppLocalizations.of(context)!.observationAjoute),
+                            content: Text(AppLocalizations.of(context)!
+                                .observationAjoute),
                             actions: [
                               ElevatedButton(
                                 onPressed: () {
@@ -149,19 +155,19 @@ class AddObservationState extends State<AddObservation> {
                 borderRadius: BorderRadius.circular(12.0),
               ),
               onPressed: () async {
-              Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MapWidget(),
-                            ),
-                          ).then((result) {
-                            // This block will be executed when the MapScreen is popped
-                            if (result != null) {
-                              setState(() {
-                                polygonCoordinates = result;
-                              });
-                            }
-});
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MapWidget(),
+                  ),
+                ).then((result) {
+                  // This block will be executed when the MapScreen is popped
+                  if (result != null) {
+                    setState(() {
+                      polygonCoordinates = result;
+                    });
+                  }
+                });
               },
               child: Text(
                 AppLocalizations.of(context)!.localiser,

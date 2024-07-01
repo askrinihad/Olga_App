@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
-import 'package:test_app/single_pages/map_test.dart';
 import 'package:test_app/style/StyleText.dart';
 
 class BirdRecognition extends StatefulWidget {

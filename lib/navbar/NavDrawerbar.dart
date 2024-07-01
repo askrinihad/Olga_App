@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/observation/history/History.dart';
 import 'package:test_app/Specie/LibrarySelectType.dart';
+import 'package:test_app/observation/protocole/ChoiceForms.dart';
 import 'package:test_app/single_pages/BirdRecognition.dart';
 import 'package:test_app/single_pages/log/LogOut.dart';
 import 'package:test_app/observation/add/ObservationSelectType.dart';
@@ -70,7 +71,7 @@ class _NavDrawerbarState extends State<NavDrawerbar> {
         return ObservationSelectType(
             email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Protocole:
-        return Center(child: Text('Not implemented Yet'));
+        return ChoiceForms(email: widget.email, aeroport: widget.aeroport);
       case DrawerSections.Bibliotheque:
         return LibrarySelectType(
             email: widget.email, aeroport: widget.aeroport);

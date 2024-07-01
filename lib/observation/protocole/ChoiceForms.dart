@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/BDD/bdd_function.dart';
-import 'package:test_app/navbar/NavBackbar.dart';
-import 'package:test_app/observation/add/AddObservation.dart';
+import 'package:test_app/observation/protocole/AddProtocol.dart';
 import 'package:test_app/style/StyleText.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChoiceForms extends StatefulWidget {
-  final String specie_type;
   final String email;
   final String aeroport;
 
   const ChoiceForms(
       {super.key,
-      required this.specie_type,
       required this.email,
       required this.aeroport});
 
@@ -26,16 +23,19 @@ class _ChoiceFormsState extends State<ChoiceForms> {
   final _formkey = GlobalKey<FormState>();
   String _selectedvalue = '';
 
+  Future getdata() async {
+    return getFormIds();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return NavBackbar(
-        body: Padding(
+    return Padding(
             padding:
                 EdgeInsets.only(top: 100.0), // Adjust top padding as needed
             child: Form(
                 key: _formkey,
                 child: FutureBuilder(
-                    future: getIdsByFormCategory(widget.specie_type),
+                    future: getdata(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Column(children: [
@@ -110,15 +110,12 @@ class _ChoiceFormsState extends State<ChoiceForms> {
                                                       builder:
                                                           (context, snapshot) {
                                                         if (snapshot.hasData) {
-                                                          return AddObservation(
+                                                          return AddProtocol(
                                                             email: widget.email,
                                                             aeroport:
                                                                 widget.aeroport,
                                                             json:
                                                                 snapshot.data!,
-                                                            SpecieType: widget
-                                                                .specie_type,
-                                                            
                                                           );
                                                         } else {
                                                           return CircularProgressIndicator();
@@ -137,6 +134,6 @@ class _ChoiceFormsState extends State<ChoiceForms> {
                       } else {
                         return Center(child: CircularProgressIndicator());
                       }
-                    }))));
+                    })));
   }
 }

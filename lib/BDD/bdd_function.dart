@@ -220,7 +220,12 @@ Future<List<String>> getSpecie(
 Future<List<String>> getInventoryCode(String airport, String userEmail) async {
   QuerySnapshot<Map<String, dynamic>> snap =
       await getCollection_CodeInventaire(airport).get();
-  return snap.docs.where((doc) => doc.get('email') == userEmail || doc.get('membres').contains(userEmail)).map((doc) => doc.get('code').toString()).toList();
+  return snap.docs
+      .where((doc) =>
+          doc.get('email') == userEmail ||
+          doc.get('membres').contains(userEmail))
+      .map((doc) => doc.get('code').toString())
+      .toList();
 }
 
 Future<List<String>> getUsers({String field = ''}) async {
@@ -260,7 +265,7 @@ String? getFormpath(String id) {
 Future<List<String>> getFormIds() async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
   QuerySnapshot<Object?> snapshot = await forms.get();
-  return snapshot.docs.map((doc) => doc.id).toList();
+  return snapshot.docs.map((doc) => doc.get('form_id').toString()).toList();
 }
 
 Future<List<String>> getIdsByFormCategory(String category) async {
@@ -268,6 +273,29 @@ Future<List<String>> getIdsByFormCategory(String category) async {
   QuerySnapshot<Object?> snapshot =
       await forms.where('form_category', isEqualTo: category).get();
   return snapshot.docs.map((doc) => doc.get('form_id').toString()).toList();
+}
+
+Future<Map<String, String>> getIdFormDailyObs(String code) async {
+  CollectionReference forms = FirebaseFirestore.instance.collection('forms');
+  QuerySnapshot<Object?> snapshot = await forms
+      .where('form_code', isEqualTo: code)
+      .get(); //TODO Change field
+
+  Map<String, String> result = {};
+  for (var doc in snapshot.docs) {
+    switch (doc.get('form_category').toString()) {
+      case 'flore':
+        result['flore'] = doc.get('form_id').toString();
+        break;
+      case 'faune':
+        result['faune'] = doc.get('form_id').toString();
+        break;
+      case 'insectes':
+        result['insectes'] = doc.get('form_id').toString();
+        break;
+    }
+  }
+  return result;
 }
 
 Future<Map<String, dynamic>> getForm(String id) async {

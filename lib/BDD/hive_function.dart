@@ -87,4 +87,9 @@ class HiveService {
   static Future<void> clearDataUser() async {
     await Hive.box<User>('user').clear();
   }
+
+  static Future<String> getCode() async {
+    // TODO : get saved code from Hive
+    return "";
+  }
 }

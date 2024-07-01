@@ -1,4 +1,3 @@
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:test_app/model/observation.dart';
 import 'package:flutter/material.dart';
