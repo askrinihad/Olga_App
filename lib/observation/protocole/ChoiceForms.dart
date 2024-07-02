@@ -24,7 +24,7 @@ class _ChoiceFormsState extends State<ChoiceForms> {
   String _selectedvalue = '';
 
   Future getdata() async {
-    return getFormIds();
+    return getIdsByFormCategory("Protocol");
   }
 
   @override
