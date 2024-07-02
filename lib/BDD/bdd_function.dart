@@ -305,6 +305,12 @@ Future<Map<String, dynamic>> getForm(String id) async {
   return snapshot.data() as Map<String, dynamic>;
 }
 
+Future<List<Map<String, dynamic>>> getFormsByCode(String code) async {
+  CollectionReference forms = FirebaseFirestore.instance.collection('forms');
+  QuerySnapshot snapshot = await forms.where('form_inventoryCode', isEqualTo: code).get();
+  return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+}
+
 Future<Map<String, dynamic>> getFormFieldCategory(String id) async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
   DocumentSnapshot<Object?> snapshot = await forms.doc(id).get();
