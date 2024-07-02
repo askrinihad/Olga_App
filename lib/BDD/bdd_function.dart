@@ -278,7 +278,7 @@ Future<List<String>> getIdsByFormCategory(String category) async {
 Future<Map<String, String>> getIdFormDailyObs(String code) async {
   CollectionReference forms = FirebaseFirestore.instance.collection('forms');
   QuerySnapshot<Object?> snapshot = await forms
-      .where('form_code', isEqualTo: code)
+      .where('form_inventoryCode', isEqualTo: code)
       .get(); //TODO Change field
 
   Map<String, String> result = {};
