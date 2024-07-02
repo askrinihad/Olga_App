@@ -26,9 +26,10 @@ class SearchDropdown extends StatefulWidget {
   }
 }
 
-class _SearchDropdownState extends State<SearchDropdown> {
+class _SearchDropdownState extends State<SearchDropdown> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (widget.multi) {
       return DropdownSearch<String>.multiSelection(
         items: widget.options,
@@ -145,4 +146,7 @@ class _SearchDropdownState extends State<SearchDropdown> {
       ),
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
