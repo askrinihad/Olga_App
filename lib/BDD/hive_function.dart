@@ -5,6 +5,8 @@ import 'package:test_app/model/especes_envahissantes.dart';
 import 'package:test_app/model/especes_faune.dart';
 import 'package:test_app/model/observation.dart';
 import 'package:test_app/model/user.dart';
+import 'package:test_app/BDD/bdd_function.dart';
+
 
 class HiveService {
   static Future initializeHive() async {
@@ -51,35 +53,41 @@ class HiveService {
   }
 
   Future<void> saveUser({
-    required int id,
-    required String email,
-    String? password,
-    required String airport,
-    String inventoryCode =
-        '',
-    required DateTime tokenExpiryDate,
-    bool isLogged = false,
-  }) async {
-    var box = await Hive.openBox<User>('user');
+  required int id,
+  required String email,
+  String? password,
+  required String airport,
+  String inventoryCode = '',
+  required DateTime tokenExpiryDate,
+  bool isLogged = false,
+}) async {
+  var box = await Hive.openBox<User>('user');
 
-    User? existingUser = box.get('user');
-    if (existingUser?.inventoryCode?.isNotEmpty ?? false) {
-      inventoryCode = existingUser!.inventoryCode!;
+  // Check if inventoryCode is empty, then fetch the first inventory code
+  if (inventoryCode.isEmpty) {
+    List<String> inventoryCodes = await getInventoryCode(airport, email);
+    if (inventoryCodes.isNotEmpty) {
+      inventoryCode = inventoryCodes.first;
     }
-
-    var user = User(
-      id: id,
-      email: email,
-      password: password,
-      airport: airport,
-      inventoryCode:
-          inventoryCode,
-      tokenExpiryDate: tokenExpiryDate,
-      isLogged: isLogged,
-    );
-
-    await box.put('user', user);
   }
+
+  User? existingUser = box.get('user');
+  if (existingUser?.inventoryCode?.isNotEmpty ?? false) {
+    inventoryCode = existingUser!.inventoryCode!;
+  }
+
+  var user = User(
+    id: id,
+    email: email,
+    password: password,
+    airport: airport,
+    inventoryCode: inventoryCode,
+    tokenExpiryDate: tokenExpiryDate,
+    isLogged: isLogged,
+  );
+
+  await box.put('user', user);
+}
 
   Future<bool> isUserLogged() async {
     var box = await Hive.openBox<User>('user');
